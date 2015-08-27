@@ -117,33 +117,35 @@
 
     operation<span class="variable">.cacheOperation</span> = [<span class="keyword">self</span><span class="variable">.imageCache</span> queryDiskCacheForKey:key done:^(<span class="built_in">UIImage</span> *image, SDImageCacheType cacheType) 
     {
-        SDWebImageDownloaderOptions downloaderOptions = <span class="number">0</span>;<span class="comment">//根据配置赋值</span>
-        <span class="keyword">id</span> &lt;SDWebImageOperation&gt; subOperation = [<span class="keyword">self</span><span class="variable">.imageDownloader</span> downloadImageWithURL:url options:downloaderOptions progress:progressBlock completed:^(<span class="built_in">UIImage</span> *downloadedImage, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *error, <span class="built_in">BOOL</span> finished) 
-        {
-            <span class="comment">//一些失败的处理</span>
-            <span class="comment">//获取图片成功的处理</span>
-            [<span class="keyword">self</span><span class="variable">.imageCache</span> storeImage:transformedImage recalculateFromImage:imageWasTransformed imageData:data forKey:key toDisk:cacheOnDisk];
-            completedBlock(transformedImage, <span class="literal">nil</span>, SDImageCacheTypeNone, finished, url);
-            [<span class="keyword">self</span><span class="variable">.runningOperations</span> removeObject:operation];<span class="comment">//互斥执行</span>
-        }];
-        operation<span class="variable">.cancelBlock</span> = ^{
-            [subOperation cancel];
-            [<span class="keyword">self</span><span class="variable">.runningOperations</span> removeObject:operation];<span class="comment">//互斥执行</span>
-        };
-    }
-    <span class="keyword">else</span> <span class="keyword">if</span> (image) <span class="comment">//在cache中找到image</span>
-    {
-        completedBlock(<span class="literal">nil</span>, <span class="literal">nil</span>, SDImageCacheTypeNone, <span class="literal">YES</span>, url);<span class="comment">//主线程中执行</span>
-        [<span class="keyword">self</span><span class="variable">.runningOperations</span> removeObject:operation];<span class="comment">//互斥执行</span>
-    }
-    <span class="keyword">else</span>    <span class="comment">//在cache中没找到image，且下载动作被delegate阻止</span>
-    {
-        completedBlock(<span class="literal">nil</span>, <span class="literal">nil</span>, SDImageCacheTypeNone, <span class="literal">YES</span>, url);<span class="comment">//主线程中执行</span>
-        [<span class="keyword">self</span><span class="variable">.runningOperations</span> removeObject:operation];<span class="comment">//互斥执行</span>
-    }
-}];
+        <span class="keyword">if</span>(image....)
 
-<span class="keyword">return</span> operation;
+            SDWebImageDownloaderOptions downloaderOptions = <span class="number">0</span>;<span class="comment">//根据配置赋值</span>
+            <span class="keyword">id</span> &lt;SDWebImageOperation&gt; subOperation = [<span class="keyword">self</span><span class="variable">.imageDownloader</span> downloadImageWithURL:url options:downloaderOptions progress:progressBlock completed:^(<span class="built_in">UIImage</span> *downloadedImage, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *error, <span class="built_in">BOOL</span> finished) 
+            {
+                <span class="comment">//一些失败的处理</span>
+                <span class="comment">//获取图片成功的处理</span>
+                [<span class="keyword">self</span><span class="variable">.imageCache</span> storeImage:transformedImage recalculateFromImage:imageWasTransformed imageData:data forKey:key toDisk:cacheOnDisk];
+                completedBlock(transformedImage, <span class="literal">nil</span>, SDImageCacheTypeNone, finished, url);
+                [<span class="keyword">self</span><span class="variable">.runningOperations</span> removeObject:operation];<span class="comment">//互斥执行</span>
+            }];
+            operation<span class="variable">.cancelBlock</span> = ^{
+                [subOperation cancel];
+                [<span class="keyword">self</span><span class="variable">.runningOperations</span> removeObject:operation];<span class="comment">//互斥执行</span>
+                };
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (image) <span class="comment">//在cache中找到image</span>
+        {
+                completedBlock(<span class="literal">nil</span>, <span class="literal">nil</span>, SDImageCacheTypeNone, <span class="literal">YES</span>, url);<span class="comment">//主线程中执行</span>
+            [<span class="keyword">self</span><span class="variable">.runningOperations</span> removeObject:operation];<span class="comment">//互斥执行</span>
+        }
+        <span class="keyword">else</span>    <span class="comment">//在cache中没找到image，且下载动作被delegate阻止</span>
+        {
+            completedBlock(<span class="literal">nil</span>, <span class="literal">nil</span>, SDImageCacheTypeNone, <span class="literal">YES</span>, url);<span class="comment">//主线程中执行</span>
+            [<span class="keyword">self</span><span class="variable">.runningOperations</span> removeObject:operation];<span class="comment">//互斥执行</span>
+        }
+    }];
+
+    <span class="keyword">return</span> operation;
 }
 </code></pre><h2 id="SDWebImageCombinedOperation">SDWebImageCombinedOperation</h2><h2 id="SDImageCache">SDImageCache</h2><p>－   queryDiskCacheForKey</p>
 <pre><code>- (<span class="built_in">NSOperation</span> *)queryDiskCacheForKey:(<span class="built_in">NSString</span> *)key done:(SDWebImageQueryCompletedBlock)doneBlock 
@@ -158,7 +160,28 @@
 <pre><code>- (<span class="built_in">UIImage</span> *)imageFromMemoryCacheForKey:(<span class="built_in">NSString</span> *)key {
 <span class="keyword">return</span> [<span class="keyword">self</span><span class="variable">.memCache</span> objectForKey:key];
 }
+</code></pre><p>从硬盘中查找数据<br>1.在defaultCachePath中寻找<br>2.在self.customPaths中寻找</p>
+<pre><code>- (<span class="built_in">NSData</span> *)diskImageDataBySearchingAllPathsForKey:(<span class="built_in">NSString</span> *)key 
+{
+    <span class="built_in">NSString</span> *defaultPath = [<span class="keyword">self</span> defaultCachePathForKey:key];
+    <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataWithContentsOfFile:defaultPath];
+    <span class="keyword">if</span> (data) {
+        <span class="keyword">return</span> data;
+    }
+
+    <span class="keyword">for</span> (<span class="built_in">NSString</span> *path <span class="keyword">in</span> <span class="keyword">self</span><span class="variable">.customPaths</span>) {
+        <span class="built_in">NSString</span> *filePath = [<span class="keyword">self</span> cachePathForKey:key inPath:path];
+        <span class="built_in">NSData</span> *imageData = [<span class="built_in">NSData</span> dataWithContentsOfFile:filePath];
+        <span class="keyword">if</span> (imageData) {
+            <span class="keyword">return</span> imageData;
+        }
+    }
+    <span class="keyword">return</span> <span class="literal">nil</span>;
+}        
 </code></pre><p>self.memCache ： <code>@property (strong, nonatomic) NSCache *memCache;</code> 存在变量中，就是存在内存中。</p>
+<blockquote>
+<p>NSCache key-value存储，与NSDictionary类似，<br>         没有遍历的功能<br>         在内存吃紧的时候，会自动释放。<br>         NSDiscardableContent<br>         countLimit/totalCostLimit<br>         有自己的释放策略，系统会自动的无序的调用响应的策略，来释放内存<br>         可以在多个线程中对NSCache做add/remove/query操作，不用上锁<br>         与NSMutableDictionary不同，cache不会拷贝key</p>
+</blockquote>
 <pre><code><span class="tag">-</span> (void)<span class="tag">storeImage</span>:(UIImage *)<span class="tag">image</span> <span class="tag">recalculateFromImage</span>:(BOOL)<span class="tag">recalculate</span> <span class="tag">imageData</span>:(NSData *)<span class="tag">imageData</span> <span class="tag">forKey</span>:(NSString *)<span class="tag">key</span> <span class="tag">toDisk</span>:(BOOL)<span class="tag">toDisk</span> {
     <span class="attr_selector">[self.memCache setObject:image forKey:key cost:image.size.height * image.size.width * image.scale]</span>;
 }
@@ -221,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtr0ynx0000v8crm0zvr3z3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtywl700000h3cru3jed95y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -266,7 +289,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtr0yok0001v8crb39a37jb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtywl7n0001h3cr8hs3pwff" class="article-share-link">Share</a>
       
       
     </footer>
