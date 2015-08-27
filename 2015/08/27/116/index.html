@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-27T09:00:53.000Z">
+<meta property="og:updated_time" content="2015-08-27T09:01:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -178,7 +178,7 @@
     <span class="keyword">return</span> <span class="literal">nil</span>;
 }        
 </code></pre><p>self.memCache ： <code>@property (strong, nonatomic) NSCache *memCache;</code> 存在变量中，就是存在内存中。</p>
-<p><strong>NSCache<br>    1.key-value存储，与NSDictionary类似，<br>    2.没有遍历的功能<br>    3.有自己的释放策略，在内存吃紧/系统需要清除缓存的时候，系统会 自动的 无序的 调用相应的清除策略，来释放内存<br>    4.可以在多个线程中对NSCache做add/remove/query操作，不用上锁<br>    5.与NSMutableDictionary不同，cache不会拷贝key<br>    4.NSDiscardableContent<br>    5.countLimit/totalCostLimit</strong></p>
+<p><em>NSCache<br>    1.key-value存储，与NSDictionary类似，<br>    2.没有遍历的功能<br>    3.有自己的释放策略，在内存吃紧/系统需要清除缓存的时候，系统会 自动的 无序的 调用相应的清除策略，来释放内存<br>    4.可以在多个线程中对NSCache做add/remove/query操作，不用上锁<br>    5.与NSMutableDictionary不同，cache不会拷贝key<br>    4.NSDiscardableContent<br>    5.countLimit/totalCostLimit</em></p>
 <pre><code><span class="tag">-</span> (void)<span class="tag">storeImage</span>:(UIImage *)<span class="tag">image</span> <span class="tag">recalculateFromImage</span>:(BOOL)<span class="tag">recalculate</span> <span class="tag">imageData</span>:(NSData *)<span class="tag">imageData</span> <span class="tag">forKey</span>:(NSString *)<span class="tag">key</span> <span class="tag">toDisk</span>:(BOOL)<span class="tag">toDisk</span> {
     <span class="attr_selector">[self.memCache setObject:image forKey:key cost:image.size.height * image.size.width * image.scale]</span>;
 }
@@ -241,7 +241,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtzdiqp0000jzcrwjx103cz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtze88z0000k7crqt4uozax" class="article-share-link">Share</a>
       
       
     </footer>
