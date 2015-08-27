@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-27T09:49:21.000Z">
+<meta property="og:updated_time" content="2015-08-27T09:51:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -192,7 +192,17 @@
 {
     <span class="attr_selector">[self.memCache setObject:diskImage forKey:key cost:cost]</span>;
 }
-</code></pre><h4 id="写disk">写disk</h4><h4 id="ioQueue">ioQueue</h4><p><code>// Create IO serial queue</code><br><code>_ioQueue = dispatch_queue_create(&quot;com.hackemist.SDWebImageCache&quot;, DISPATCH_QUEUE_SERIAL);</code></p>
+</code></pre><h4 id="写disk">写disk</h4><h4 id="ioQueue">ioQueue</h4><p><code>// Create IO serial queue</code><br><code>_ioQueue = dispatch_queue_create(&quot;com.hackemist.SDWebImageCache&quot;, DISPATCH_QUEUE_SERIAL);</code><br>用到ioQueue的方法</p>
+<ul>
+<li>(void)storeImage:(UIImage <em>)image recalculateFromImage:(BOOL)recalculate imageData:(NSData </em>)imageData forKey:(NSString *)key toDisk:(BOOL)toDisk {</li>
+<li>(NSOperation <em>)queryDiskCacheForKey:(NSString </em>)key done:(SDWebImageQueryCompletedBlock)doneBlock {</li>
+<li>(void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk withCompletion:(SDWebImageNoParamsBlock)completion {</li>
+<li>(void)clearDiskOnCompletion:(SDWebImageNoParamsBlock)completion</li>
+<li>(void)cleanDiskWithCompletionBlock:(SDWebImageNoParamsBlock)completionBlock {</li>
+<li>(NSUInteger)getSize {</li>
+<li>(NSUInteger)getDiskCount {</li>
+<li>(void)calculateSizeWithCompletionBlock:(SDWebImageCalculateSizeBlock)completionBlock {</li>
+</ul>
 <h4 id="超时时间">超时时间</h4><p><code>static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week</code></p>
 <p>在SD<br>清除缓存</p>
 <pre><code><span class="tag">-</span> (void)<span class="tag">clearMemory</span> {
@@ -245,7 +255,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidu13sqq0000nbcr7xih35d2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidu16vad0000o1crksh5216c" class="article-share-link">Share</a>
       
       
     </footer>
