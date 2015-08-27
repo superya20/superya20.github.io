@@ -188,37 +188,40 @@
             andCompletedBlock:completedBlock 
                        forURL:url 
                createCallback:^{
+        <span class="comment">//createCallback回调</span>
         timeoutInterval = <span class="number">15.0</span>;
-
+        <span class="comment">//生成request</span>
         <span class="built_in">NSMutableURLRequest</span> *request = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url 
-                                                                       cachePolicy:(options &amp; SDWebImageDownloaderUse<span class="built_in">NSURLCache</span> ? <span class="built_in">NSURLRequestUseProtocolCachePolicy</span> : <span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span>) 
-                                                                   timeoutInterval:timeoutInterval];
-    operation = [[SDWebImageDownloaderOperation alloc] initWithRequest:request
-                                                               options:options
-                                                              progress:^(<span class="built_in">NSInteger</span> receivedSize, <span class="built_in">NSInteger</span> expectedSize) 
-                                                              {     
-                                                                      SDWebImageDownloaderProgressBlock callback = callbacks[kProgressCallbackKey];
-      callback(receivedSize, expectedSize);
-                                                              }
-                                                             completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *error, <span class="built_in">BOOL</span> finished) 
-                                                             {
-                                                                 SDWebImageDownloaderProgressBlock callback = callbacks[kProgressCallbackKey];
-      callback(receivedSize, expectedSize);
-                                                             }
-                                                             cancelled:^{
-                                                                 [sself removeCallbacksForURL:url];                                                                 }];
-    [wself<span class="variable">.downloadQueue</span> addOperation:operation];
-    wself<span class="variable">.lastAddedOperation</span> = operation;
-}];
-
-<span class="keyword">return</span> operation;
+                cachePolicy:(options &amp; SDWebImageDownloaderUse<span class="built_in">NSURLCache</span> ? <span class="built_in">NSURLRequestUseProtocolCachePolicy</span> : <span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span>) 
+            timeoutInterval:timeoutInterval];
+        <span class="comment">//生成operation    </span>
+        operation = [[SDWebImageDownloaderOperation alloc] initWithRequest:request
+                           options:options
+                          progress:^(<span class="built_in">NSInteger</span> receivedSize, <span class="built_in">NSInteger</span> expectedSize) 
+                                   {     
+                                       SDWebImageDownloaderProgressBlock callback = callbacks[kProgressCallbackKey];
+                                      callback(receivedSize, expectedSize);
+                                   }
+                         completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *error, <span class="built_in">BOOL</span> finished) 
+                                   {
+                                       SDWebImageDownloaderProgressBlock callback = callbacks[kProgressCallbackKey];
+                                      callback(receivedSize, expectedSize);
+                                   }
+                         cancelled:^{
+                                       [sself removeCallbacksForURL:url];                                                                 
+                                }];
+        <span class="comment">//添加至wself.downloadQueue          </span>
+        [wself<span class="variable">.downloadQueue</span> addOperation:operation];
+        wself<span class="variable">.lastAddedOperation</span> = operation;
+        }];
+    <span class="keyword">return</span> operation;
 }
 </code></pre><p>－－－ end wly －－－</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqtv5j0000ujcr0rbbyxf2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtr0ynx0000v8crm0zvr3z3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -263,7 +266,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtqtv660001ujcr4pyi2bms" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtr0yok0001v8crb39a37jb" class="article-share-link">Share</a>
       
       
     </footer>
