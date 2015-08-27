@@ -180,7 +180,7 @@
 }        
 </code></pre><p>self.memCache ： <code>@property (strong, nonatomic) NSCache *memCache;</code> 存在变量中，就是存在内存中。</p>
 <blockquote>
-<p>NSCache key-value存储，与NSDictionary类似，<br>         没有遍历的功能<br>         在内存吃紧的时候，会自动释放。<br>         NSDiscardableContent<br>         countLimit/totalCostLimit<br>         有自己的释放策略，系统会自动的无序的调用响应的策略，来释放内存<br>         可以在多个线程中对NSCache做add/remove/query操作，不用上锁<br>         与NSMutableDictionary不同，cache不会拷贝key</p>
+<p>NSCache<br>1.key-value存储，与NSDictionary类似，<br>2.没有遍历的功能<br>3.在内存吃紧的时候，会自动释放。<br>4.NSDiscardableContent<br>5.countLimit/totalCostLimit<br>6.有自己的释放策略，系统会自动的无序的调用响应的策略，来释放内存<br>7.可以在多个线程中对NSCache做add/remove/query操作，不用上锁<br>8.与NSMutableDictionary不同，cache不会拷贝key</p>
 </blockquote>
 <pre><code><span class="tag">-</span> (void)<span class="tag">storeImage</span>:(UIImage *)<span class="tag">image</span> <span class="tag">recalculateFromImage</span>:(BOOL)<span class="tag">recalculate</span> <span class="tag">imageData</span>:(NSData *)<span class="tag">imageData</span> <span class="tag">forKey</span>:(NSString *)<span class="tag">key</span> <span class="tag">toDisk</span>:(BOOL)<span class="tag">toDisk</span> {
     <span class="attr_selector">[self.memCache setObject:image forKey:key cost:image.size.height * image.size.width * image.scale]</span>;
@@ -244,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtyye5x0000hkcrrv9xfnz7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtz08kn0000hucroekd2c90" class="article-share-link">Share</a>
       
       
     </footer>
@@ -289,7 +289,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtyye6m0001hkcr1nx1qy20" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtz08l90001hucrxl7ffuza" class="article-share-link">Share</a>
       
       
     </footer>
