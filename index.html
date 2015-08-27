@@ -179,16 +179,15 @@
     <span class="keyword">return</span> <span class="literal">nil</span>;
 }        
 </code></pre><p>self.memCache ： <code>@property (strong, nonatomic) NSCache *memCache;</code> 存在变量中，就是存在内存中。</p>
-<pre><code>NSCache 
-<span class="number">1.</span>key-value存储，与NSDictionary类似，
-<span class="number">2.</span>没有遍历的功能
-<span class="number">3.</span>在内存吃紧的时候，会自动释放。
-<span class="number">4.</span>NSDiscardableContent
-<span class="number">5.</span>countLimit/totalCostLimit
-<span class="number">6.</span>有自己的释放策略，系统会自动的无序的调用响应的策略，来释放内存
-<span class="number">7.</span>可以在多个线程中对NSCache做add/remove/query操作，不用上锁
-<span class="number">8.</span>与NSMutableDictionary不同，cache不会拷贝key
-</code></pre><p>11111111111111111111111111111</p>
+<p><code>NSCache 
+    1.key-value存储，与NSDictionary类似，
+    2.没有遍历的功能
+    3.在内存吃紧的时候，会自动释放。
+    4.NSDiscardableContent
+    5.countLimit/totalCostLimit
+    6.有自己的释放策略，系统会自动的无序的调用响应的策略，来释放内存
+    7.可以在多个线程中对NSCache做add/remove/query操作，不用上锁
+    8.与NSMutableDictionary不同，cache不会拷贝key</code></p>
 <pre><code><span class="tag">-</span> (void)<span class="tag">storeImage</span>:(UIImage *)<span class="tag">image</span> <span class="tag">recalculateFromImage</span>:(BOOL)<span class="tag">recalculate</span> <span class="tag">imageData</span>:(NSData *)<span class="tag">imageData</span> <span class="tag">forKey</span>:(NSString *)<span class="tag">key</span> <span class="tag">toDisk</span>:(BOOL)<span class="tag">toDisk</span> {
     <span class="attr_selector">[self.memCache setObject:image forKey:key cost:image.size.height * image.size.width * image.scale]</span>;
 }
@@ -251,7 +250,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtz62bq0000itcr9fu32756" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtz70690000j0cr49wubjvq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -296,7 +295,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtz62cc0001itcrt6y4bcch" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtz706v0001j0cr8mk391r8" class="article-share-link">Share</a>
       
       
     </footer>
