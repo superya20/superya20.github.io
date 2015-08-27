@@ -148,7 +148,24 @@
     <span class="keyword">return</span> operation;
 }
 </code></pre><h2 id="SDWebImageCombinedOperation">SDWebImageCombinedOperation</h2><hr>
-<h2 id="SDImageCache">SDImageCache</h2><h3 id="获取数据">获取数据</h3><p>－   queryDiskCacheForKey</p>
+<h2 id="SDImageCache">SDImageCache</h2><p>1.存取路径<br>    defaultCachePath<br>    self.customPaths<br>2.超时时间<br><code>static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week</code><br>3.ioQueue<br><code>// Create IO serial queue</code><br><code>_ioQueue = dispatch_queue_create(&quot;com.hackemist.SDWebImageCache&quot;, DISPATCH_QUEUE_SERIAL);</code><br>用到ioQueue的方法</p>
+<ul>
+<li>(void)<code>storeImage</code>:(UIImage <em>)image recalculateFromImage:(BOOL)recalculate imageData:(NSData </em>)imageData forKey:(NSString *)key toDisk:(BOOL)toDisk {</li>
+<li>(NSOperation <em>)<code>queryDiskCacheForKey</code>:(NSString </em>)key done:(SDWebImageQueryCompletedBlock)doneBlock {</li>
+<li>(void)<code>removeImageForKey</code>:(NSString *)key fromDisk:(BOOL)fromDisk withCompletion:(SDWebImageNoParamsBlock)completion {</li>
+<li>(void)<code>clearDiskOnCompletion</code>:(SDWebImageNoParamsBlock)completion</li>
+<li>(void)<code>cleanDiskWithCompletionBlock</code>:(SDWebImageNoParamsBlock)completionBlock {</li>
+<li>(NSUInteger)<code>getSize</code> {</li>
+<li>(NSUInteger)<code>getDiskCount</code> {</li>
+<li>(void)<code>calculateSizeWithCompletionBlock</code>:(SDWebImageCalculateSizeBlock)completionBlock {<br>4.cache<br>  self.memCache ： <code>@property (strong, nonatomic) NSCache *memCache;</code> 存在变量中，就是存在内存中。</li>
+</ul>
+<p><em>NSCache<br>    1.key-value存储，与NSDictionary类似，<br>    2.没有遍历的功能<br>    3.有自己的释放策略，在内存吃紧/系统需要清除缓存的时候，系统会 自动的 无序的 调用相应的清除策略，来释放内存<br>    4.可以在多个线程中对NSCache做add/remove/query操作，不用上锁<br>    5.与NSMutableDictionary不同，cache不会拷贝key<br>    4.NSDiscardableContent<br>    5.countLimit/totalCostLimit</em></p>
+<pre><code>清除缓存
+
+<span class="tag">-</span> (void)<span class="tag">clearMemory</span> {
+    <span class="attr_selector">[self.memCache removeAllObjects]</span>;
+}
+</code></pre><p>5.获取数据<br>－   queryDiskCacheForKey</p>
 <pre><code>- (<span class="built_in">NSOperation</span> *)queryDiskCacheForKey:(<span class="built_in">NSString</span> *)key done:(SDWebImageQueryCompletedBlock)doneBlock 
 {
     <span class="built_in">UIImage</span> *image = [<span class="keyword">self</span> imageFromMemoryCacheForKey:key];<span class="comment">//在内存中查找图片</span>
@@ -157,11 +174,11 @@
     <span class="built_in">UIImage</span> *diskImage = [<span class="keyword">self</span> diskImageForKey:key];<span class="comment">//在硬盘中查找图片</span>
     doneBlock(image, SDImageCacheTypeMemory);
 }
-</code></pre><p>－  imageFromMemoryCacheForKey</p>
+</code></pre><p>－  imageFromMemoryCacheForKey  —从缓存中读取数据</p>
 <pre><code>- (<span class="built_in">UIImage</span> *)imageFromMemoryCacheForKey:(<span class="built_in">NSString</span> *)key {
 <span class="keyword">return</span> [<span class="keyword">self</span><span class="variable">.memCache</span> objectForKey:key];
 }
-</code></pre><p>从硬盘中查找数据<br>1.在defaultCachePath中寻找<br>2.在self.customPaths中寻找</p>
+</code></pre><p>－  diskImageDataBySearchingAllPathsForKey  —从disk中读取数据</p>
 <pre><code>- (<span class="built_in">NSData</span> *)diskImageDataBySearchingAllPathsForKey:(<span class="built_in">NSString</span> *)key 
 {
     <span class="built_in">NSString</span> *defaultPath = [<span class="keyword">self</span> defaultCachePathForKey:key];
@@ -179,9 +196,8 @@
     }
     <span class="keyword">return</span> <span class="literal">nil</span>;
 }        
-</code></pre><p>self.memCache ： <code>@property (strong, nonatomic) NSCache *memCache;</code> 存在变量中，就是存在内存中。</p>
-<p><em>NSCache<br>    1.key-value存储，与NSDictionary类似，<br>    2.没有遍历的功能<br>    3.有自己的释放策略，在内存吃紧/系统需要清除缓存的时候，系统会 自动的 无序的 调用相应的清除策略，来释放内存<br>    4.可以在多个线程中对NSCache做add/remove/query操作，不用上锁<br>    5.与NSMutableDictionary不同，cache不会拷贝key<br>    4.NSDiscardableContent<br>    5.countLimit/totalCostLimit</em></p>
-<h3 id="写数据">写数据</h3><h4 id="写缓存">写缓存</h4><pre><code><span class="tag">-</span> (void)<span class="tag">storeImage</span>:(UIImage *)<span class="tag">image</span> <span class="tag">recalculateFromImage</span>:(BOOL)<span class="tag">recalculate</span> <span class="tag">imageData</span>:(NSData *)<span class="tag">imageData</span> <span class="tag">forKey</span>:(NSString *)<span class="tag">key</span> <span class="tag">toDisk</span>:(BOOL)<span class="tag">toDisk</span> {
+</code></pre><p>6.写数据<br>6.1 写缓存</p>
+<pre><code><span class="tag">-</span> (void)<span class="tag">storeImage</span>:(UIImage *)<span class="tag">image</span> <span class="tag">recalculateFromImage</span>:(BOOL)<span class="tag">recalculate</span> <span class="tag">imageData</span>:(NSData *)<span class="tag">imageData</span> <span class="tag">forKey</span>:(NSString *)<span class="tag">key</span> <span class="tag">toDisk</span>:(BOOL)<span class="tag">toDisk</span> {
     <span class="attr_selector">[self.memCache setObject:image forKey:key cost:image.size.height * image.size.width * image.scale]</span>;
 }
 <span class="tag">-</span> (UIImage *)<span class="tag">imageFromDiskCacheForKey</span>:(NSString *)<span class="tag">key</span>
@@ -193,23 +209,8 @@
 {
     <span class="attr_selector">[self.memCache setObject:diskImage forKey:key cost:cost]</span>;
 }
-</code></pre><h4 id="写disk">写disk</h4><h4 id="ioQueue">ioQueue</h4><p><code>// Create IO serial queue</code><br><code>_ioQueue = dispatch_queue_create(&quot;com.hackemist.SDWebImageCache&quot;, DISPATCH_QUEUE_SERIAL);</code><br>用到ioQueue的方法</p>
-<ul>
-<li>(void)<code>storeImage</code>:(UIImage <em>)image recalculateFromImage:(BOOL)recalculate imageData:(NSData </em>)imageData forKey:(NSString *)key toDisk:(BOOL)toDisk {</li>
-<li>(NSOperation <em>)<code>queryDiskCacheForKey</code>:(NSString </em>)key done:(SDWebImageQueryCompletedBlock)doneBlock {</li>
-<li>(void)<code>removeImageForKey</code>:(NSString *)key fromDisk:(BOOL)fromDisk withCompletion:(SDWebImageNoParamsBlock)completion {</li>
-<li>(void)<code>clearDiskOnCompletion</code>:(SDWebImageNoParamsBlock)completion</li>
-<li>(void)<code>cleanDiskWithCompletionBlock</code>:(SDWebImageNoParamsBlock)completionBlock {</li>
-<li>(NSUInteger)<code>getSize</code> {</li>
-<li>(NSUInteger)<code>getDiskCount</code> {</li>
-<li>(void)<code>calculateSizeWithCompletionBlock</code>:(SDWebImageCalculateSizeBlock)completionBlock {</li>
-</ul>
-<h4 id="超时时间">超时时间</h4><p><code>static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week</code></p>
-<p>在SD<br>清除缓存</p>
-<pre><code><span class="tag">-</span> (void)<span class="tag">clearMemory</span> {
-    <span class="attr_selector">[self.memCache removeAllObjects]</span>;
-}
-</code></pre><hr>
+</code></pre><p>6.2 写disk</p>
+<hr>
 <h2 id="SDWebImageDownloader">SDWebImageDownloader</h2><p>在createCallback的回调block中，<br>1.创建NSMutableURLRequest请求<br>2.超时时间为15s<br>3.创建SDWebImageDownloaderOperation的对象，将NSMutableURLRequest变量放入operation中<br>4.设置几个回调，progress，completed，cancelled</p>
 <pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url 
                                           options:(SDWebImageDownloaderOptions)options 
@@ -256,7 +257,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidu184s80000obcrpbus2flv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidu1ekbo0000qjcr4lruncti" class="article-share-link">Share</a>
       
       
     </footer>
@@ -301,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidu184sz0001obcrrb2k44m0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidu1ekc70001qjcrsuoi5yxn" class="article-share-link">Share</a>
       
       
     </footer>
