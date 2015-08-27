@@ -177,9 +177,9 @@
 }
 </code></pre><h2 id="SDWebImageDownloader">SDWebImageDownloader</h2><p>在createCallback的回调block中，<br>1.创建NSMutableURLRequest请求<br>2.超时时间为15s<br>3.创建SDWebImageDownloaderOperation的对象，将NSMutableURLRequest变量放入operation中<br>4.设置几个回调，progress，completed，cancelled</p>
 <pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url 
-options:(SDWebImageDownloaderOptions)options 
-progress:(SDWebImageDownloaderProgressBlock)progressBlock 
-completed:(SDWebImageDownloaderCompletedBlock)completedBlock 
+                                          options:(SDWebImageDownloaderOptions)options 
+                                         progress:(SDWebImageDownloaderProgressBlock)progressBlock 
+                                        completed:(SDWebImageDownloaderCompletedBlock)completedBlock 
 {
 __block SDWebImageDownloaderOperation *operation;
 __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="keyword">self</span>;
@@ -213,7 +213,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqqv570000tmcr29injfky" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqrmyz0000tzcrm0kxlfw4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -258,7 +258,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtqqv5t0001tmcrwt20lic1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtqrmzm0001tzcrniud92kz" class="article-share-link">Share</a>
       
       
     </footer>
