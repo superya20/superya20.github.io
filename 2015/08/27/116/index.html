@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="#####UIImageView+WebCache
 - (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock c">
-<meta property="og:updated_time" content="2015-08-27T03:50:05.000Z">
+<meta property="og:updated_time" content="2015-08-27T04:20:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="#####UIImageView+WebCache
@@ -148,8 +148,9 @@
 
 <span class="keyword">return</span> operation;
 }
-</code></pre><p>#####SDWebImageCombinedOperation</p>
-<p>#####SDImageCache</p>
+</code></pre><p>SDWebImageCombinedOperation</p>
+<p>SDImageCache</p>
+<p>－   queryDiskCacheForKey</p>
 <pre><code>- (<span class="built_in">NSOperation</span> *)queryDiskCacheForKey:(<span class="built_in">NSString</span> *)key done:(SDWebImageQueryCompletedBlock)doneBlock 
 {
     <span class="built_in">UIImage</span> *image = [<span class="keyword">self</span> imageFromMemoryCacheForKey:key];<span class="comment">//在内存中查找图片</span>
@@ -158,7 +159,28 @@
     <span class="built_in">UIImage</span> *diskImage = [<span class="keyword">self</span> diskImageForKey:key];<span class="comment">//在硬盘中查找图片</span>
     doneBlock(image, SDImageCacheTypeMemory);
 }
-</code></pre><p>#####SDWebImageDownloader</p>
+</code></pre><p>－  imageFromMemoryCacheForKey</p>
+<pre><code>- (<span class="built_in">UIImage</span> *)imageFromMemoryCacheForKey:(<span class="built_in">NSString</span> *)key {
+<span class="keyword">return</span> [<span class="keyword">self</span><span class="variable">.memCache</span> objectForKey:key];
+}
+</code></pre><p>self.memCache ： <code>@property (strong, nonatomic) NSCache *memCache;</code> 存在变量中，就是存在内存中。</p>
+<pre><code><span class="tag">-</span> (void)<span class="tag">storeImage</span>:(UIImage *)<span class="tag">image</span> <span class="tag">recalculateFromImage</span>:(BOOL)<span class="tag">recalculate</span> <span class="tag">imageData</span>:(NSData *)<span class="tag">imageData</span> <span class="tag">forKey</span>:(NSString *)<span class="tag">key</span> <span class="tag">toDisk</span>:(BOOL)<span class="tag">toDisk</span> {
+    <span class="attr_selector">[self.memCache setObject:image forKey:key cost:image.size.height * image.size.width * image.scale]</span>;
+}
+<span class="tag">-</span> (UIImage *)<span class="tag">imageFromDiskCacheForKey</span>:(NSString *)<span class="tag">key</span>
+{
+    \\在硬盘中找到图片后，存在内存中
+    <span class="attr_selector">[self.memCache setObject:diskImage forKey:key cost:cost]</span>;
+}
+<span class="tag">-</span> (NSOperation *)<span class="tag">queryDiskCacheForKey</span>:(NSString *)<span class="tag">key</span> <span class="tag">done</span>:(SDWebImageQueryCompletedBlock)<span class="tag">doneBlock</span>
+{
+    <span class="attr_selector">[self.memCache setObject:diskImage forKey:key cost:cost]</span>;
+}
+</code></pre><p>清除缓存</p>
+<pre><code><span class="tag">-</span> (void)<span class="tag">clearMemory</span> {
+    <span class="attr_selector">[self.memCache removeAllObjects]</span>;
+}
+</code></pre><p>SDWebImageDownloader</p>
 <pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url options:(SDWebImageDownloaderOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageDownloaderCompletedBlock)completedBlock 
 {
 __block SDWebImageDownloaderOperation *operation;
@@ -188,12 +210,12 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
 
 <span class="keyword">return</span> operation;
 }
-</code></pre><p>end wly</p>
+</code></pre><p>－－－ end wly －－－</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtom73u0001lycryhgzfzi1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtpci910001olcrgxk9dml4" class="article-share-link">Share</a>
       
       
     </footer>
