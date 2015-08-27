@@ -5,19 +5,19 @@
   
   <title>SDWebImage源码分析 | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="###UIImageView+WebCache
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock com">
+  <meta name="description" content="UIImageView+WebCache
+- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SDWebImage源码分析">
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="###UIImageView+WebCache
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock com">
-<meta property="og:updated_time" content="2015-08-27T04:23:52.000Z">
+<meta property="og:description" content="UIImageView+WebCache
+- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
+<meta property="og:updated_time" content="2015-08-27T04:48:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
-<meta name="twitter:description" content="###UIImageView+WebCache
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock com">
+<meta name="twitter:description" content="UIImageView+WebCache
+- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -89,7 +89,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>###UIImageView+WebCache</p>
+        <p>UIImageView+WebCache</p>
 <pre><code>- (<span class="typename">void</span>)<span class="string">sd_setImageWithURL:</span>(NSURL *)url <span class="string">placeholderImage:</span>(UIImage *)placeholder <span class="string">options:</span>(SDWebImageOptions)options <span class="string">progress:</span>(SDWebImageDownloaderProgressBlock)progressBlock <span class="string">completed:</span>(SDWebImageCompletionBlock)completedBlock 
 {
     id &lt;SDWebImageOperation&gt; operation = [SDWebImageManager.sharedManager <span class="string">downloadImageWithURL:</span>url <span class="string">options:</span>options <span class="string">progress:</span>progressBlock <span class="string">completed:</span>^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
@@ -104,7 +104,7 @@
     }];
     [self <span class="string">sd_setImageLoadOperation:</span>operation <span class="string">forKey:</span>@<span class="string">"UIImageViewImageLoad"</span>];
 }
-</code></pre><p>#####SDWebImageManager<br>—单例</p>
+</code></pre><p>SDWebImageManager<br>—单例</p>
 <pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url
                                      options:(SDWebImageOptions)options
                                     progress:(SDWebImageDownloaderProgressBlock)progressBlock
@@ -215,7 +215,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtpcrr10001otcr4kv3vdt0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqdi3d0000q1crswpe7151" class="article-share-link">Share</a>
       
       
     </footer>
@@ -225,9 +225,9 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
 <nav id="article-nav">
   
   
-    <a href="/2015/08/27/112/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/08/27/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">112</div>
+      <div class="article-nav-title">Hello World</div>
     </a>
   
 </nav>
@@ -249,7 +249,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -262,10 +262,6 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
         
           <li>
             <a href="/2015/08/27/116/">SDWebImage源码分析</a>
-          </li>
-        
-          <li>
-            <a href="/2015/08/27/112/">112</a>
           </li>
         
           <li>
