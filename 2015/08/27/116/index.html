@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-27T04:59:58.000Z">
+<meta property="og:updated_time" content="2015-08-27T05:01:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -180,18 +180,23 @@
                                          progress:(SDWebImageDownloaderProgressBlock)progressBlock 
                                         completed:(SDWebImageDownloaderCompletedBlock)completedBlock 
 {
-__block SDWebImageDownloaderOperation *operation;
-__<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="keyword">self</span>;
+    __block SDWebImageDownloaderOperation *operation;
+    __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="keyword">self</span>;
 
-[<span class="keyword">self</span> addProgressCallback:progressBlock andCompletedBlock:completedBlock forURL:url createCallback:^{
-    timeoutInterval = <span class="number">15.0</span>;
+    [<span class="keyword">self</span> addProgressCallback:progressBlock 
+            andCompletedBlock:completedBlock 
+                       forURL:url 
+               createCallback:^{
+        timeoutInterval = <span class="number">15.0</span>;
 
-    <span class="built_in">NSMutableURLRequest</span> *request = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url 
-                                                                cachePolicy:(options &amp; SDWebImageDownloaderUse<span class="built_in">NSURLCache</span> ? <span class="built_in">NSURLRequestUseProtocolCachePolicy</span> : <span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span>) timeoutInterval:timeoutInterval];
+        <span class="built_in">NSMutableURLRequest</span> *request = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url 
+                                                                       cachePolicy:(options &amp; SDWebImageDownloaderUse<span class="built_in">NSURLCache</span> ? <span class="built_in">NSURLRequestUseProtocolCachePolicy</span> : <span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span>) 
+                                                                   timeoutInterval:timeoutInterval];
     operation = [[SDWebImageDownloaderOperation alloc] initWithRequest:request
                                                                options:options
                                                               progress:^(<span class="built_in">NSInteger</span> receivedSize, <span class="built_in">NSInteger</span> expectedSize) 
-                                                              {         SDWebImageDownloaderProgressBlock callback = callbacks[kProgressCallbackKey];
+                                                              {     
+                                                                      SDWebImageDownloaderProgressBlock callback = callbacks[kProgressCallbackKey];
       callback(receivedSize, expectedSize);
                                                               }
                                                              completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *error, <span class="built_in">BOOL</span> finished) 
@@ -212,7 +217,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqrmyz0000tzcrm0kxlfw4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqtv5j0000ujcr0rbbyxf2" class="article-share-link">Share</a>
       
       
     </footer>
