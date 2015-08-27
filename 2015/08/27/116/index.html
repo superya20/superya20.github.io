@@ -5,19 +5,16 @@
   
   <title>SDWebImage源码分析 | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="UIImageView+WebCache
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
+  <meta name="description" content="UIImageView+WebCache1- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SDWebImage源码分析">
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="UIImageView+WebCache
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
-<meta property="og:updated_time" content="2015-08-27T04:48:23.000Z">
+<meta property="og:description" content="UIImageView+WebCache1- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
+<meta property="og:updated_time" content="2015-08-27T04:50:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
-<meta name="twitter:description" content="UIImageView+WebCache
-- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
+<meta name="twitter:description" content="UIImageView+WebCache1- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock comple">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -89,22 +86,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>UIImageView+WebCache</p>
-<pre><code>- (<span class="typename">void</span>)<span class="string">sd_setImageWithURL:</span>(NSURL *)url <span class="string">placeholderImage:</span>(UIImage *)placeholder <span class="string">options:</span>(SDWebImageOptions)options <span class="string">progress:</span>(SDWebImageDownloaderProgressBlock)progressBlock <span class="string">completed:</span>(SDWebImageCompletionBlock)completedBlock 
-{
-    id &lt;SDWebImageOperation&gt; operation = [SDWebImageManager.sharedManager <span class="string">downloadImageWithURL:</span>url <span class="string">options:</span>options <span class="string">progress:</span>progressBlock <span class="string">completed:</span>^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
-     {
-        dispatch_main_sync_safe(^{
-            wself.image = image;
-            [wself setNeedsLayout];
-            <span class="keyword">if</span> (completedBlock &amp;&amp; finished) {
-                completedBlock(image, error, cacheType, url);
-            }
-        });
-    }];
-    [self <span class="string">sd_setImageLoadOperation:</span>operation <span class="string">forKey:</span>@<span class="string">"UIImageViewImageLoad"</span>];
-}
-</code></pre><p>SDWebImageManager<br>—单例</p>
+        <h2 id="UIImageView+WebCache">UIImageView+WebCache</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock &#10;&#9;&#123;&#10;        id &#60;SDWebImageOperation&#62; operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)&#10;         &#123;&#10;            dispatch_main_sync_safe(^&#123;&#10;            &#9;wself.image = image;&#10;            &#9;[wself setNeedsLayout];&#10;            &#9;if (completedBlock &#38;&#38; finished) &#123;&#10;                    completedBlock(image, error, cacheType, url);&#10;                &#125;&#10;            &#125;);&#10;        &#125;];&#10;        [self sd_setImageLoadOperation:operation forKey:@&#34;UIImageViewImageLoad&#34;];&#10;    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="SDWebImageManager">SDWebImageManager</h2><p>—单例</p>
 <pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url
                                      options:(SDWebImageOptions)options
                                     progress:(SDWebImageDownloaderProgressBlock)progressBlock
@@ -148,9 +131,7 @@
 
 <span class="keyword">return</span> operation;
 }
-</code></pre><p>SDWebImageCombinedOperation</p>
-<p>SDImageCache</p>
-<p>－   queryDiskCacheForKey</p>
+</code></pre><h2 id="SDWebImageCombinedOperation">SDWebImageCombinedOperation</h2><h2 id="SDImageCache">SDImageCache</h2><p>－   queryDiskCacheForKey</p>
 <pre><code>- (<span class="built_in">NSOperation</span> *)queryDiskCacheForKey:(<span class="built_in">NSString</span> *)key done:(SDWebImageQueryCompletedBlock)doneBlock 
 {
     <span class="built_in">UIImage</span> *image = [<span class="keyword">self</span> imageFromMemoryCacheForKey:key];<span class="comment">//在内存中查找图片</span>
@@ -180,8 +161,7 @@
 <pre><code><span class="tag">-</span> (void)<span class="tag">clearMemory</span> {
     <span class="attr_selector">[self.memCache removeAllObjects]</span>;
 }
-</code></pre><p>SDWebImageDownloader</p>
-<pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url options:(SDWebImageDownloaderOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageDownloaderCompletedBlock)completedBlock 
+</code></pre><h2 id="SDWebImageDownloader">SDWebImageDownloader</h2><pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url options:(SDWebImageDownloaderOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageDownloaderCompletedBlock)completedBlock 
 {
 __block SDWebImageDownloaderOperation *operation;
 __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="keyword">self</span>;
@@ -215,7 +195,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqdi3d0000q1crswpe7151" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqfvtq0000qncrp9rx0td6" class="article-share-link">Share</a>
       
       
     </footer>
