@@ -87,7 +87,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="UIImageView+WebCache">UIImageView+WebCache</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ - (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock &#10;&#9;&#123;&#10;        id &#60;SDWebImageOperation&#62; operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)&#10;         &#123;&#10;            dispatch_main_sync_safe(^&#123;&#10;            &#9;wself.image = image;&#10;            &#9;[wself setNeedsLayout];&#10;            &#9;if (completedBlock &#38;&#38; finished) &#123;&#10;                    completedBlock(image, error, cacheType, url);&#10;                &#125;&#10;            &#125;);&#10;        &#125;];&#10;        [self sd_setImageLoadOperation:operation forKey:@&#34;UIImageViewImageLoad&#34;];&#10;    &#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="UIImageView+WebCache">UIImageView+WebCache</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ - (<span class="keyword">void</span>)sd_setImageWithURL:(<span class="built_in">NSURL</span> *)url placeholderImage:(<span class="built_in">UIImage</span> *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock </span><br><span class="line">	&#123;</span><br><span class="line">        <span class="keyword">id</span> &lt;SDWebImageOperation&gt; operation = [SDWebImageManager<span class="variable">.sharedManager</span> downloadImageWithURL:url options:options progress:progressBlock completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSError</span> *error, SDImageCacheType cacheType, <span class="built_in">BOOL</span> finished, <span class="built_in">NSURL</span> *imageURL)</span><br><span class="line">         &#123;</span><br><span class="line">            dispatch_main_sync_safe(^&#123;</span><br><span class="line">            	wself<span class="variable">.image</span> = image;</span><br><span class="line">            	[wself setNeedsLayout];</span><br><span class="line">            	<span class="keyword">if</span> (completedBlock &amp;&amp; finished) &#123;</span><br><span class="line">                    completedBlock(image, error, cacheType, url);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;];</span><br><span class="line">        [<span class="keyword">self</span> sd_setImageLoadOperation:operation forKey:<span class="string">@"UIImageViewImageLoad"</span>];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <h2 id="SDWebImageManager">SDWebImageManager</h2><p>—单例</p>
 <pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url
                                      options:(SDWebImageOptions)options
@@ -196,7 +196,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqh3js0000rrcrkva80q2n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqhxt80000s1crzxin87or" class="article-share-link">Share</a>
       
       
     </footer>
@@ -241,7 +241,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtqh3ki0001rrcrjax9ygz2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtqhxtu0001s1crmi7v46pf" class="article-share-link">Share</a>
       
       
     </footer>
