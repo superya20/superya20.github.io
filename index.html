@@ -147,7 +147,8 @@
 
     <span class="keyword">return</span> operation;
 }
-</code></pre><h2 id="SDWebImageCombinedOperation">SDWebImageCombinedOperation</h2><h2 id="SDImageCache">SDImageCache</h2><p>－   queryDiskCacheForKey</p>
+</code></pre><h2 id="SDWebImageCombinedOperation">SDWebImageCombinedOperation</h2><hr>
+<h2 id="SDImageCache">SDImageCache</h2><p>－   queryDiskCacheForKey</p>
 <pre><code>- (<span class="built_in">NSOperation</span> *)queryDiskCacheForKey:(<span class="built_in">NSString</span> *)key done:(SDWebImageQueryCompletedBlock)doneBlock 
 {
     <span class="built_in">UIImage</span> *image = [<span class="keyword">self</span> imageFromMemoryCacheForKey:key];<span class="comment">//在内存中查找图片</span>
@@ -196,7 +197,8 @@
 <pre><code><span class="tag">-</span> (void)<span class="tag">clearMemory</span> {
     <span class="attr_selector">[self.memCache removeAllObjects]</span>;
 }
-</code></pre><h2 id="SDWebImageDownloader">SDWebImageDownloader</h2><p>在createCallback的回调block中，<br>1.创建NSMutableURLRequest请求<br>2.超时时间为15s<br>3.创建SDWebImageDownloaderOperation的对象，将NSMutableURLRequest变量放入operation中<br>4.设置几个回调，progress，completed，cancelled</p>
+</code></pre><hr>
+<h2 id="SDWebImageDownloader">SDWebImageDownloader</h2><p>在createCallback的回调block中，<br>1.创建NSMutableURLRequest请求<br>2.超时时间为15s<br>3.创建SDWebImageDownloaderOperation的对象，将NSMutableURLRequest变量放入operation中<br>4.设置几个回调，progress，completed，cancelled</p>
 <pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url 
                                           options:(SDWebImageDownloaderOptions)options 
                                          progress:(SDWebImageDownloaderProgressBlock)progressBlock 
@@ -242,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtze88z0000k7crqt4uozax" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtzfc2y0000kfcrv773gdtv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -287,7 +289,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtze89m0001k7crdw34f807" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtzfc3o0001kfcrfayympau" class="article-share-link">Share</a>
       
       
     </footer>
