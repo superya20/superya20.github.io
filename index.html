@@ -87,8 +87,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="UIImageView+WebCache">UIImageView+WebCache</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="typename">void</span>)<span class="string">sd_setImageWithURL:</span>(NSURL *)url <span class="string">placeholderImage:</span>(UIImage *)placeholder <span class="string">options:</span>(SDWebImageOptions)options <span class="string">progress:</span>(SDWebImageDownloaderProgressBlock)progressBlock <span class="string">completed:</span>(SDWebImageCompletionBlock)completedBlock </span><br><span class="line">&#123;</span><br><span class="line">       id &lt;SDWebImageOperation&gt; operation = [SDWebImageManager.sharedManager <span class="string">downloadImageWithURL:</span>url <span class="string">options:</span>options <span class="string">progress:</span>progressBlock <span class="string">completed:</span>^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)</span><br><span class="line">        &#123;</span><br><span class="line">           dispatch_main_sync_safe(^&#123;</span><br><span class="line">           	wself.image = image;</span><br><span class="line">           	[wself setNeedsLayout];</span><br><span class="line">           	<span class="keyword">if</span> (completedBlock &amp;&amp; finished) &#123;</span><br><span class="line">                   completedBlock(image, error, cacheType, url);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;);</span><br><span class="line">       &#125;];</span><br><span class="line">       [self <span class="string">sd_setImageLoadOperation:</span>operation <span class="string">forKey:</span>@<span class="string">"UIImageViewImageLoad"</span>];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="SDWebImageManager">SDWebImageManager</h2><p>—单例</p>
+        <h2 id="UIImageView+WebCache">UIImageView+WebCache</h2><pre><code>- (<span class="typename">void</span>)<span class="string">sd_setImageWithURL:</span>(NSURL *)url <span class="string">placeholderImage:</span>(UIImage *)placeholder <span class="string">options:</span>(SDWebImageOptions)options <span class="string">progress:</span>(SDWebImageDownloaderProgressBlock)progressBlock <span class="string">completed:</span>(SDWebImageCompletionBlock)completedBlock 
+{
+    id &lt;SDWebImageOperation&gt; operation = [SDWebImageManager.sharedManager <span class="string">downloadImageWithURL:</span>url <span class="string">options:</span>options <span class="string">progress:</span>progressBlock <span class="string">completed:</span>^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
+     {
+        dispatch_main_sync_safe(^{
+            wself.image = image;
+            [wself setNeedsLayout];
+            <span class="keyword">if</span> (completedBlock &amp;&amp; finished) {
+                completedBlock(image, error, cacheType, url);
+            }
+        });
+    }];
+    [self <span class="string">sd_setImageLoadOperation:</span>operation <span class="string">forKey:</span>@<span class="string">"UIImageViewImageLoad"</span>];
+}
+</code></pre><h2 id="SDWebImageManager">SDWebImageManager</h2><p>—单例</p>
 <pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url
                                      options:(SDWebImageOptions)options
                                     progress:(SDWebImageDownloaderProgressBlock)progressBlock
@@ -162,7 +175,8 @@
 <pre><code><span class="tag">-</span> (void)<span class="tag">clearMemory</span> {
     <span class="attr_selector">[self.memCache removeAllObjects]</span>;
 }
-</code></pre><h2 id="SDWebImageDownloader">SDWebImageDownloader</h2><pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url options:(SDWebImageDownloaderOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageDownloaderCompletedBlock)completedBlock 
+</code></pre><h2 id="SDWebImageDownloader">SDWebImageDownloader</h2><p>在createCallback的回调block中，<br>1.创建NSMutableURLRequest请求<br>2.超时时间为15s<br>3.创建SDWebImageDownloaderOperation的对象，将NSMutableURLRequest变量放入operation中<br>4.设置几个回调，progress，completed，cancelled</p>
+<pre><code>- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url options:(SDWebImageDownloaderOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageDownloaderCompletedBlock)completedBlock 
 {
 __block SDWebImageDownloaderOperation *operation;
 __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="keyword">self</span>;
@@ -196,7 +210,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqm0ee0000sxcri4pze3qz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidtqq0qn0000tfcr221dhcp2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -241,7 +255,7 @@ __<span class="keyword">weak</span> SDWebImageDownloader *wself = <span class="k
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtqm0f10001sxcroxxlqufp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidtqq0rd0001tfcrbn8fqobs" class="article-share-link">Share</a>
       
       
     </footer>
