@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-28T01:12:16.000Z">
+<meta property="og:updated_time" content="2015-08-28T01:22:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -264,7 +264,6 @@
     [<span class="keyword">self</span><span class="variable">.connection</span> start];
 
     [[<span class="built_in">NSNotificationCenter</span> defaultCenter] postNotificationName:SDWebImageDownloadStartNotification object:<span class="keyword">self</span>];
-    <span class="built_in">CFRunLoopRun</span>();
     <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.connection</span>)
     {
         <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.progressBlock</span>) {
@@ -289,7 +288,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="ciduy2pac00002fcrixh21txi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="ciduygvs200004ncrd3ua2ifu" class="article-share-link">Share</a>
       
       
     </footer>
