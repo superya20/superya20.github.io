@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-28T01:08:57.000Z">
+<meta property="og:updated_time" content="2015-08-28T01:10:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -267,7 +267,7 @@
     <span class="built_in">CFRunLoopRun</span>();
     <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.connection</span>)
     {
-            <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.progressBlock</span>) {
+           <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.progressBlock</span>) {
             <span class="keyword">self</span><span class="variable">.progressBlock</span>(<span class="number">0</span>, <span class="built_in">NSURLResponseUnknownLength</span>);
         }
         [[<span class="built_in">NSNotificationCenter</span> defaultCenter] postNotificationName:SDWebImageDownloadStartNotification object:<span class="keyword">self</span>];
@@ -280,7 +280,7 @@
     }
     <span class="keyword">else</span> {
         <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.completedBlock</span>) {
-                <span class="keyword">self</span><span class="variable">.completedBlock</span>(<span class="literal">nil</span>, <span class="literal">nil</span>, [<span class="built_in">NSError</span> errorWithDomain:<span class="built_in">NSURLErrorDomain</span> code:<span class="number">0</span> userInfo:@{<span class="built_in">NSLocalizedDescriptionKey</span> : <span class="string">@"Connection can't be initialized"</span>}], <span class="literal">YES</span>);
+               <span class="keyword">self</span><span class="variable">.completedBlock</span>(<span class="literal">nil</span>, <span class="literal">nil</span>, [<span class="built_in">NSError</span> errorWithDomain:<span class="built_in">NSURLErrorDomain</span> code:<span class="number">0</span> userInfo:@{<span class="built_in">NSLocalizedDescriptionKey</span> : <span class="string">@"Connection can't be initialized"</span>}], <span class="literal">YES</span>);
         }
     }
 }
@@ -289,7 +289,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="ciduxyuy100001fcrnml6ajg0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="ciduxz32v00001ncroskjzhlt" class="article-share-link">Share</a>
       
       
     </footer>
