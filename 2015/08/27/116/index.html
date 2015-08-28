@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-28T08:08:04.000Z">
+<meta property="og:updated_time" content="2015-08-28T08:09:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -285,7 +285,10 @@
 }
 </code></pre><p>1.关于CFRunLoop<br>1.1这里为什么要用CFRunLoopRun?NSURLConnection需要与runloop结合来捕捉输入。</p>
 <p>1.2为什么不用NSRunLoop？<br>        CFRunLoop线程安全的<br>        NSRunLoop不是线程安全的，针对Framework中的类</p>
-<p>1.3iOS下RunLoop的主要运行模式<br>        Run Loop运行时只能以一种固定的模式运行，只会监控这个模式下添加的Timer Source和Input Source，如果这个模式下没有相应的事件源，Run Loop的运行也会立刻返回的。注意Run Loop不能在运行在NSRunLoopCommonModes模式，因为NSRunLoopCommonModes其实是个模式集合，而不是一个具体的模式，我可以在添加事件源的时候使用NSRunLoopCommonModes，只要Run Loop运行在NSRunLoopCommonModes中任何一个模式，这个事件源都可以被触发。Run Loop就是个处理事件的Loop，可以添加Timer和其他Input Source等各种事件源，如果事件源没有发生时，Run Loop就可能让线程进入asleep状态，而事件源发生时就会唤醒休眠的(asleep)的子线程来处理事件。Run Loop的事件源事件源分两类：Timer Source和Input Source(包括-performSelector:*API调用簇，Port Input Source、自定义Input Source)。不同的是Timer Source事件处理后不会使Run Loop结束，而Input Source事件处理后会让Run Loop退出。因此你需要自己的一个Loop去不断运行Run Loop来处理事件，就像本文开头的示例那样。<br>        a. NSDefaultRunLoopMode:默认的运行模式，除了NSConnection对象的事件<br>        b. NSRunLoopCommonModes: 是一组常用的模式集合，将一个input source关联到这个模式集合上，等于将input source关联到这个模式集合中的所有模式上。在iOS系统中NSRunLoopCommonMode包含NSDefaultRunLoopMode、NSTaskDeathCheckMode、UITrackingRunLoopMode<br>        c. UITrackingRunLoopMode: 用于跟踪触摸事件触发的模式（例如UIScrollView上下滚动），主线程当触摸事件触发时会设置为这个模式，可以用来在控件事件触发过程中设置Timer。<br>        d. GSEventReceiveRunLoopMode: 用于接受系统事件，属于内部的Run Loop模式<br>        e. 自定义Mode：可以设置自定义的运行模式Mode，你也可以用CFRunLoopAddCommonMode添加到NSRunLoopCommonModes中。</p>
+<p>1.3iOS下RunLoop的主要运行模式<br>        Run Loop运行时只能以一种固定的模式运行，只会监控这个模式下添加的Timer Source和Input Source，如果这个模式下没有相应的事件源，Run Loop的运行也会立刻返回的。注意Run Loop不能在运行在NSRunLoopCommonModes模式，因为NSRunLoopCommonModes其实是个模式集合，而不是一个具体的模式，我可以在添加事件源的时候使用NSRunLoopCommonModes，只要Run Loop运行在NSRunLoopCommonModes中任何一个模式，这个事件源都可以被触发。Run Loop就是个处理事件的Loop，可以添加Timer和其他Input Source等各种事件源，如果事件源没有发生时，Run Loop就可能让线程进入asleep状态，而事件源发生时就会唤醒休眠的(asleep)的子线程来处理事件。Run Loop的事件源事件源分两类：Timer Source和Input Source(包括-performSelector:*API调用簇，Port Input Source、自定义Input Source)。不同的是Timer Source事件处理后不会使Run Loop结束，而Input Source事件处理后会让Run Loop退出。因此你需要自己的一个Loop去不断运行Run Loop来处理事件，就像本文开头的示例那样。</p>
+<blockquote>
+<p>a. NSDefaultRunLoopMode:默认的运行模式，除了NSConnection对象的事件<br>b. NSRunLoopCommonModes: 是一组常用的模式集合，将一个input source关联到这个模式集合上，等于将input source关联到这个模式集合中的所有模式上。在iOS系统中NSRunLoopCommonMode包含NSDefaultRunLoopMode、NSTaskDeathCheckMode、UITrackingRunLoopMode<br>c. UITrackingRunLoopMode: 用于跟踪触摸事件触发的模式（例如UIScrollView上下滚动），主线程当触摸事件触发时会设置为这个模式，可以用来在控件事件触发过程中设置Timer。<br>d. GSEventReceiveRunLoopMode: 用于接受系统事件，属于内部的Run Loop模式<br>e. 自定义Mode：可以设置自定义的运行模式Mode，你也可以用CFRunLoopAddCommonMode添加到NSRunLoopCommonModes中。</p>
+</blockquote>
 <p>2.NSURLConnection<br>SDWebImageCombinedOperation实现了NSURLConnection的如下代理<br><code>- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response</code><br><code>- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data</code><br><code>- (void)connectionDidFinishLoading:(NSURLConnection *)aConnection</code><br><code>- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error</code><br>等等<br>NSURLConnectionDataDelegate<nsurlconnectiondelegate></nsurlconnectiondelegate></p>
 <h5 id="NSMutableURLRequest+NSURLConnection下载数据的步骤">NSMutableURLRequest+NSURLConnection下载数据的步骤</h5><p><strong>基本步骤</strong></p>
 <pre><code><span class="number">1.</span><span class="built_in">NSMutableURLRequest</span> *req = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url cachePolicy:<span class="built_in">NSURLRequestUseProtocolCachePolicy</span> timeoutInterval:<span class="number">15.0</span>];
@@ -316,7 +319,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidvcxdih00002ocrfqzgn7vr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidvcym2t000034crqk5gayp4" class="article-share-link">Share</a>
       
       
     </footer>
