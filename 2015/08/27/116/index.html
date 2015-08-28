@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-28T01:32:26.000Z">
+<meta property="og:updated_time" content="2015-08-28T06:21:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -283,12 +283,20 @@
         }
     }
 }
-</code></pre><p>1.CFRunLoop–这里为什么要用到CFRunLoop<br>CFRunLoopRun<br>CFRunLoop线程安全的<br>NSRunLoop不是线程安全的<br>2.NSURLConnection<br>SDWebImageCombinedOperation实现了NSURLConnection的如下代理<br><code>- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response</code><br><code>- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data</code><br><code>- (void)connectionDidFinishLoading:(NSURLConnection *)aConnection</code><br><code>- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error</code><br>等等<br>－－－ end wly －－－</p>
+</code></pre><p>1.CFRunLoop–这里为什么要用到CFRunLoop<br>CFRunLoopRun<br>CFRunLoop线程安全的<br>NSRunLoop不是线程安全的<br>2.NSURLConnection<br>SDWebImageCombinedOperation实现了NSURLConnection的如下代理<br><code>- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response</code><br><code>- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data</code><br><code>- (void)connectionDidFinishLoading:(NSURLConnection *)aConnection</code><br><code>- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error</code><br>等等<br>NSURLConnectionDataDelegate<nsurlconnectiondelegate></nsurlconnectiondelegate></p>
+<p>#####NSMutableURLRequest+NSURLConnection下载数据的步骤</p>
+<pre><code><span class="number">1.</span><span class="built_in">NSMutableURLRequest</span> *req = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url cachePolicy:<span class="built_in">NSURLRequestUseProtocolCachePolicy</span> timeoutInterval:<span class="number">15.0</span>];
+<span class="number">2.</span><span class="built_in">NSURLConnection</span> *connection = [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:_requst delegate:<span class="keyword">self</span> startImmediately:<span class="literal">NO</span>];
+<span class="number">3.</span>[connection scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> mainRunLoop] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];
+<span class="number">4.</span>[connection start];
+<span class="number">5.</span>delegate
+<span class="number">6.</span>- (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection等等
+</code></pre><p>－－－ end wly －－－</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="ciduyslac0000qpcr7k6qi4jq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidv94s3h0000abcr7og567jz" class="article-share-link">Share</a>
       
       
     </footer>
