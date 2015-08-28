@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-28T06:22:20.000Z">
+<meta property="og:updated_time" content="2015-08-28T06:25:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -284,19 +284,28 @@
     }
 }
 </code></pre><p>1.CFRunLoop–这里为什么要用到CFRunLoop<br>CFRunLoopRun<br>CFRunLoop线程安全的<br>NSRunLoop不是线程安全的<br>2.NSURLConnection<br>SDWebImageCombinedOperation实现了NSURLConnection的如下代理<br><code>- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response</code><br><code>- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data</code><br><code>- (void)connectionDidFinishLoading:(NSURLConnection *)aConnection</code><br><code>- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error</code><br>等等<br>NSURLConnectionDataDelegate<nsurlconnectiondelegate></nsurlconnectiondelegate></p>
-<p>#####NSMutableURLRequest+NSURLConnection下载数据的步骤</p>
-<pre><code><span class="number">1.</span><span class="built_in">NSMutableURLRequest</span> *req = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url cachePolicy:<span class="built_in">NSURLRequestUseProtocolCachePolicy</span> timeoutInterval:<span class="number">15.0</span>];
-<span class="number">2.</span><span class="built_in">NSURLConnection</span> *connection = [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:_requst delegate:<span class="keyword">self</span> startImmediately:<span class="literal">NO</span>];
-<span class="number">3.</span>[connection scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> mainRunLoop] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];
-<span class="number">4.</span>[connection start];
-<span class="number">5.</span><span class="comment">//delegate</span>
-<span class="number">6.</span>- (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection等等
+<p>#####NSMutableURLRequest+NSURLConnection下载数据的步骤<br>基本步骤<br>    1.NSMutableURLRequest <em>req = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:15.0];<br>    2.NSURLConnection </em>connection = [[NSURLConnection alloc] initWithRequest:_requst delegate:self startImmediately:NO];<br>    3.[connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];<br>    4.[connection start];<br>    5.//delegate<br>    6.- (void)connectionDidFinishLoading:(NSURLConnection *)connection等等</p>
+<p>使用NSOperation<br>FirstViewController.m</p>
+<pre><code>_testQueue = <span class="comment">[<span class="comment">[NSOperationQueue alloc]</span> init]</span>;
+NSMutableURLRequest *req = <span class="comment">[<span class="comment">[NSMutableURLRequest alloc]</span> initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:15.0]</span>;
+myOperation *ope = <span class="comment">[<span class="comment">[myOperation alloc]</span> initWithRequest:req]</span>;
+<span class="comment">[_testQueue addOperation:ope]</span>;
+</code></pre><p>myOperation.m</p>
+<pre><code>- (<span class="keyword">void</span>)start {
+    <span class="built_in">NSURLConnection</span> *connection = [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:_requst delegate:<span class="keyword">self</span> startImmediately:<span class="literal">NO</span>];
+    [connection scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> mainRunLoop] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];
+    [connection start];
+    <span class="built_in">NSLog</span>(<span class="string">@"start %@"</span>, _requst);
+}
+
+<span class="comment">//delegate</span>
+- (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection<span class="comment">//等等</span>
 </code></pre><p>－－－ end wly －－－</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidv95f480000aocrqqww6c3u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidv999jm0000bzcr6paw5wd5" class="article-share-link">Share</a>
       
       
     </footer>
