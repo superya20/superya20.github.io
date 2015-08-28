@@ -91,7 +91,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cidv9b22l0001ckcr2zgw23af" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cidv9bsd60001cucrufb0l1si" class="article-share-link">Share</a>
       
       
     </footer>
@@ -321,14 +321,14 @@
     }
 }
 </code></pre><p>1.CFRunLoop–这里为什么要用到CFRunLoop<br>CFRunLoopRun<br>CFRunLoop线程安全的<br>NSRunLoop不是线程安全的<br>2.NSURLConnection<br>SDWebImageCombinedOperation实现了NSURLConnection的如下代理<br><code>- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response</code><br><code>- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data</code><br><code>- (void)connectionDidFinishLoading:(NSURLConnection *)aConnection</code><br><code>- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error</code><br>等等<br>NSURLConnectionDataDelegate<nsurlconnectiondelegate></nsurlconnectiondelegate></p>
-<p>#####NSMutableURLRequest+NSURLConnection下载数据的步骤<br>–基本步骤–</p>
+<p>#####NSMutableURLRequest+NSURLConnection下载数据的步骤<br>-基本步骤-</p>
 <pre><code><span class="number">1.</span><span class="built_in">NSMutableURLRequest</span> *req = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url cachePolicy:<span class="built_in">NSURLRequestUseProtocolCachePolicy</span> timeoutInterval:<span class="number">15.0</span>];
 <span class="number">2.</span><span class="built_in">NSURLConnection</span> *connection = [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:_requst delegate:<span class="keyword">self</span> startImmediately:<span class="literal">NO</span>];
 <span class="number">3.</span>[connection scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> mainRunLoop] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];
 <span class="number">4.</span>[connection start];
 <span class="number">5.</span><span class="comment">//delegate</span>
 <span class="number">6.</span>- (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection等等
-</code></pre><p>–使用NSOperation–<br>FirstViewController.m</p>
+</code></pre><p>-使用NSOperation-<br>FirstViewController.m</p>
 <pre><code>_testQueue = <span class="comment">[<span class="comment">[NSOperationQueue alloc]</span> init]</span>;
 NSMutableURLRequest *req = <span class="comment">[<span class="comment">[NSMutableURLRequest alloc]</span> initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:15.0]</span>;
 myOperation *ope = <span class="comment">[<span class="comment">[myOperation alloc]</span> initWithRequest:req]</span>;
@@ -348,7 +348,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidv9b21y0000ckcrcgnbhv1m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidv9bscj0000cucr77vfl4da" class="article-share-link">Share</a>
       
       
     </footer>
@@ -393,7 +393,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidv9b22m0002ckcrj2f8mqhz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidv9bsd80002cucrx0nxzbsw" class="article-share-link">Share</a>
       
       
     </footer>
