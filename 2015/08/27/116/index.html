@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-28T06:30:52.000Z">
+<meta property="og:updated_time" content="2015-08-28T06:41:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -307,13 +307,13 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
 
 <span class="comment">//delegate</span>
 - (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection<span class="comment">//等等</span>
-</code></pre><p><code>[connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];</code><br><em>如果不加上这句话，myOperation即时实现了回调，也无法被调起，这是为什么？</em></p>
+</code></pre><p><code>[connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];</code><br><em>如果不加上这句话，代理者即时实现了回调，也无法被调起，这是为什么？</em></p>
 <p>－－－ end wly －－－</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidv9gdi80000dxcr8fc9dzmy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidv9tjfh0000lpcr0hy01cub" class="article-share-link">Share</a>
       
       
     </footer>
