@@ -92,7 +92,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cidvd0uvs00023tcrmwxluiox" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cidvd3bix000249crun031m8t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -128,7 +128,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cidvd0uvr00013tcrw73uf3j7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cidvd3biv000149crzx3mktqz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -376,21 +376,21 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
 </code></pre><p>myOperation.m</p>
 <pre><code>- (<span class="keyword">void</span>)start {
     <span class="built_in">NSURLConnection</span> *connection = [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:_requst delegate:<span class="keyword">self</span> startImmediately:<span class="literal">NO</span>];
-    [connection scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> mainRunLoop] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];
+    **[connection scheduleInRunLoop:[<span class="built_in">NSRunLoop</span> mainRunLoop] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];**
     [connection start];
     <span class="built_in">NSLog</span>(<span class="string">@"start %@"</span>, _requst);
 }
 
 <span class="comment">//delegate</span>
 - (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection<span class="comment">//等等</span>
-</code></pre><p><code>[connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];</code><br><em>如果不加上这句话，代理者即时实现了回调，也无法被调起，这是为什么？</em></p>
+</code></pre><p><code>[connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];</code></p>
 <p>－－－ end wly －－－</p>
 <p>参考文章：<br><a href="http://southpeak.github.io/blog/2015/02/07/yuan-ma-pian-:sdwebimage/?utm_source=tuicool" target="_blank" rel="external">http://southpeak.github.io/blog/2015/02/07/yuan-ma-pian-:sdwebimage/?utm_source=tuicool</a><br><a href="http://www.hrchen.com/2013/06/multi-threading-programming-of-ios-part-1/" target="_blank" rel="external">http://www.hrchen.com/2013/06/multi-threading-programming-of-ios-part-1/</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidvd0uuz00003tcryb3cl62h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidvd3bi7000049crcwu71msd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -435,7 +435,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidvd0uvu00033tcrbmqk3sva" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidvd3biy000349crgtrfpvp7" class="article-share-link">Share</a>
       
       
     </footer>
