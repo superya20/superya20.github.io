@@ -92,7 +92,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cidvcg0wu0002zgcrisb8bo9h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cidvcs4my00021ccrjmg9zshj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -128,7 +128,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cidvcg0wt0001zgcrkubzc561" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cidvcs4mx00011ccryzjkzzyv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -357,7 +357,8 @@
         }
     }
 }
-</code></pre><p>1.CFRunLoop–这里为什么要用到CFRunLoop<br>CFRunLoopRun<br>CFRunLoop线程安全的<br>NSRunLoop不是线程安全的<br>2.NSURLConnection<br>SDWebImageCombinedOperation实现了NSURLConnection的如下代理<br><code>- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response</code><br><code>- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data</code><br><code>- (void)connectionDidFinishLoading:(NSURLConnection *)aConnection</code><br><code>- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error</code><br>等等<br>NSURLConnectionDataDelegate<nsurlconnectiondelegate></nsurlconnectiondelegate></p>
+</code></pre><p>1.CFRunLoop<br>1.1这里为什么要用CFRunLoopRun?NSURLConnection需要与runloop结合来捕捉输入。<br>1.2为什么不用NSRunLoop？<br>    CFRunLoop线程安全的<br>    NSRunLoop不是线程安全的，针对Framework中的类<br>1.3iOS下RunLoop的主要运行模式<br>    a. NSDefaultRunLoopMode:默认的运行模式，除了NSConnection对象的事件<br>    b. NSRunLoopCommonModes: 是一组常用的模式集合，将一个input source关联到这个模式集合上，等于将input source关联到这个模式集合中的所有模式上。在iOS系统中NSRunLoopCommonMode包含NSDefaultRunLoopMode、NSTaskDeathCheckMode、UITrackingRunLoopMode<br>    c. UITrackingRunLoopMode: 用于跟踪触摸事件触发的模式（例如UIScrollView上下滚动），主线程当触摸事件触发时会设置为这个模式，可以用来在控件事件触发过程中设置Timer。<br>    d. GSEventReceiveRunLoopMode: 用于接受系统事件，属于内部的Run Loop模式<br>    e. 自定义Mode：可以设置自定义的运行模式Mode，你也可以用CFRunLoopAddCommonMode添加到NSRunLoopCommonModes中。</p>
+<p>2.NSURLConnection<br>SDWebImageCombinedOperation实现了NSURLConnection的如下代理<br><code>- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response</code><br><code>- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data</code><br><code>- (void)connectionDidFinishLoading:(NSURLConnection *)aConnection</code><br><code>- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error</code><br>等等<br>NSURLConnectionDataDelegate<nsurlconnectiondelegate></nsurlconnectiondelegate></p>
 <h5 id="NSMutableURLRequest+NSURLConnection下载数据的步骤">NSMutableURLRequest+NSURLConnection下载数据的步骤</h5><p><strong>基本步骤</strong></p>
 <pre><code><span class="number">1.</span><span class="built_in">NSMutableURLRequest</span> *req = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url cachePolicy:<span class="built_in">NSURLRequestUseProtocolCachePolicy</span> timeoutInterval:<span class="number">15.0</span>];
 <span class="number">2.</span><span class="built_in">NSURLConnection</span> *connection = [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:_requst delegate:<span class="keyword">self</span> startImmediately:<span class="literal">NO</span>];
@@ -387,7 +388,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidvcg0wh0000zgcr6otl6m69" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidvcs4m800001ccrss2qw8k7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -432,7 +433,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidvcg0wv0003zgcr7e46dwzr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cidvcs4n000031ccrw33lhlsn" class="article-share-link">Share</a>
       
       
     </footer>
