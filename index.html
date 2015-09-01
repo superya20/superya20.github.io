@@ -88,7 +88,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="原理">原理</h2><p><code>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</code><br>·自定义请求和响应<br>·提供自定义的全局缓存支持<br>·重定向网络请求<br>·提供HTTP Mocking (方便前期测试)<br>·其他一些全局的网络请求修改需求</p>
-<h2 id="—">—</h2><h3 id="NSURLProtocol使用方法">NSURLProtocol使用方法</h3><p><code>继承NSURLPorotocl，并注册你的NSURLProtocol.当NSURLConnection准备发起请求时，它会遍历所有已注册的NSURLProtocol，询问它们能否处理当前请求。所以你需要尽早注册这个Protocol。</code></p>
+<hr>
+<h3 id="NSURLProtocol使用方法">NSURLProtocol使用方法</h3><p><code>继承NSURLPorotocl，并注册你的NSURLProtocol.当NSURLConnection准备发起请求时，它会遍历所有已注册的NSURLProtocol，询问它们能否处理当前请求。所以你需要尽早注册这个Protocol。</code></p>
 <pre><code><span class="collection">[NSURLProtocol registerClass:<span class="collection">[YXURLProtocol class]</span>]</span><span class="comment">;</span>
 </code></pre><p><code>实现NSURLProtocol的相关方法.当遍历到我们自定义的NSURLProtocol时，系统先会调用canInitWithRequest:这个方法。顾名思义，这是整个流程的入口，只有这个方法返回YES我们才能够继续后续的处理。我们可以在这个方法的实现里面进行请求的过滤，筛选出需要进行处理的请求。</code></p>
 <pre><code>+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request
@@ -96,7 +97,8 @@
 + (<span class="built_in">BOOL</span>)requestIsCacheEquivalent:(<span class="built_in">NSURLRequest</span> *)a
                    toRequest:(<span class="built_in">NSURLRequest</span> *)b
 - (<span class="keyword">void</span>)startLoading
-</code></pre><h2 id="—-1">—</h2><h2 id="WebViewProxy使用方法：在需要使用的viewcontroller调用">WebViewProxy使用方法：在需要使用的viewcontroller调用</h2><pre><code>[WebViewProxy <span class="string">handleRequestsWithHost:</span>@<span class="string">"www.google.com"</span> <span class="string">path:</span>@<span class="string">"/images/srpr/logo3w.png"</span> <span class="string">handler:</span>^(NSURLRequest* req, WVPResponse *res)
+</code></pre><hr>
+<h2 id="WebViewProxy使用方法：在需要使用的viewcontroller调用">WebViewProxy使用方法：在需要使用的viewcontroller调用</h2><pre><code>[WebViewProxy <span class="string">handleRequestsWithHost:</span>@<span class="string">"www.google.com"</span> <span class="string">path:</span>@<span class="string">"/images/srpr/logo3w.png"</span> <span class="string">handler:</span>^(NSURLRequest* req, WVPResponse *res)
 </code></pre><h3 id="流程">流程</h3><h4 id="0-配置－－全局静态变量">0.配置－－全局静态变量</h4><pre><code><span class="keyword">static</span> <span class="built_in">NSMutableArray</span>* requestMatchers;
 <span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewUserAgentTest;
 <span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewProxyLoopDetection;
@@ -139,7 +141,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cie18gxge0004fccrasjcvek5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cie18hky60004ftcr7uhjf7vx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -176,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cie18gxgb0002fccr5zjfvgvw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cie18hky40002ftcr1gpcnxkl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -212,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cie18gxg90001fccr0cw7ni75" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cie18hky30001ftcrc2d4b8yf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -474,7 +476,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cie18gxfi0000fccrpv058w5w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cie18hkxg0000ftcr78yy49eg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -519,7 +521,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cie18gxgc0003fccrnfuc91qe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cie18hky50003ftcrbzneomqs" class="article-share-link">Share</a>
       
       
     </footer>
