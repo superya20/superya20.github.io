@@ -6,18 +6,18 @@
   <title>WebViewProxy | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原理NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你·自定义请求和响应·提供自定义的全局缓存支持·重定向网络请求·提供HTTP Mocking (方便前期测试)·其他一些全局的网络请求修改需求
-使用方法继承NSURLPorotoc">
+NSURLProtocol使用方法继">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WebViewProxy">
 <meta property="og:url" content="http://yoursite.com/2015/09/01/WebViewProxy/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="原理NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你·自定义请求和响应·提供自定义的全局缓存支持·重定向网络请求·提供HTTP Mocking (方便前期测试)·其他一些全局的网络请求修改需求
-使用方法继承NSURLPorotoc">
-<meta property="og:updated_time" content="2015-09-01T10:24:36.000Z">
+NSURLProtocol使用方法继">
+<meta property="og:updated_time" content="2015-09-01T10:47:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebViewProxy">
 <meta name="twitter:description" content="原理NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你·自定义请求和响应·提供自定义的全局缓存支持·重定向网络请求·提供HTTP Mocking (方便前期测试)·其他一些全局的网络请求修改需求
-使用方法继承NSURLPorotoc">
+NSURLProtocol使用方法继">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -90,7 +90,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="原理">原理</h2><p><code>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</code><br>·自定义请求和响应<br>·提供自定义的全局缓存支持<br>·重定向网络请求<br>·提供HTTP Mocking (方便前期测试)<br>·其他一些全局的网络请求修改需求</p>
-<h3 id="使用方法">使用方法</h3><p><code>继承NSURLPorotocl，并注册你的NSURLProtocol.当NSURLConnection准备发起请求时，它会遍历所有已注册的NSURLProtocol，询问它们能否处理当前请求。所以你需要尽早注册这个Protocol。</code></p>
+<h3 id="NSURLProtocol使用方法">NSURLProtocol使用方法</h3><p><code>继承NSURLPorotocl，并注册你的NSURLProtocol.当NSURLConnection准备发起请求时，它会遍历所有已注册的NSURLProtocol，询问它们能否处理当前请求。所以你需要尽早注册这个Protocol。</code></p>
 <pre><code><span class="collection">[NSURLProtocol registerClass:<span class="collection">[YXURLProtocol class]</span>]</span><span class="comment">;</span>
 </code></pre><p><code>实现NSURLProtocol的相关方法.当遍历到我们自定义的NSURLProtocol时，系统先会调用canInitWithRequest:这个方法。顾名思义，这是整个流程的入口，只有这个方法返回YES我们才能够继续后续的处理。我们可以在这个方法的实现里面进行请求的过滤，筛选出需要进行处理的请求。</code></p>
 <pre><code>+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request
@@ -98,19 +98,19 @@
 + (<span class="built_in">BOOL</span>)requestIsCacheEquivalent:(<span class="built_in">NSURLRequest</span> *)a
                    toRequest:(<span class="built_in">NSURLRequest</span> *)b
 - (<span class="keyword">void</span>)startLoading
-</code></pre><h2 id="使用方法：在需要使用的viewcontroller调用">使用方法：在需要使用的viewcontroller调用</h2><pre><code>[WebViewProxy <span class="string">handleRequestsWithHost:</span>@<span class="string">"www.google.com"</span> <span class="string">path:</span>@<span class="string">"/images/srpr/logo3w.png"</span> <span class="string">handler:</span>^(NSURLRequest* req, WVPResponse *res)
-</code></pre><h4 id="全局静态变量">全局静态变量</h4><pre><code><span class="keyword">static</span> <span class="built_in">NSMutableArray</span>* requestMatchers;
+</code></pre><h2 id="WebViewProxy使用方法：在需要使用的viewcontroller调用">WebViewProxy使用方法：在需要使用的viewcontroller调用</h2><pre><code>[WebViewProxy <span class="string">handleRequestsWithHost:</span>@<span class="string">"www.google.com"</span> <span class="string">path:</span>@<span class="string">"/images/srpr/logo3w.png"</span> <span class="string">handler:</span>^(NSURLRequest* req, WVPResponse *res)
+</code></pre><h3 id="流程">流程</h3><h4 id="0-配置－－全局静态变量">0.配置－－全局静态变量</h4><pre><code><span class="keyword">static</span> <span class="built_in">NSMutableArray</span>* requestMatchers;
 <span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewUserAgentTest;
 <span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewProxyLoopDetection;
-</code></pre><h5 id="WebViewProxy:NSObject">WebViewProxy:NSObject</h5><pre><code>+ (<span class="typename">void</span>)initialize {
+</code></pre><h5 id="1-WebViewProxy:NSObject_，编译的时候，做些初始化操作，并向NSURLProtocol注册WebViewProxyURLProtocol">1.WebViewProxy:NSObject ，编译的时候，做些初始化操作，并向NSURLProtocol注册WebViewProxyURLProtocol</h5><pre><code>+ (void)initialize {
     [WebViewProxy removeAllHandlers];
-    webViewUserAgentTest = [NSPredicate <span class="string">predicateWithFormat:</span>@<span class="string">"self MATCHES '^Mozilla.*Mac OS X.*'"</span>];
-    webViewProxyLoopDetection = [NSPredicate <span class="string">predicateWithFormat:</span>@<span class="string">"self.fragment MATCHES '__webviewproxyreq__'"</span>];
-    <span class="comment">// e.g. "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403"</span>
-    [NSURLProtocol <span class="string">registerClass:</span>[WebViewProxyURLProtocol <span class="class"><span class="keyword">class</span>]];
-}</span>
-</code></pre><p>关键：｀[NSURLProtocol registerClass:[WebViewProxyURLProtocol class]];｀</p>
-<pre><code>+ (void)handleRequestsWithHost:(NSString *)host path:(NSString *)path <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+    webViewUserAgentTest = [NSPredicate predicateWithFormat:@"self MATCHES '^Mozilla.*Mac OS X.*'"];
+    webViewProxyLoopDetection = [NSPredicate predicateWithFormat:@"self.fragment MATCHES '__webviewproxyreq__'"];
+    // e.g. "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403"
+    [NSURLProtocol registerClass:[WebViewProxyURLProtocol class]];
+}
+
++ (void)handleRequestsWithHost:(NSString *)host path:(NSString *)path <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
     [<span class="keyword">self</span> handleRequestsMatching:predicate <span class="keyword">handler</span>:<span class="keyword">handler</span>];</span>
 }
 
@@ -118,9 +118,19 @@
 + (void)handleRequestsMatching:(NSPredicate*)predicate <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
 // <span class="keyword">Match</span> <span class="keyword">on</span> <span class="keyword">any</span> property <span class="keyword">of</span> NSURL, <span class="keyword">e</span>.<span class="keyword">g</span>. <span class="string">"scheme MATCHES 'http' AND host MATCHES 'www.google.com'"</span>
     [requestMatchers addObject:[WVPRequestMatcher matchWithPredicate:predicate <span class="keyword">handler</span>:<span class="keyword">handler</span>]];</span>
+} 
+</code></pre><h5 id="2-WebViewProxyURLProtocol">2.WebViewProxyURLProtocol</h5><pre><code><span class="comment">//canInitWithRequest －－ 过滤可处理的请求</span>
++ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request {
+    <span class="built_in">NSString</span>* userAgent = request<span class="variable">.allHTTPHeaderFields</span>[<span class="string">@"User-Agent"</span>];
+    <span class="keyword">if</span> (userAgent &amp;&amp; ![webViewUserAgentTest evaluateWithObject:userAgent]) { <span class="keyword">return</span> <span class="literal">NO</span>; }
+    <span class="keyword">if</span> ([webViewProxyLoopDetection evaluateWithObject:request<span class="variable">.URL</span>]) { <span class="keyword">return</span> <span class="literal">NO</span>; }
+    <span class="keyword">return</span> ([<span class="keyword">self</span> findRequestMatcher:request<span class="variable">.URL</span>] != <span class="literal">nil</span>);
 }
-static NSMutableArray* requestMatchers; 
-</code></pre><h5 id="WVPRequestMatcher:NSObject">WVPRequestMatcher:NSObject</h5><pre><code>+ (WVPRequestMatcher*)matchWithPredicate:(NSPredicate *)predicate <span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+<span class="comment">//startLoading -- 执行注册的handler</span>
+- (<span class="keyword">void</span>)startLoading {
+    <span class="keyword">self</span><span class="variable">.requestMatcher</span><span class="variable">.handler</span>(_correctedRequest, <span class="keyword">self</span><span class="variable">.proxyResponse</span>);
+}
+</code></pre><h5 id="3-WVPRequestMatcher:NSObject">3.WVPRequestMatcher:NSObject</h5><pre><code>+ (WVPRequestMatcher*)matchWithPredicate:(NSPredicate *)predicate <span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
     WVPRequestMatcher* matcher = [[WVPRequestMatcher alloc] init];
     matcher.<span class="keyword">handler</span> = <span class="keyword">handler</span>;
     matcher.predicate = predicate;
@@ -131,7 +141,7 @@ static NSMutableArray* requestMatchers;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cie17knkp0004cscr5cywv18c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cie17l0wl0004d2cr66avnywy" class="article-share-link">Share</a>
       
       
     </footer>
