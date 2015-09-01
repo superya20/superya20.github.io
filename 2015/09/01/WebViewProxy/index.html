@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>WebViewProxy | magicya的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原理NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你·自定义请求和响应·提供自定义的全局缓存支持·重定向网络请求·提供HTTP Mocking (方便前期测试)·其他一些全局的网络请求修改需求
+使用方法继承NSURLPorotoc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebViewProxy">
+<meta property="og:url" content="http://yoursite.com/2015/09/01/WebViewProxy/index.html">
+<meta property="og:site_name" content="magicya的技术博客">
+<meta property="og:description" content="原理NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你·自定义请求和响应·提供自定义的全局缓存支持·重定向网络请求·提供HTTP Mocking (方便前期测试)·其他一些全局的网络请求修改需求
+使用方法继承NSURLPorotoc">
+<meta property="og:updated_time" content="2015-09-01T10:24:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebViewProxy">
+<meta name="twitter:description" content="原理NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你·自定义请求和响应·提供自定义的全局缓存支持·重定向网络请求·提供HTTP Mocking (方便前期测试)·其他一些全局的网络请求修改需求
+使用方法继承NSURLPorotoc">
+  
+    <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">magicya的技术博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">海纳百川，有容乃大；壁立千仞，无欲则刚</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-WebViewProxy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/01/WebViewProxy/" class="article-date">
+  <time datetime="2015-09-01T08:26:55.000Z" itemprop="datePublished">2015-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      WebViewProxy
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="原理">原理</h2><p><code>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</code><br>·自定义请求和响应<br>·提供自定义的全局缓存支持<br>·重定向网络请求<br>·提供HTTP Mocking (方便前期测试)<br>·其他一些全局的网络请求修改需求</p>
+<h3 id="使用方法">使用方法</h3><p><code>继承NSURLPorotocl，并注册你的NSURLProtocol.当NSURLConnection准备发起请求时，它会遍历所有已注册的NSURLProtocol，询问它们能否处理当前请求。所以你需要尽早注册这个Protocol。</code></p>
+<pre><code><span class="collection">[NSURLProtocol registerClass:<span class="collection">[YXURLProtocol class]</span>]</span><span class="comment">;</span>
+</code></pre><p><code>实现NSURLProtocol的相关方法.当遍历到我们自定义的NSURLProtocol时，系统先会调用canInitWithRequest:这个方法。顾名思义，这是整个流程的入口，只有这个方法返回YES我们才能够继续后续的处理。我们可以在这个方法的实现里面进行请求的过滤，筛选出需要进行处理的请求。</code></p>
+<pre><code>+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request
++ (<span class="built_in">NSURLRequest</span> *)canonicalRequestForRequest:(<span class="built_in">NSURLRequest</span> *)request
++ (<span class="built_in">BOOL</span>)requestIsCacheEquivalent:(<span class="built_in">NSURLRequest</span> *)a
+                   toRequest:(<span class="built_in">NSURLRequest</span> *)b
+- (<span class="keyword">void</span>)startLoading
+</code></pre><h2 id="使用方法：在需要使用的viewcontroller调用">使用方法：在需要使用的viewcontroller调用</h2><pre><code>[WebViewProxy <span class="string">handleRequestsWithHost:</span>@<span class="string">"www.google.com"</span> <span class="string">path:</span>@<span class="string">"/images/srpr/logo3w.png"</span> <span class="string">handler:</span>^(NSURLRequest* req, WVPResponse *res)
+</code></pre><h4 id="全局静态变量">全局静态变量</h4><pre><code><span class="keyword">static</span> <span class="built_in">NSMutableArray</span>* requestMatchers;
+<span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewUserAgentTest;
+<span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewProxyLoopDetection;
+</code></pre><h5 id="WebViewProxy:NSObject">WebViewProxy:NSObject</h5><pre><code>+ (<span class="typename">void</span>)initialize {
+    [WebViewProxy removeAllHandlers];
+    webViewUserAgentTest = [NSPredicate <span class="string">predicateWithFormat:</span>@<span class="string">"self MATCHES '^Mozilla.*Mac OS X.*'"</span>];
+    webViewProxyLoopDetection = [NSPredicate <span class="string">predicateWithFormat:</span>@<span class="string">"self.fragment MATCHES '__webviewproxyreq__'"</span>];
+    <span class="comment">// e.g. "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403"</span>
+    [NSURLProtocol <span class="string">registerClass:</span>[WebViewProxyURLProtocol <span class="class"><span class="keyword">class</span>]];
+}</span>
+</code></pre><p>关键：｀[NSURLProtocol registerClass:[WebViewProxyURLProtocol class]];｀</p>
+<pre><code>+ (void)handleRequestsWithHost:(NSString *)host path:(NSString *)path <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+    [<span class="keyword">self</span> handleRequestsMatching:predicate <span class="keyword">handler</span>:<span class="keyword">handler</span>];</span>
+}
+
+
++ (void)handleRequestsMatching:(NSPredicate*)predicate <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+// <span class="keyword">Match</span> <span class="keyword">on</span> <span class="keyword">any</span> property <span class="keyword">of</span> NSURL, <span class="keyword">e</span>.<span class="keyword">g</span>. <span class="string">"scheme MATCHES 'http' AND host MATCHES 'www.google.com'"</span>
+    [requestMatchers addObject:[WVPRequestMatcher matchWithPredicate:predicate <span class="keyword">handler</span>:<span class="keyword">handler</span>]];</span>
+}
+static NSMutableArray* requestMatchers; 
+</code></pre><h5 id="WVPRequestMatcher:NSObject">WVPRequestMatcher:NSObject</h5><pre><code>+ (WVPRequestMatcher*)matchWithPredicate:(NSPredicate *)predicate <span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+    WVPRequestMatcher* matcher = [[WVPRequestMatcher alloc] init];
+    matcher.<span class="keyword">handler</span> = <span class="keyword">handler</span>;
+    matcher.predicate = predicate;
+    <span class="keyword">return</span> matcher;
+}
+</code></pre><p>参考文章：<br><a href="http://www.cocoachina.com/ios/20141225/10765.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20141225/10765.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cie17knkp0004cscr5cywv18c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/08/28/一些博客地址/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">一些博客地址</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/09/01/WebViewProxy/">WebViewProxy</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/28/一些博客地址/">一些博客地址</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/27/爱上写博客/">爱上写博客</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/27/116/">SDWebImage源码分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/27/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 magicya<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

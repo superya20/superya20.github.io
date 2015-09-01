@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/27/116/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
-<meta property="og:updated_time" content="2015-08-28T08:13:31.000Z">
+<meta property="og:updated_time" content="2015-08-31T09:16:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage源码分析">
 <meta name="twitter:description" content="UIImageView+WebCache- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock complet">
@@ -147,7 +147,7 @@
     <span class="keyword">return</span> operation;
 }
 </code></pre><hr>
-<h2 id="SDImageCache">SDImageCache</h2><p>1.存取路径<br>    defaultCachePath<br>    self.customPaths<br>2.超时时间<br><code>static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week</code><br>3.ioQueue<br><code>// Create IO serial queue</code><br><code>_ioQueue = dispatch_queue_create(&quot;com.hackemist.SDWebImageCache&quot;, DISPATCH_QUEUE_SERIAL);</code><br>用到ioQueue的方法</p>
+<h2 id="SDImageCache">SDImageCache</h2><p>1.存取路径<br>    defaultCachePath<br>    <code>/var/mobile/Containers/Data/Application/9E20C126-D089-45DB-B790-CEBEF1802849/Library/Caches/com.hackemist.SDWebImageCache.default/8bc5045e8deb56760dd05425b06bf8e2</code><br>    self.customPaths<br>2.超时时间<br><code>static const NSInteger kDefaultCacheMaxCacheAge = 60 * 60 * 24 * 7; // 1 week</code><br>3.ioQueue<br><code>// Create IO serial queue</code><br><code>_ioQueue = dispatch_queue_create(&quot;com.hackemist.SDWebImageCache&quot;, DISPATCH_QUEUE_SERIAL);</code><br>用到ioQueue的方法</p>
 <ul>
 <li>(void)<code>storeImage</code>:(UIImage <em>)image recalculateFromImage:(BOOL)recalculate imageData:(NSData </em>)imageData forKey:(NSString *)key toDisk:(BOOL)toDisk {</li>
 <li>(NSOperation <em>)<code>queryDiskCacheForKey</code>:(NSString </em>)key done:(SDWebImageQueryCompletedBlock)doneBlock {</li>
@@ -310,13 +310,13 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
 <span class="comment">//delegate</span>
 - (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection<span class="comment">//等等</span>
 </code></pre><p><code>[connection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];</code></p>
-<p>－－－ end wly －－－</p>
+<h5 id="感想：SDWebImage估计大部分iOS开发者都听说过，我也是用了好久好久，都没想过去看源码。这一次只是简单的纵向挖了一下，居然也能挖出众多key_point。NSCache，NSFileManager，NSOperationQueue，NSOperation，NSMutableURLRequest，CFRunLoop。">感想：SDWebImage估计大部分iOS开发者都听说过，我也是用了好久好久，都没想过去看源码。这一次只是简单的纵向挖了一下，居然也能挖出众多key point。NSCache，NSFileManager，NSOperationQueue，NSOperation，NSMutableURLRequest，CFRunLoop。</h5><p>－－－ end wly －－－</p>
 <p>参考文章：<br><a href="http://southpeak.github.io/blog/2015/02/07/yuan-ma-pian-:sdwebimage/?utm_source=tuicool" target="_blank" rel="external">http://southpeak.github.io/blog/2015/02/07/yuan-ma-pian-:sdwebimage/?utm_source=tuicool</a><br><a href="http://www.hrchen.com/2013/06/multi-threading-programming-of-ios-part-1/" target="_blank" rel="external">http://www.hrchen.com/2013/06/multi-threading-programming-of-ios-part-1/</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cidvd4eqi00004kcrnag0ahwj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cie17knjy0000cscrs8pevawl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -359,7 +359,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -369,6 +369,10 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/09/01/WebViewProxy/">WebViewProxy</a>
+          </li>
         
           <li>
             <a href="/2015/08/28/一些博客地址/">一些博客地址</a>
