@@ -3,21 +3,36 @@
 <head>
   <meta charset="utf-8">
   
-  <title>从项目中移除storyboards | magicya的技术博客</title>
+  <title>html+JavaScript基础知识 | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在xcode6的新建工程中移除storyboards步骤1.删除:    .plist中Main storyboard file base name    Main.storyboard    LaunchScreen.xib2.置空:    Main Interface    Launch Screen File3.添加:    在
-- (BOOL)application:(UIApplicat">
+  <meta name="description" content="HTMLHTML 指的是超文本标记语言 (Hyper Text Markup Language)Web 浏览器的作用是读取 HTML 文档，并以网页的形式显示出它们。浏览器不会显示 HTML 标签，而是使用标签来解释页面的内容：
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+
+&amp;lt;h1&amp;gt;My First Heading&amp;lt;/h1&amp;gt;
+
+&amp;lt;p&amp;gt;My first p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从项目中移除storyboards">
-<meta property="og:url" content="http://yoursite.com/2015/09/07/从项目中移除storyboards/index.html">
+<meta property="og:title" content="html+JavaScript基础知识">
+<meta property="og:url" content="http://yoursite.com/2015/09/07/html基础知识/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="在xcode6的新建工程中移除storyboards步骤1.删除:    .plist中Main storyboard file base name    Main.storyboard    LaunchScreen.xib2.置空:    Main Interface    Launch Screen File3.添加:    在
-- (BOOL)application:(UIApplicat">
-<meta property="og:updated_time" content="2015-09-07T06:22:01.000Z">
+<meta property="og:description" content="HTMLHTML 指的是超文本标记语言 (Hyper Text Markup Language)Web 浏览器的作用是读取 HTML 文档，并以网页的形式显示出它们。浏览器不会显示 HTML 标签，而是使用标签来解释页面的内容：
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+
+&amp;lt;h1&amp;gt;My First Heading&amp;lt;/h1&amp;gt;
+
+&amp;lt;p&amp;gt;My first p">
+<meta property="og:updated_time" content="2015-09-07T10:26:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从项目中移除storyboards">
-<meta name="twitter:description" content="在xcode6的新建工程中移除storyboards步骤1.删除:    .plist中Main storyboard file base name    Main.storyboard    LaunchScreen.xib2.置空:    Main Interface    Launch Screen File3.添加:    在
-- (BOOL)application:(UIApplicat">
+<meta name="twitter:title" content="html+JavaScript基础知识">
+<meta name="twitter:description" content="HTMLHTML 指的是超文本标记语言 (Hyper Text Markup Language)Web 浏览器的作用是读取 HTML 文档，并以网页的形式显示出它们。浏览器不会显示 HTML 标签，而是使用标签来解释页面的内容：
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+
+&amp;lt;h1&amp;gt;My First Heading&amp;lt;/h1&amp;gt;
+
+&amp;lt;p&amp;gt;My first p">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -67,10 +82,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-从项目中移除storyboards" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-html基础知识" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/07/从项目中移除storyboards/" class="article-date">
-  <time datetime="2015-09-07T06:08:57.000Z" itemprop="datePublished">2015-09-07</time>
+    <a href="/2015/09/07/html基础知识/" class="article-date">
+  <time datetime="2015-09-07T10:17:27.000Z" itemprop="datePublished">2015-09-07</time>
 </a>
     
   </div>
@@ -81,7 +96,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      从项目中移除storyboards
+      html+JavaScript基础知识
     </h1>
   
 
@@ -89,18 +104,31 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在xcode6的新建工程中移除storyboards步骤<br>1.删除:<br>    .plist中Main storyboard file base name<br>    Main.storyboard<br>    LaunchScreen.xib<br>2.置空:<br>    Main Interface<br>    Launch Screen File<br>3.添加:<br>    在</p>
-<pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
-</code></pre><p>中添加</p>
-<pre><code>self.window = <span class="comment">[<span class="comment">[UIWindow alloc]</span> initWithFrame:<span class="comment">[<span class="comment">[UIScreen mainScreen]</span> bounds]</span>]</span>;
- self.window.backgroundColor = <span class="comment">[UIColor whiteColor]</span>;
-<span class="comment">[self.window makeKeyAndVisible]</span>;
-</code></pre><p>4.设置LaunchScreenFile</p>
+        <h2 id="HTML">HTML</h2><p>HTML 指的是超文本标记语言 (Hyper Text Markup Language)<br>Web 浏览器的作用是读取 HTML 文档，并以网页的形式显示出它们。浏览器不会显示 HTML 标签，而是使用标签来解释页面的内容：</p>
+<pre><code><span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
 
+<span class="tag">&lt;<span class="title">h1</span>&gt;</span>My First Heading<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">p</span>&gt;</span>My first paragraph.<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><p><html> 与 </html> 之间的文本描述网页</p>
+<p><body> 与 </body> 之间的文本是可见的页面内容</p>
+<h1> 与 </h1> 之间的文本被显示为标题<br><p> 与 </p> 之间的文本被显示为段落<br><br>HTML 标题<br>HTML 标题（Heading）是通过 <h1> - <h6> 等标签进行定义的。<br><br>    <h1>This is a heading</h1>
+
+<p>HTML 段落<br>HTML 段落是通过 </p><p> 标签进行定义的。</p>
+<pre><code>&lt;p&gt;This <span class="keyword">is</span> a <span class="property">paragraph</span>.&lt;/p&gt;
+</code></pre><p>HTML 链接<br>HTML 链接是通过 <a> 标签进行定义的。</a></p>
+<pre><code>&lt;<span class="tag">a</span> href=<span class="string">"http://www.w3school.com.cn"</span>&gt;This is <span class="tag">a</span> link&lt;/a&gt;
+</code></pre><p>HTML 图像<br>HTML 图像是通过 <img> 标签进行定义的。</p>
+<pre><code>&lt;<span class="tag">img</span> src=<span class="string">"w3school.jpg"</span> <span class="attribute">width</span>=<span class="string">"104"</span> <span class="attribute">height</span>=<span class="string">"142"</span> /&gt;
+</code></pre><h2 id="HTML5">HTML5</h2></h6></h1>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cie9s9hvs0002mocrns2cm5wh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cie9s9hvw0005mocr2ejc4fey" class="article-share-link">Share</a>
       
       
     </footer>
@@ -109,19 +137,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/09/07/JKTabBarController/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          JKTabBarController
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/07/iOS-app-工程目录模版/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/09/07/WebViewJavascriptBridge/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">iOS app 工程目录模版</div>
+      <div class="article-nav-title">WebViewJavascriptBridge</div>
     </a>
   
 </nav>
