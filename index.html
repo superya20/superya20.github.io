@@ -65,6 +65,48 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-从项目中移除storyboards" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/07/从项目中移除storyboards/" class="article-date">
+  <time datetime="2015-09-07T06:08:57.000Z" itemprop="datePublished">2015-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/07/从项目中移除storyboards/">从项目中移除storyboards</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在xcode6的新建工程中移除storyboards步骤<br>1.删除:<br>    .plist中Main storyboard file base name<br>    Main.storyboard<br>    LaunchScreen.xib<br>2.置空:<br>    Main Interface<br>    Launch Screen File<br>3.添加:<br>    在</p>
+<pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
+</code></pre><p>中添加</p>
+<pre><code>self.window = <span class="comment">[<span class="comment">[UIWindow alloc]</span> initWithFrame:<span class="comment">[<span class="comment">[UIScreen mainScreen]</span> bounds]</span>]</span>;
+ self.window.backgroundColor = <span class="comment">[UIColor whiteColor]</span>;
+<span class="comment">[self.window makeKeyAndVisible]</span>;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cie9j8hl10002sicrky9g5kvh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-iOS-app-工程目录模版" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/07/iOS-app-工程目录模版/" class="article-date">
@@ -92,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cie9fai7o0003k5cr5f3mx2q7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cie9j8hl40004sicr836tohri" class="article-share-link">Share</a>
       
       
     </footer>
@@ -180,7 +222,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cie9fai7r0005k5cru37r1ley" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cie9j8hl70006sicrnn2d5hbt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -220,7 +262,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cie9fai7n0002k5crajxl2e62" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cie9j8hl30003sicrh8xbqvyr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -256,7 +298,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cie9fai7m0001k5crs16cn8ej" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cie9j8hkz0001sicrspfssbsg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -518,7 +560,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cie9fai6z0000k5crk49u1tvp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cie9j8hk80000sicrh62bn0eg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -563,7 +605,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cie9fai7p0004k5crz19u701q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cie9j8hl60005sicrovffxe65" class="article-share-link">Share</a>
       
       
     </footer>
@@ -588,7 +630,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -598,6 +640,10 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/09/07/从项目中移除storyboards/">从项目中移除storyboards</a>
+          </li>
         
           <li>
             <a href="/2015/09/07/iOS-app-工程目录模版/">iOS app 工程目录模版</a>
@@ -613,10 +659,6 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
         
           <li>
             <a href="/2015/08/27/爱上写博客/">爱上写博客</a>
-          </li>
-        
-          <li>
-            <a href="/2015/08/27/116/">SDWebImage源码分析</a>
           </li>
         
       </ul>

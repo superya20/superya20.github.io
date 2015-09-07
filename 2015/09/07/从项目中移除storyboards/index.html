@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/9 | magicya的技术博客</title>
+  <title>从项目中移除storyboards | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="magicya的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2015/09/index.html">
+  <meta name="description" content="在xcode6的新建工程中移除storyboards步骤1.删除:    .plist中Main storyboard file base name    Main.storyboard    LaunchScreen.xib2.置空:    Main Interface    Launch Screen File3.添加:    在
+- (BOOL)application:(UIApplicat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从项目中移除storyboards">
+<meta property="og:url" content="http://yoursite.com/2015/09/07/从项目中移除storyboards/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description">
+<meta property="og:description" content="在xcode6的新建工程中移除storyboards步骤1.删除:    .plist中Main storyboard file base name    Main.storyboard    LaunchScreen.xib2.置空:    Main Interface    Launch Screen File3.添加:    在
+- (BOOL)application:(UIApplicat">
+<meta property="og:updated_time" content="2015-09-07T06:13:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="magicya的技术博客">
-<meta name="twitter:description">
+<meta name="twitter:title" content="从项目中移除storyboards">
+<meta name="twitter:description" content="在xcode6的新建工程中移除storyboards步骤1.删除:    .plist中Main storyboard file base name    Main.storyboard    LaunchScreen.xib2.置空:    Main Interface    Launch Screen File3.添加:    在
+- (BOOL)application:(UIApplicat">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -63,77 +67,58 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/07/从项目中移除storyboards/" class="archive-article-date">
-  <time datetime="2015-09-07T06:08:57.000Z" itemprop="datePublished">Sep 7</time>
+        <section id="main"><article id="post-从项目中移除storyboards" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/07/从项目中移除storyboards/" class="article-date">
+  <time datetime="2015-09-07T06:08:57.000Z" itemprop="datePublished">2015-09-07</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/07/从项目中移除storyboards/">从项目中移除storyboards</a>
+    <h1 class="article-title" itemprop="name">
+      从项目中移除storyboards
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/07/iOS-app-工程目录模版/" class="archive-article-date">
-  <time datetime="2015-09-07T04:10:47.000Z" itemprop="datePublished">Sep 7</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/07/iOS-app-工程目录模版/">iOS app 工程目录模版</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/01/WebViewProxy/" class="archive-article-date">
-  <time datetime="2015-09-01T08:26:55.000Z" itemprop="datePublished">Sep 1</time>
-</a>
+        <p>在xcode6的新建工程中移除storyboards步骤<br>1.删除:<br>    .plist中Main storyboard file base name<br>    Main.storyboard<br>    LaunchScreen.xib<br>2.置空:<br>    Main Interface<br>    Launch Screen File<br>3.添加:<br>    在</p>
+<pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
+</code></pre><p>中添加</p>
+<pre><code>self.window = <span class="comment">[<span class="comment">[UIWindow alloc]</span> initWithFrame:<span class="comment">[<span class="comment">[UIScreen mainScreen]</span> bounds]</span>]</span>;
+ self.window.backgroundColor = <span class="comment">[UIColor whiteColor]</span>;
+<span class="comment">[self.window makeKeyAndVisible]</span>;
+</code></pre>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/01/WebViewProxy/">WebViewProxy</a>
-    </h1>
-  
-
-    </header>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cie9j8hl10002sicrky9g5kvh" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/09/07/iOS-app-工程目录模版/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS app 工程目录模版</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
 </section>
         
           <aside id="sidebar">
