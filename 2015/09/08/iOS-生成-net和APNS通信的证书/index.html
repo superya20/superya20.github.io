@@ -5,22 +5,16 @@
   
   <title>iOS 生成各类证书 | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 生成Cerificate1.1 生成推送证书＋.net和APNS通信的证书1.1.1  生成推送证书aps_developer_identity.cera 登录苹果的证书网站，选择`Certificates -&amp;gt; Production`
-b 选择`Development-&amp;gt;Apple Push Notification service SSL (Sandbox)`
-  或`Prod">
+  <meta name="description" content="1 生成Cerificate1.1 生成推送证书＋.net和APNS通信的证书1.1.1  生成推送证书aps_developer_identity.cer   a 登录苹果的证书网站，选择Certificates -&amp;gt; Production   b 选择Development-&amp;gt;Apple Push Notification service SSL (Sandbox)      或P">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 生成各类证书">
 <meta property="og:url" content="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="1 生成Cerificate1.1 生成推送证书＋.net和APNS通信的证书1.1.1  生成推送证书aps_developer_identity.cera 登录苹果的证书网站，选择`Certificates -&amp;gt; Production`
-b 选择`Development-&amp;gt;Apple Push Notification service SSL (Sandbox)`
-  或`Prod">
-<meta property="og:updated_time" content="2015-09-08T03:59:17.000Z">
+<meta property="og:description" content="1 生成Cerificate1.1 生成推送证书＋.net和APNS通信的证书1.1.1  生成推送证书aps_developer_identity.cer   a 登录苹果的证书网站，选择Certificates -&amp;gt; Production   b 选择Development-&amp;gt;Apple Push Notification service SSL (Sandbox)      或P">
+<meta property="og:updated_time" content="2015-09-08T04:00:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 生成各类证书">
-<meta name="twitter:description" content="1 生成Cerificate1.1 生成推送证书＋.net和APNS通信的证书1.1.1  生成推送证书aps_developer_identity.cera 登录苹果的证书网站，选择`Certificates -&amp;gt; Production`
-b 选择`Development-&amp;gt;Apple Push Notification service SSL (Sandbox)`
-  或`Prod">
+<meta name="twitter:description" content="1 生成Cerificate1.1 生成推送证书＋.net和APNS通信的证书1.1.1  生成推送证书aps_developer_identity.cer   a 登录苹果的证书网站，选择Certificates -&amp;gt; Production   b 选择Development-&amp;gt;Apple Push Notification service SSL (Sandbox)      或P">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -92,14 +86,8 @@ b 选择`Development-&amp;gt;Apple Push Notification service SSL (Sandbox)`
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1_生成Cerificate">1 生成Cerificate</h2><h3 id="1-1_生成推送证书＋-net和APNS通信的证书">1.1 生成推送证书＋.net和APNS通信的证书</h3><h4 id="1-1-1_生成推送证书aps_developer_identity-cer">1.1.1  生成推送证书aps_developer_identity.cer</h4><pre><code><span class="literal">a</span> 登录苹果的证书网站，选择<span class="escape">`C</span>ertificates -&gt; Production<span class="escape">`
-</span>b 选择<span class="escape">`D</span>evelopment-&gt;Apple Push Notification service SSL (Sandbox)<span class="escape">`
-</span>  或<span class="escape">`P</span>roduction-&gt;Apple Push Notification service SSL (Production)<span class="escape">`
-</span>c 选择<span class="escape">`A</span>ppID<span class="escape">`
-</span>d 打开keychain生成CSR  <span class="escape">`C</span>ertificateSigningRequest.certSigningRequest<span class="escape">`（</span>生成时输入的名字，是这个key的名字，在keychain中点击推送证书前面的小剪头，在下拉行中能看到)
-e 导入<span class="escape">`C</span>ertificateSigningRequest.certSigningRequest<span class="escape">`证</span>书
-f 生成  <span class="escape">`a</span>ps_development.cer <span class="escape">` </span>或    <span class="escape">`a</span>ps_production.cer `
-</code></pre><h4 id="1-1-2_生成pem证书">1.1.2 生成pem证书</h4><p>输入：    <code>aps_development.cer</code><br>输出：   <code>aps_development.pem</code></p>
+        <h2 id="1_生成Cerificate">1 生成Cerificate</h2><h3 id="1-1_生成推送证书＋-net和APNS通信的证书">1.1 生成推送证书＋.net和APNS通信的证书</h3><h4 id="1-1-1_生成推送证书aps_developer_identity-cer">1.1.1  生成推送证书aps_developer_identity.cer</h4><p>   a 登录苹果的证书网站，选择<code>Certificates -&gt; Production</code><br>   b 选择<code>Development-&gt;Apple Push Notification service SSL (Sandbox)</code><br>      或<code>Production-&gt;Apple Push Notification service SSL (Production)</code><br>   c 选择<code>AppID</code><br>   d 打开keychain生成CSR  <code>CertificateSigningRequest.certSigningRequest</code>（生成时输入的名字，是这个key的名字，在keychain中点击推送证书前面的小剪头，在下拉行中能看到)<br>   e 导入<code>CertificateSigningRequest.certSigningRequest</code>证书<br>   f 生成  <code>aps_development.cer</code> 或    <code>aps_production.cer</code></p>
+<h4 id="1-1-2_生成pem证书">1.1.2 生成pem证书</h4><p>输入：    <code>aps_development.cer</code><br>输出：   <code>aps_development.pem</code></p>
 <pre><code>开发：openssl x509 -<span class="keyword">in</span> aps_development<span class="class">.cer</span> -inform DER -out aps_development<span class="class">.pem</span> -outform PEM
 生产：openssl x509 -<span class="keyword">in</span> aps_production<span class="class">.cer</span> -inform DER -out aps_production<span class="class">.pem</span> -outform PEM
 </code></pre><h4 id="1-1-3_将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。">1.1.3 将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。</h4><p>下载上一步生成的<code>aps_development.cer</code>或<code>aps_production.cer</code> 证书，并双击安装。在keychain中能看到相应的证书，且带密钥。<br>从keychain中导出该证书，命名为PushChat</p>
@@ -112,7 +100,7 @@ f 生成  <span class="escape">`a</span>ps_development.cer <span class="escape">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieatvvwz0004jpcruab3yyw2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieatx7s80004k4crbrazw4a5" class="article-share-link">Share</a>
       
       
     </footer>
