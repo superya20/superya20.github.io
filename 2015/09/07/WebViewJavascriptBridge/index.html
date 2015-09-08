@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
 [WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webv">
-<meta property="og:updated_time" content="2015-09-08T10:41:22.000Z">
+<meta property="og:updated_time" content="2015-09-08T11:04:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebViewJavascriptBridge">
 <meta name="twitter:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
@@ -301,22 +301,25 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
 <pre><code><span class="tag">-</span> (void) <span class="tag">_evaluateJavascript</span>:(NSString *)<span class="tag">javascriptCommand</span> {
     <span class="attr_selector">[self.delegate _evaluateJavascript:javascriptCommand]</span>;
 }
-</code></pre><h1 id="过程流">过程流</h1><h2 id="h5调oc">h5调oc</h2><h3 id="step1:send">step1:send</h3><p>格式:<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">data, responseCallback</span>) </span>{
-    _doSend({ data:data }, responseCallback)
+</code></pre><h1 id="过程流">过程流</h1><h2 id="h5调oc">h5调oc</h2><h3 id="step1:_send">step1: send</h3><p>格式:<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(data, responseCallback)</span> {</span>                <span class="comment">//调用默认handler</span>
+    _doSend<span class="params">({ data:data }, responseCallback)</span>
 }
-<span class="function"><span class="keyword">function</span> <span class="title">_doSend</span>(<span class="params">message, responseCallback</span>) </span>{
-    <span class="keyword">if</span> (responseCallback) {
-        <span class="keyword">var</span> callbackId = <span class="string">'cb_'</span>+(uniqueId++)+<span class="string">'_'</span>+<span class="keyword">new</span> <span class="built_in">Date</span>().getTime()<span class="comment">//双重保险，保证uniqueId的唯一性</span>
+<span class="function"><span class="keyword">function</span> <span class="title">callHandler</span><span class="params">(handlerName, data, responseCallback)</span> {</span>                <span class="comment">//调用指定handler</span>
+    _doSend<span class="params">({ handlerName:handlerName, data:data }, responseCallback)</span>
+}
+<span class="function"><span class="keyword">function</span> <span class="title">_doSend</span><span class="params">(message, responseCallback)</span> {</span>
+    <span class="keyword">if</span> <span class="params">(responseCallback)</span> {                    <span class="comment">//若需要回调，生成callbackId，并将callbackId：responseCallback保存在本地</span>
+        var callbackId = 'cb_'+<span class="params">(uniqueId++)</span>+'_'+new Date<span class="params">()</span>.getTime<span class="params">()</span>       <span class="comment">//双重保险，保证uniqueId的唯一性</span>
         responseCallbacks[callbackId] = responseCallback
-        message[<span class="string">'callbackId'</span>] = callbackId
+        message['callbackId'] = callbackId
     }
-    sendMessageQueue.push(message)
+    sendMessageQueue.push<span class="params">(message)</span>
 
-    messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + <span class="string">'://'</span> + QUEUE_HAS_MESSAGE
+    messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + ':<span class="comment">//' + QUEUE_HAS_MESSAGE</span>
 }
-</code></pre><h3 id="step2:oc唤起shouldStartLoadWithRequest">step2:oc唤起<code>shouldStartLoadWithRequest</code></h3><p>在此方法中让oc执行h5的WebViewJavascriptBridge._fetchQueue()方法，通过这个方法来获取h5命令字串。见上。</p>
-<h3 id="step3:调用flushMessageQueue对命令字串做解析，执行。">step3:调用flushMessageQueue对命令字串做解析，执行。</h3><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或</p>
+</code></pre><h3 id="step2:_oc唤起shouldStartLoadWithRequest">step2: oc唤起<code>shouldStartLoadWithRequest</code></h3><p>在此方法中让oc执行h5的WebViewJavascriptBridge._fetchQueue()方法，通过这个方法来获取h5命令字串。见上。</p>
+<h3 id="step3:_调用flushMessageQueue对命令字串做解析，执行。">step3: 调用flushMessageQueue对命令字串做解析，执行。</h3><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或</p>
 <pre><code>- (<span class="keyword">void</span>)flushMessageQueue:(<span class="built_in">NSString</span> *)messageQueueString{
     ...
     <span class="keyword">for</span> (WVJBMessage* message <span class="keyword">in</span> messages) {
@@ -358,11 +361,12 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
         }
     }
 }
-</code></pre>
+</code></pre><h2 id="oc调h5">oc调h5</h2><h3 id="step1:_sendData_:__queueMessage">step1: sendData :  _queueMessage</h3><h3 id="step2:__queueMessage:__dispatchMessage_或_添加进self-startupMessageQueue">step2: _queueMessage: _dispatchMessage 或 添加进self.startupMessageQueue</h3><h3 id="step3:_webViewDidFinishLoad_:_dispatchStartUpMessageQueue">step3: webViewDidFinishLoad : dispatchStartUpMessageQueue</h3><p>oc调h5只能在webViewDidFinishLoad时触发。如果h5静默，则不会调起。</p>
+<h3 id="step4:_dispatchStartUpMessageQueue_：_逐一读取命令，执行_dispatchMessage">step4: dispatchStartUpMessageQueue ： 逐一读取命令，执行_dispatchMessage</h3><h3 id="step5:__dispatchMessage_：格式化命令，并调用h5的函数WebViewJavascriptBridge-_handleMessageFromObjC">step5: _dispatchMessage ：格式化命令，并调用h5的函数WebViewJavascriptBridge._handleMessageFromObjC</h3><h3 id="step6:_h5执行_dispatchMessageFromObjC">step6: h5执行_dispatchMessageFromObjC</h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb88x8z0009lmcriqgxfuj0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb92dih0009npcr73z1kurn" class="article-share-link">Share</a>
       
       
     </footer>
