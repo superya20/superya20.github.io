@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
 [WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webv">
-<meta property="og:updated_time" content="2015-09-08T10:12:40.000Z">
+<meta property="og:updated_time" content="2015-09-08T10:33:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebViewJavascriptBridge">
 <meta name="twitter:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
@@ -151,7 +151,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
     responseCallback(<span class="built_in">document</span>.location.toString())
 })
 </code></pre><h2 id="源码分析">源码分析</h2><p>js和native有自己的uniqueId，并不共用。</p>
-<h4 id="WebViewJavascriptBridge">WebViewJavascriptBridge</h4><p>实现webview的四个代理</p>
+<h4 id="WebViewJavascriptBridge">WebViewJavascriptBridge</h4><p>成员变量：<br>_webViewDelegate ，用于向ViewController放开以下四个代理。<br>实现webview的四个代理</p>
 <pre><code>- (BOOL)<span class="string">webView:</span>(UIWebView *)webView <span class="string">shouldStartLoadWithRequest:</span>(NSURLRequest *)request <span class="string">navigationType:</span>(UIWebViewNavigationType)navigationType {
     <span class="keyword">if</span> (webView != _webView) { <span class="keyword">return</span> YES; }
     NSURL *url = [request URL];
@@ -301,8 +301,20 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
 <pre><code><span class="tag">-</span> (void) <span class="tag">_evaluateJavascript</span>:(NSString *)<span class="tag">javascriptCommand</span> {
     <span class="attr_selector">[self.delegate _evaluateJavascript:javascriptCommand]</span>;
 }
-</code></pre><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>h5调oc<br>h5通过触发WebViewJavascriptBridge的shouldStartLoadWithRequest方法，让oc执行h5的WebViewJavascriptBridge._fetchQueue()方法，通过这个方法来获取h5命令。然后调用flushMessageQueue来解析，执行。</p>
-<p>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
+</code></pre><h2 id="h5调oc">h5调oc</h2><h3 id="send">send</h3><pre><code><span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">data, responseCallback</span>) </span>{
+    _doSend({ data:data }, responseCallback)
+}
+<span class="function"><span class="keyword">function</span> <span class="title">_doSend</span>(<span class="params">message, responseCallback</span>) </span>{
+    <span class="keyword">if</span> (responseCallback) {
+        <span class="keyword">var</span> callbackId = <span class="string">'cb_'</span>+(uniqueId++)+<span class="string">'_'</span>+<span class="keyword">new</span> <span class="built_in">Date</span>().getTime()
+        responseCallbacks[callbackId] = responseCallback
+        message[<span class="string">'callbackId'</span>] = callbackId
+    }
+    sendMessageQueue.push(message)
+    messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + <span class="string">'://'</span> + QUEUE_HAS_MESSAGE
+}
+</code></pre><h3 id="oc唤起-_(BOOL)webView:(UIWebView_*)webView_shouldStartLoadWithRequest:(NSURLRequest_*)request_navigationType:(UIWebViewNavigationType)navigationType">oc唤起<code>- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType</code></h3><p>在此方法中让oc执行h5的WebViewJavascriptBridge._fetchQueue()方法，通过这个方法来获取h5命令字串。</p>
+<h3 id="调用flushMessageQueue对命令字串做解析，执行。">调用flushMessageQueue对命令字串做解析，执行。</h3><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
 <pre><code>- (<span class="keyword">void</span>)flushMessageQueue:(<span class="built_in">NSString</span> *)messageQueueString{
     ...
     <span class="keyword">for</span> (WVJBMessage* message <span class="keyword">in</span> messages) {
@@ -348,7 +360,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb780fo0009j8crtypz8ieh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb7zcbs0009kxcray1nlylk" class="article-share-link">Share</a>
       
       
     </footer>
