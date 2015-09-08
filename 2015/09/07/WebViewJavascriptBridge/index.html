@@ -5,22 +5,19 @@
   
   <title>WebViewJavascriptBridge | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Native使用方法生成WebViewJavascriptBridge变量[WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webview 
-                                   handler:(WVJBHandler)handler]
-[WebViewJavascriptBridge br">
+  <meta name="description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
+[WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WebViewJavascriptBridge">
 <meta property="og:url" content="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="Native使用方法生成WebViewJavascriptBridge变量[WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webview 
-                                   handler:(WVJBHandler)handler]
-[WebViewJavascriptBridge br">
-<meta property="og:updated_time" content="2015-09-08T01:19:56.000Z">
+<meta property="og:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
+[WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webv">
+<meta property="og:updated_time" content="2015-09-08T01:42:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebViewJavascriptBridge">
-<meta name="twitter:description" content="Native使用方法生成WebViewJavascriptBridge变量[WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webview 
-                                   handler:(WVJBHandler)handler]
-[WebViewJavascriptBridge br">
+<meta name="twitter:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
+[WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webv">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -92,7 +89,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Native">Native</h2><h3 id="使用方法">使用方法</h3><h4 id="生成WebViewJavascriptBridge变量">生成WebViewJavascriptBridge变量</h4><pre><code><span class="collection">[WebViewJavascriptBridge bridgeForWebView:<span class="list">(<span class="keyword">UIWebView/WebView*</span>)</span>webview 
+        <h2 id="Native">Native</h2><h3 id="使用方法">使用方法</h3><h4 id="生成WebViewJavascriptBridge变量">生成WebViewJavascriptBridge变量</h4><p><code>WebViewJavascriptBridge : NSObject&lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&gt;</code></p>
+<pre><code><span class="collection">[WebViewJavascriptBridge bridgeForWebView:<span class="list">(<span class="keyword">UIWebView/WebView*</span>)</span>webview 
                                    handler:<span class="list">(<span class="keyword">WVJBHandler</span>)</span>handler]</span>
 <span class="collection">[WebViewJavascriptBridge bridgeForWebView:<span class="list">(<span class="keyword">UIWebView/WebView*</span>)</span>webview 
                            webViewDelegate:<span class="list">(<span class="keyword">UIWebViewDelegate*</span>)</span>webViewDelegate 
@@ -110,18 +108,35 @@
         <span class="type">NSLog</span>(@"<span class="type">Received</span> <span class="title">message</span> <span class="title">from</span> <span class="title">javascript</span>: %@", <span class="title">data</span>);
         <span class="title">responseCallback</span>(@"<span class="type">Right</span> <span class="title">back</span> <span class="title">atcha</span>");
     }</span>];</span>
+</code></pre><p>实现：</p>
+<pre><code>WebViewJavascriptBridge* bridge = [[WebViewJavascriptBridge alloc] init];
+[bridge <span class="string">_platformSpecificSetup:</span>webView <span class="string">webViewDelegate:</span>webViewDelegate <span class="string">handler:</span>messageHandler <span class="string">resourceBundle:</span>bundle];
+
+- (<span class="typename">void</span>) <span class="string">_platformSpecificSetup:</span>(WVJB_WEBVIEW_TYPE*)webView <span class="string">webViewDelegate:</span>(id&lt;UIWebViewDelegate&gt;)webViewDelegate <span class="string">handler:</span>        (WVJBHandler)messageHandler <span class="string">resourceBundle:</span>(NSBundle*)bundle{
+    _webView = webView;
+    _webView.delegate = self;
+    _webViewDelegate = webViewDelegate;
+    _base = [[WebViewJavascriptBridgeBase alloc] <span class="string">initWithHandler:</span>(WVJBHandler)messageHandler <span class="string">resourceBundle:</span>(NSBundle*)bundle];
+    _base.delegate = self;
+}
 </code></pre><h4 id="ObjC向javascript发请求">ObjC向javascript发请求</h4><pre><code><span class="collection">[self.bridge send:@<span class="string">"Well hello there"</span>]</span><span class="comment">;</span>
 <span class="collection">[self.bridge send:<span class="collection">[NSDictionary dictionaryWithObject:@<span class="string">"Foo"</span> forKey:@<span class="string">"Bar"</span>]</span>]</span><span class="comment">;</span>
 <span class="collection">[self.bridge send:@<span class="string">"Give me a response, will you?"</span> responseCallback:^<span class="list">(<span class="keyword">id</span> responseData)</span> <span class="collection">{
     NSLog<span class="list">(@<span class="string">"ObjC got its response! %@"</span>, responseData)</span><span class="comment">;</span>
 }</span>]</span><span class="comment">;</span>
+</code></pre><p>实现：</p>
+<pre><code>[_base <span class="string">sendData:</span>data <span class="string">responseCallback:</span>responseCallback <span class="string">handlerName:</span>nil];    
 </code></pre><h4 id="注册handlerName">注册handlerName</h4><pre><code><span class="collection">[bridge registerHandler:<span class="list">(<span class="keyword">NSString*</span>)</span>handlerName handler:<span class="list">(<span class="keyword">WVJBHandler</span>)</span>handler]</span>
-</code></pre><p>javascript调用</p>
+</code></pre><p>实现：</p>
+<pre><code>_base.messageHandlers<span class="comment">[handlerName]</span> = <span class="comment">[handler copy]</span>;
+</code></pre><p>javascript调用：</p>
 <pre><code>WebViewJavascriptBridge.<span class="function"><span class="title">callHandler</span><span class="params">(<span class="string">"handlerName"</span>)</span></span>
 </code></pre><h4 id="ObjC调用js定义的handlerName">ObjC调用js定义的handlerName</h4><pre><code>[self.bridge callHandler:@<span class="string">"showAlert"</span> <span class="typedef"><span class="keyword">data</span>:@"<span class="type">Hi</span> from <span class="type">ObjC</span> to <span class="type">JS</span>!"];</span>
 [self.bridge callHandler:@<span class="string">"getCurrentPageUrl"</span> <span class="typedef"><span class="keyword">data</span>:nil responseCallback:^<span class="container">(<span class="title">id</span> <span class="title">responseData</span>)</span> <span class="container">{
     <span class="type">NSLog</span>(@"<span class="type">Current</span> <span class="type">UIWebView</span> <span class="title">page</span> <span class="type">URL</span> <span class="title">is</span>: %@", <span class="title">responseData</span>);
 }</span>];</span>
+</code></pre><p>实现：</p>
+<pre><code>[_base <span class="string">sendData:</span>data <span class="string">responseCallback:</span>responseCallback <span class="string">handlerName:</span>handlerName];
 </code></pre><h2 id="js">js</h2><h3 id="使用方法-1">使用方法</h3><h4 id="等待WebViewJavascriptBridgeReady的DOM事件">等待WebViewJavascriptBridgeReady的DOM事件</h4><pre><code><span class="built_in">document</span>.addEventListener(<span class="string">'WebViewJavascriptBridgeReady'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{
     <span class="keyword">var</span> bridge = event.bridge
     <span class="comment">// Start using the bridge</span>
@@ -139,7 +154,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieao71ot000857crtuvykq3x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieap2eih00086zcrcu5jarm8" class="article-share-link">Share</a>
       
       
     </footer>
