@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
 [WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webv">
-<meta property="og:updated_time" content="2015-09-08T10:06:07.000Z">
+<meta property="og:updated_time" content="2015-09-08T10:12:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebViewJavascriptBridge">
 <meta name="twitter:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
@@ -301,7 +301,8 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
 <pre><code><span class="tag">-</span> (void) <span class="tag">_evaluateJavascript</span>:(NSString *)<span class="tag">javascriptCommand</span> {
     <span class="attr_selector">[self.delegate _evaluateJavascript:javascriptCommand]</span>;
 }
-</code></pre><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
+</code></pre><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>h5调oc<br>h5通过触发WebViewJavascriptBridge的shouldStartLoadWithRequest方法，让oc执行h5的WebViewJavascriptBridge._fetchQueue()方法，通过这个方法来获取h5命令。然后调用flushMessageQueue来解析，执行。</p>
+<p>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
 <pre><code>- (<span class="keyword">void</span>)flushMessageQueue:(<span class="built_in">NSString</span> *)messageQueueString{
     ...
     <span class="keyword">for</span> (WVJBMessage* message <span class="keyword">in</span> messages) {
@@ -347,7 +348,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb6zn1t0009iucrfqagw6q5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb780fo0009j8crtypz8ieh" class="article-share-link">Share</a>
       
       
     </footer>

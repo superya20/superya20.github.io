@@ -111,7 +111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieb6zn1m0004iucr2wxvwdki" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieb780f90004j8cr3njehof2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -167,7 +167,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cieb6zn1o0006iucr5vkcibpn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cieb780fc0006j8crg5mryjvf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -411,7 +411,8 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
 <pre><code><span class="tag">-</span> (void) <span class="tag">_evaluateJavascript</span>:(NSString *)<span class="tag">javascriptCommand</span> {
     <span class="attr_selector">[self.delegate _evaluateJavascript:javascriptCommand]</span>;
 }
-</code></pre><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
+</code></pre><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>h5调oc<br>h5通过触发WebViewJavascriptBridge的shouldStartLoadWithRequest方法，让oc执行h5的WebViewJavascriptBridge._fetchQueue()方法，通过这个方法来获取h5命令。然后调用flushMessageQueue来解析，执行。</p>
+<p>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
 <pre><code>- (<span class="keyword">void</span>)flushMessageQueue:(<span class="built_in">NSString</span> *)messageQueueString{
     ...
     <span class="keyword">for</span> (WVJBMessage* message <span class="keyword">in</span> messages) {
@@ -457,7 +458,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb6zn1t0009iucrfqagw6q5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb780fo0009j8crtypz8ieh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -493,7 +494,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cieb6zn1y000ciucrj48we1ch" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cieb780ft000cj8crwdxtg3hf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -529,7 +530,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cieb6zn1v000aiucr7vtnpxai" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cieb780fq000aj8crf7s33i1s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -566,7 +567,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cieb6zn1w000biucrtdz5out2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cieb780fs000bj8crd5d22sh8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -609,7 +610,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cieb6zn1j0002iucrxkbjnfus" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cieb780f60002j8crlqpurmmt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -654,7 +655,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cieb6zn1n0005iucrlc9mhzr0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cieb780fa0005j8crbvkgi19q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -742,7 +743,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cieb6zn1s0008iucr33mrkz41" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cieb780fm0008j8crano2omy8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -784,7 +785,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cieb6zn1k0003iucr3qu629wl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cieb780f80003j8cr8irz4c4v" class="article-share-link">Share</a>
       
       
     </footer>
