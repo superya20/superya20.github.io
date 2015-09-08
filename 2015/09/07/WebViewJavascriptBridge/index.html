@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
 [WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webv">
-<meta property="og:updated_time" content="2015-09-08T11:07:20.000Z">
+<meta property="og:updated_time" content="2015-09-08T11:09:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebViewJavascriptBridge">
 <meta name="twitter:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
@@ -150,7 +150,7 @@ bridge.<span class="function">send</span>(<span class="string">"Hi there!"</span
 bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data, responseCallback</span>) </span>{
     responseCallback(<span class="built_in">document</span>.location.toString())
 })
-</code></pre><h2 id="源码分析">源码分析</h2><p>js和native有自己的uniqueId，并不共用。</p>
+</code></pre><h2 id="源码分析">源码分析</h2><p>js和native有自己的uniqueId，并不共用。<br>js和native各自注册handlername，给对方调用，那么是同一个变量吗，可以重复注册吗？比如js注册@”handlername1”,native也注册”handlername1”,但各自的实现不一样，会怎么样？</p>
 <h4 id="WebViewJavascriptBridge">WebViewJavascriptBridge</h4><p>成员变量：<br>_webViewDelegate ，用于向ViewController放开以下四个代理。<br>实现webview的四个代理</p>
 <pre><code>- (BOOL)<span class="string">webView:</span>(UIWebView *)webView <span class="string">shouldStartLoadWithRequest:</span>(NSURLRequest *)request <span class="string">navigationType:</span>(UIWebViewNavigationType)navigationType {
     <span class="keyword">if</span> (webView != _webView) { <span class="keyword">return</span> YES; }
@@ -405,7 +405,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb96cz30009okcr1330opog" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb99b1o0009oucrrg2zfzt9" class="article-share-link">Share</a>
       
       
     </footer>
