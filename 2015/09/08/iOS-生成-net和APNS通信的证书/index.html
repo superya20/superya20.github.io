@@ -5,25 +5,25 @@
   
   <title>iOS 生成各类证书 | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="iOS开发中需要配置三类元素 ： Certificate ，appid，Provisioning Profiles 。需要具备agent资格的appid登录https://developer.apple.com/membercenter/index.action， 进入Certificates, Identifiers &amp;amp; Profiles去配置。
+  <meta name="description" content="iOS开发中需要配置三类元素  ： Certificate ，appid，Provisioning Profiles 。需要具备agent资格的appid登录https://developer.apple.com/membercenter/index.action， 进入Certificates, Identifiers &amp;amp; Profiles去配置。
 
 1 生成Certificate
-1.1">
+1.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 生成各类证书">
 <meta property="og:url" content="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="iOS开发中需要配置三类元素 ： Certificate ，appid，Provisioning Profiles 。需要具备agent资格的appid登录https://developer.apple.com/membercenter/index.action， 进入Certificates, Identifiers &amp;amp; Profiles去配置。
+<meta property="og:description" content="iOS开发中需要配置三类元素  ： Certificate ，appid，Provisioning Profiles 。需要具备agent资格的appid登录https://developer.apple.com/membercenter/index.action， 进入Certificates, Identifiers &amp;amp; Profiles去配置。
 
 1 生成Certificate
-1.1">
-<meta property="og:updated_time" content="2015-09-08T04:11:55.000Z">
+1.">
+<meta property="og:updated_time" content="2015-09-08T06:17:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 生成各类证书">
-<meta name="twitter:description" content="iOS开发中需要配置三类元素 ： Certificate ，appid，Provisioning Profiles 。需要具备agent资格的appid登录https://developer.apple.com/membercenter/index.action， 进入Certificates, Identifiers &amp;amp; Profiles去配置。
+<meta name="twitter:description" content="iOS开发中需要配置三类元素  ： Certificate ，appid，Provisioning Profiles 。需要具备agent资格的appid登录https://developer.apple.com/membercenter/index.action， 进入Certificates, Identifiers &amp;amp; Profiles去配置。
 
 1 生成Certificate
-1.1">
+1.">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -95,7 +95,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>iOS开发中需要配置三类元素 ： Certificate ，appid，Provisioning Profiles 。<br>需要具备agent资格的appid登录<a href="https://developer.apple.com/membercenter/index.action" target="_blank" rel="external">https://developer.apple.com/membercenter/index.action</a>， 进入<code>Certificates, Identifiers &amp; Profiles</code>去配置。</p>
+        <p>iOS开发中需要配置三类元素  ： Certificate ，appid，Provisioning Profiles 。<br>需要具备agent资格的appid登录<a href="https://developer.apple.com/membercenter/index.action" target="_blank" rel="external">https://developer.apple.com/membercenter/index.action</a>， 进入<code>Certificates, Identifiers &amp; Profiles</code>去配置。</p>
 <hr>
 <h2 id="1_生成Certificate">1 生成Certificate</h2><hr>
 <h3 id="1-1_生成_推送证书_＋_-net与APNS通信的证书">1.1 生成 <code>推送证书</code> ＋ <code>.net与APNS通信的证书</code></h3><h4 id="step1_生成推送证书aps_developer_identity-cer">step1  生成推送证书aps_developer_identity.cer</h4><p>   a 登录苹果的证书网站，选择<code>Certificates -&gt; All</code>，进入iOS Certificates页面，点击右边的’+’号新增证书<br>   b 选择<code>Development-&gt;Apple Push Notification service SSL (Sandbox)</code> 或 <code>Production-&gt;Apple Push Notification service SSL (Production)</code><br>   c 选择<code>AppID</code><br>   d 打开keychain生成CSR  <code>CertificateSigningRequest.certSigningRequest</code>（生成时输入的名字，是这个key的名字，在keychain中点击推送证书前面的小剪头，在下拉行中能看到)<br>   e 导入<code>CertificateSigningRequest.certSigningRequest</code>证书<br>   f 生成  <code>aps_development.cer</code> 或    <code>aps_production.cer</code></p>
@@ -110,14 +110,15 @@
 生产：openssl pkcs12 -export -<span class="keyword">in</span> aps_production<span class="class">.pem</span> -inkey PushChat_Noenc<span class="class">.pem</span> -certfile CertificateSigningRequest<span class="class">.certSigningRequest</span> -name <span class="string">"xxx"</span> -out xxx.p12
 </code></pre><h4 id="总结">总结</h4><h5 id="a-生成推送证书和服务端推送证书的唯一外部入参是APPID。流程_｀生成CSR证书-&gt;选择APPID-&gt;生成推送证书-&gt;安装并导出-&gt;生成服务器用的-p12证书｀">a.生成推送证书和服务端推送证书的唯一外部入参是APPID。流程 ｀生成CSR证书-&gt;选择APPID-&gt;生成推送证书-&gt;安装并导出-&gt;生成服务器用的.p12证书｀</h5><hr>
 <h2 id="2-_生成APPID">2. 生成APPID</h2><hr>
-<h2 id="3-_生成Provisioning_Profiles">3. 生成Provisioning Profiles</h2><h3 id="3-1_Development">3.1 Development</h3><hr>
+<h2 id="3-_生成Provisioning_Profiles">3. 生成Provisioning Profiles</h2><hr>
+<h3 id="3-1_Development">3.1 Development</h3><hr>
 <h3 id="3-2_Distribution-App_Store">3.2 Distribution-App Store</h3><hr>
-<h3 id="3-3_Ad_Hoc-App_Store">3.3 Ad Hoc-App Store</h3><hr>
+<h3 id="3-3_Ad_Hoc-App_Store">3.3 Ad Hoc-App Store</h3><h2 id="—">—</h2><p>参考文件：<a href="http://blog.csdn.net/anxuegang/article/details/6157927" target="_blank" rel="external">http://blog.csdn.net/anxuegang/article/details/6157927</a>    openssl数字证书常见格式与协议介绍<br>—end by ly—</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieauc3a80004m1cr0ht8dfef" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieaytmhg0004yecr4036xpym" class="article-share-link">Share</a>
       
       
     </footer>
