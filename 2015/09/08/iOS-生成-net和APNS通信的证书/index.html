@@ -5,16 +5,25 @@
   
   <title>iOS 生成.net和APNS通信的证书 | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="使用OpenSSL生成.net和APNS通信的证书文件。0  生成aps_developer_identity.cer    登录苹果的证书网站，选择Certificates -&amp;gt; Production    打开keychain生成CSR证书  CertificateSigningRequest.certSigningRequest    导入CertificateSigningReque">
+  <meta name="description" content="使用OpenSSL生成.net和APNS通信的证书文件。
+0  生成aps_developer_identity.cer登录苹果的证书网站，选择Certificates -&amp;gt; Production
+打开keychain生成CSR证书  CertificateSigningRequest.certSigningRequest
+导入CertificateSigningRequest.certSi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 生成.net和APNS通信的证书">
 <meta property="og:url" content="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="使用OpenSSL生成.net和APNS通信的证书文件。0  生成aps_developer_identity.cer    登录苹果的证书网站，选择Certificates -&amp;gt; Production    打开keychain生成CSR证书  CertificateSigningRequest.certSigningRequest    导入CertificateSigningReque">
-<meta property="og:updated_time" content="2015-09-08T02:53:31.000Z">
+<meta property="og:description" content="使用OpenSSL生成.net和APNS通信的证书文件。
+0  生成aps_developer_identity.cer登录苹果的证书网站，选择Certificates -&amp;gt; Production
+打开keychain生成CSR证书  CertificateSigningRequest.certSigningRequest
+导入CertificateSigningRequest.certSi">
+<meta property="og:updated_time" content="2015-09-08T02:54:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 生成.net和APNS通信的证书">
-<meta name="twitter:description" content="使用OpenSSL生成.net和APNS通信的证书文件。0  生成aps_developer_identity.cer    登录苹果的证书网站，选择Certificates -&amp;gt; Production    打开keychain生成CSR证书  CertificateSigningRequest.certSigningRequest    导入CertificateSigningReque">
+<meta name="twitter:description" content="使用OpenSSL生成.net和APNS通信的证书文件。
+0  生成aps_developer_identity.cer登录苹果的证书网站，选择Certificates -&amp;gt; Production
+打开keychain生成CSR证书  CertificateSigningRequest.certSigningRequest
+导入CertificateSigningRequest.certSi">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -86,20 +95,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>使用OpenSSL生成.net和APNS通信的证书文件。<br>0  生成aps_developer_identity.cer<br>    登录苹果的证书网站，选择Certificates -&gt; Production<br>    打开keychain生成CSR证书  CertificateSigningRequest.certSigningRequest<br>    导入CertificateSigningRequest.certSigningRequest证书</p>
-<p>1、 输入：    aps_developer_identity.cer<br>    输出：   aps_developer_identity.pem</p>
-<p>开发：openssl x509 -in aps_developer_identity.cer -inform DER -out aps_developer_identity.pem -outform PEM<br>生产：openssl x509 -in aps_production.cer -inform DER -out aps_production.pem -outform PEM</p>
-<p>2、将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。<br>    下载aps_developer_identity.cer 证书，并双击安装。<br>    从keychain中导出</p>
-<pre><code>输入：<span class="tag">PushChat</span><span class="class">.p12</span>
-输出：<span class="tag">PushChat_Noenc</span><span class="class">.pem</span>
+        <p>使用OpenSSL生成.net和APNS通信的证书文件。</p>
+<h3 id="0_生成aps_developer_identity-cer">0  生成aps_developer_identity.cer</h3><pre><code>登录苹果的证书网站，选择<span class="tag">Certificates</span> <span class="tag">-</span>&gt; <span class="tag">Production</span>
+打开<span class="tag">keychain</span>生成<span class="tag">CSR</span>证书  <span class="tag">CertificateSigningRequest</span><span class="class">.certSigningRequest</span>
+导入<span class="tag">CertificateSigningRequest</span><span class="class">.certSigningRequest</span>证书
+</code></pre><h3 id="1、_输入：_aps_developer_identity-cer">1、 输入：    aps_developer_identity.cer</h3><pre><code>输出：   <span class="tag">aps_developer_identity</span><span class="class">.pem</span>
+</code></pre><p>开发：openssl x509 -in aps_developer_identity.cer -inform DER -out aps_developer_identity.pem -outform PEM<br>生产：openssl x509 -in aps_production.cer -inform DER -out aps_production.pem -outform PEM</p>
+<h3 id="2、将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。">2、将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。</h3><pre><code>下载aps_developer_identity<span class="class">.cer</span> 证书，并双击安装。
+从keychain中导出
+输入：PushChat<span class="class">.p12</span>
+输出：PushChat_Noenc.pem
 </code></pre><p>openssl pkcs12 -nocerts -out PushChat_Noenc.pem -in PushChat.p12</p>
-<p>3、用certificate和the key 创建PKCS#12格式的文件。<br>    输入：aps_developer_identity.pem ／ PushChat_Noenc.pem ／ PushChat.certSigningRequest<br>    输出：bcenterProduction.p12</p>
-<p>开发：openssl pkcs12 -export -in aps_developer_identity.pem -inkey PushChat_Noenc.pem -certfile CertificateSigningRequest.certSigningRequest -name “” -out .p12<br>生产：openssl pkcs12 -export -in aps_production.pem -inkey PushChat_Noenc.pem -certfile CertificateSigningRequest.certSigningRequest -name “bcenterProduction” -out bcenterProduction.p12</p>
+<h3 id="3、用certificate和the_key_创建PKCS#12格式的文件。">3、用certificate和the key 创建PKCS#12格式的文件。</h3><pre><code>输入：aps_developer_identity<span class="class">.pem</span> ／ PushChat_Noenc<span class="class">.pem</span> ／ PushChat<span class="class">.certSigningRequest</span>
+输出：bcenterProduction.p12
+</code></pre><p>开发：openssl pkcs12 -export -in aps_developer_identity.pem -inkey PushChat_Noenc.pem -certfile CertificateSigningRequest.certSigningRequest -name “” -out .p12<br>生产：openssl pkcs12 -export -in aps_production.pem -inkey PushChat_Noenc.pem -certfile CertificateSigningRequest.certSigningRequest -name “bcenterProduction” -out bcenterProduction.p12</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciearjeiv0004dwcrtyo7yqg5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciearl4yy0004e4crm7l1a5fy" class="article-share-link">Share</a>
       
       
     </footer>
