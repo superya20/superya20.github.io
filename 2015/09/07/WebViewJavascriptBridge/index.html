@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
 [WebViewJavascriptBridge bridgeForWebView:(UIWebView/WebView*)webv">
-<meta property="og:updated_time" content="2015-09-08T11:04:14.000Z">
+<meta property="og:updated_time" content="2015-09-08T11:05:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebViewJavascriptBridge">
 <meta name="twitter:description" content="Native使用方法生成WebViewJavascriptBridge变量WebViewJavascriptBridge : NSObject&amp;lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&amp;gt;
@@ -301,7 +301,9 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
 <pre><code><span class="tag">-</span> (void) <span class="tag">_evaluateJavascript</span>:(NSString *)<span class="tag">javascriptCommand</span> {
     <span class="attr_selector">[self.delegate _evaluateJavascript:javascriptCommand]</span>;
 }
-</code></pre><h1 id="过程流">过程流</h1><h2 id="h5调oc">h5调oc</h2><h3 id="step1:_send">step1: send</h3><p>格式:<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
+</code></pre><hr>
+<h1 id="过程流">过程流</h1><hr>
+<h2 id="h5调oc">h5调oc</h2><h3 id="step1:_send">step1: send</h3><p>格式:<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
 <pre><code><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(data, responseCallback)</span> {</span>                <span class="comment">//调用默认handler</span>
     _doSend<span class="params">({ data:data }, responseCallback)</span>
 }
@@ -361,12 +363,13 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
         }
     }
 }
-</code></pre><h2 id="oc调h5">oc调h5</h2><h3 id="step1:_sendData_:__queueMessage">step1: sendData :  _queueMessage</h3><h3 id="step2:__queueMessage:__dispatchMessage_或_添加进self-startupMessageQueue">step2: _queueMessage: _dispatchMessage 或 添加进self.startupMessageQueue</h3><h3 id="step3:_webViewDidFinishLoad_:_dispatchStartUpMessageQueue">step3: webViewDidFinishLoad : dispatchStartUpMessageQueue</h3><p>oc调h5只能在webViewDidFinishLoad时触发。如果h5静默，则不会调起。</p>
+</code></pre><hr>
+<h2 id="oc调h5">oc调h5</h2><h3 id="step1:_sendData_:__queueMessage">step1: sendData :  _queueMessage</h3><h3 id="step2:__queueMessage:__dispatchMessage_或_添加进self-startupMessageQueue">step2: _queueMessage: _dispatchMessage 或 添加进self.startupMessageQueue</h3><h3 id="step3:_webViewDidFinishLoad_:_dispatchStartUpMessageQueue">step3: webViewDidFinishLoad : dispatchStartUpMessageQueue</h3><p>oc调h5只能在webViewDidFinishLoad时触发。如果h5静默，则不会调起。</p>
 <h3 id="step4:_dispatchStartUpMessageQueue_：_逐一读取命令，执行_dispatchMessage">step4: dispatchStartUpMessageQueue ： 逐一读取命令，执行_dispatchMessage</h3><h3 id="step5:__dispatchMessage_：格式化命令，并调用h5的函数WebViewJavascriptBridge-_handleMessageFromObjC">step5: _dispatchMessage ：格式化命令，并调用h5的函数WebViewJavascriptBridge._handleMessageFromObjC</h3><h3 id="step6:_h5执行_dispatchMessageFromObjC">step6: h5执行_dispatchMessageFromObjC</h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb92dih0009npcr73z1kurn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb93rf40009o4cr2d40phzi" class="article-share-link">Share</a>
       
       
     </footer>
