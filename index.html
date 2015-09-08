@@ -88,24 +88,21 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>使用OpenSSL生成.net和APNS通信的证书文件。</p>
-<h3 id="0_生成aps_developer_identity-cer">0  生成aps_developer_identity.cer</h3><pre><code>登录苹果的证书网站，选择<span class="tag">Certificates</span> <span class="tag">-</span>&gt; <span class="tag">Production</span>
-打开<span class="tag">keychain</span>生成<span class="tag">CSR</span>证书  <span class="tag">CertificateSigningRequest</span><span class="class">.certSigningRequest</span>
-导入<span class="tag">CertificateSigningRequest</span><span class="class">.certSigningRequest</span>证书
-</code></pre><h3 id="1、_输入：_aps_developer_identity-cer">1、 输入：    aps_developer_identity.cer</h3><pre><code>输出：   <span class="tag">aps_developer_identity</span><span class="class">.pem</span>
-</code></pre><p>开发：openssl x509 -in aps_developer_identity.cer -inform DER -out aps_developer_identity.pem -outform PEM<br>生产：openssl x509 -in aps_production.cer -inform DER -out aps_production.pem -outform PEM</p>
-<h3 id="2、将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。">2、将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。</h3><pre><code>下载aps_developer_identity<span class="class">.cer</span> 证书，并双击安装。
-从keychain中导出
-输入：PushChat<span class="class">.p12</span>
-输出：PushChat_Noenc.pem
-</code></pre><p>openssl pkcs12 -nocerts -out PushChat_Noenc.pem -in PushChat.p12</p>
-<h3 id="3、用certificate和the_key_创建PKCS#12格式的文件。">3、用certificate和the key 创建PKCS#12格式的文件。</h3><pre><code>输入：aps_developer_identity<span class="class">.pem</span> ／ PushChat_Noenc<span class="class">.pem</span> ／ PushChat<span class="class">.certSigningRequest</span>
-输出：bcenterProduction.p12
-</code></pre><p>开发：openssl pkcs12 -export -in aps_developer_identity.pem -inkey PushChat_Noenc.pem -certfile CertificateSigningRequest.certSigningRequest -name “” -out .p12<br>生产：openssl pkcs12 -export -in aps_production.pem -inkey PushChat_Noenc.pem -certfile CertificateSigningRequest.certSigningRequest -name “bcenterProduction” -out bcenterProduction.p12</p>
-
+<h3 id="0_生成aps_developer_identity-cer">0  生成aps_developer_identity.cer</h3><p>登录苹果的证书网站，选择Certificates -&gt; Production<br>打开keychain生成CSR证书  CertificateSigningRequest.certSigningRequest<br>导入CertificateSigningRequest.certSigningRequest证书</p>
+<h3 id="1、_输入：_aps_developer_identity-cer">1、 输入：    aps_developer_identity.cer</h3><p>输出：   aps_developer_identity.pem</p>
+<pre><code>开发：openssl x509 -<span class="keyword">in</span> aps_developer_identity<span class="class">.cer</span> -inform DER -out aps_developer_identity<span class="class">.pem</span> -outform PEM
+生产：openssl x509 -<span class="keyword">in</span> aps_production<span class="class">.cer</span> -inform DER -out aps_production<span class="class">.pem</span> -outform PEM
+</code></pre><h3 id="2、将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。">2、将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。</h3><p>下载aps_developer_identity.cer 证书，并双击安装。<br>从keychain中导出</p>
+<p>输入：PushChat.p12<br>输出：PushChat_Noenc.pem</p>
+<pre><code>openssl pkcs12 -nocerts -out PushChat_Noenc<span class="class">.pem</span> -<span class="keyword">in</span> PushChat.p12
+</code></pre><h3 id="3、用certificate和the_key_创建PKCS#12格式的文件。">3、用certificate和the key 创建PKCS#12格式的文件。</h3><p>输入：aps_developer_identity.pem ／ PushChat_Noenc.pem ／ PushChat.certSigningRequest<br>输出：bcenterProduction.p12</p>
+<pre><code>开发：openssl pkcs12 -export -<span class="keyword">in</span> aps_developer_identity<span class="class">.pem</span> -inkey PushChat_Noenc<span class="class">.pem</span> -certfile CertificateSigningRequest<span class="class">.certSigningRequest</span> -name <span class="string">""</span> -out <span class="class">.p12</span>
+生产：openssl pkcs12 -export -<span class="keyword">in</span> aps_production<span class="class">.pem</span> -inkey PushChat_Noenc<span class="class">.pem</span> -certfile CertificateSigningRequest<span class="class">.certSigningRequest</span> -name <span class="string">"bcenterProduction"</span> -out bcenterProduction.p12
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciearl4yy0004e4crm7l1a5fy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciearmtjy0004eicr5l0lxe0z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -161,7 +158,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciearl4z10006e4crnw7xmvyp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciearmtk00006eicrlqe9xkm5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -258,7 +255,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciearl4z60009e4cr26ys15sq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciearmtk50009eicrttn1s3kp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,7 +291,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciearl4zb000ce4crf86m2ezd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciearmtka000ceicrof0yoruf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -330,7 +327,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciearl4z8000ae4crtmzfkm3i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciearmtk7000aeicrgkrpjp0y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -367,7 +364,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciearl4z9000be4criwbl26rv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciearmtk9000beicrasrn3aos" class="article-share-link">Share</a>
       
       
     </footer>
@@ -410,7 +407,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="ciearl4yv0002e4crxnor7pbp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="ciearmtjv0002eicrmxwfqtla" class="article-share-link">Share</a>
       
       
     </footer>
@@ -455,7 +452,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="ciearl4z00005e4cr8kthzdps" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="ciearmtjz0005eicrp0n65w1f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -543,7 +540,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="ciearl4z40008e4crbkbkdsiz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="ciearmtk40008eicr3zuunp6k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -584,7 +581,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="ciearl4yw0003e4cr8camifh6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="ciearmtjw0003eicr92zlm2ku" class="article-share-link">Share</a>
       
       
     </footer>
