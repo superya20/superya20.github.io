@@ -87,8 +87,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1_生成Cerificate">1 生成Cerificate</h2><h3 id="1-1_生成推送证书＋-net和APNS通信的证书">1.1 生成推送证书＋.net和APNS通信的证书</h3><h4 id="1-1-1_生成推送证书aps_developer_identity-cer">1.1.1  生成推送证书aps_developer_identity.cer</h4><p>0.0 登录苹果的证书网站，选择<code>Certificates -&gt; Production</code><br>0.1 选择<code>Development-&gt;Apple Push Notification service SSL (Sandbox)</code><br>      或<code>Production-&gt;Apple Push Notification service SSL (Production)</code><br>0.2 选择AppID<br>0.3 打开keychain生成CSR  <code>CertificateSigningRequest.certSigningRequest</code>（生成时输入的名字，是这个key的名字，在keychain中点击推送证书前面的小剪头，在下拉行中能看到)<br>0.4 导入<code>CertificateSigningRequest.certSigningRequest</code>证书<br>0.5 生成  <code>aps_development.cer</code><br>    或    <code>aps_production.cer</code></p>
-<h4 id="1-1-2_生成pem证书">1.1.2 生成pem证书</h4><p>输入：    <code>aps_development.cer</code><br>输出：   <code>aps_development.pem</code></p>
+        <h2 id="1_生成Cerificate">1 生成Cerificate</h2><h3 id="1-1_生成推送证书＋-net和APNS通信的证书">1.1 生成推送证书＋.net和APNS通信的证书</h3><h4 id="1-1-1_生成推送证书aps_developer_identity-cer">1.1.1  生成推送证书aps_developer_identity.cer</h4><pre><code><span class="literal">a</span> 登录苹果的证书网站，选择<span class="escape">`C</span>ertificates -&gt; Production<span class="escape">`
+</span>b 选择<span class="escape">`D</span>evelopment-&gt;Apple Push Notification service SSL (Sandbox)<span class="escape">`
+</span>  或<span class="escape">`P</span>roduction-&gt;Apple Push Notification service SSL (Production)<span class="escape">`
+</span>c 选择<span class="escape">`A</span>ppID<span class="escape">`
+</span>d 打开keychain生成CSR  <span class="escape">`C</span>ertificateSigningRequest.certSigningRequest<span class="escape">`（</span>生成时输入的名字，是这个key的名字，在keychain中点击推送证书前面的小剪头，在下拉行中能看到)
+e 导入<span class="escape">`C</span>ertificateSigningRequest.certSigningRequest<span class="escape">`证</span>书
+f 生成  <span class="escape">`a</span>ps_development.cer <span class="escape">` </span>或    <span class="escape">`a</span>ps_production.cer `
+</code></pre><h4 id="1-1-2_生成pem证书">1.1.2 生成pem证书</h4><p>输入：    <code>aps_development.cer</code><br>输出：   <code>aps_development.pem</code></p>
 <pre><code>开发：openssl x509 -<span class="keyword">in</span> aps_development<span class="class">.cer</span> -inform DER -out aps_development<span class="class">.pem</span> -outform PEM
 生产：openssl x509 -<span class="keyword">in</span> aps_production<span class="class">.cer</span> -inform DER -out aps_production<span class="class">.pem</span> -outform PEM
 </code></pre><h4 id="1-1-3_将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。">1.1.3 将p12格式的私钥转换成pem，需要设置4次密码，这里密码都设置为：abc123。</h4><p>下载上一步生成的<code>aps_development.cer</code>或<code>aps_production.cer</code> 证书，并双击安装。在keychain中能看到相应的证书，且带密钥。<br>从keychain中导出该证书，命名为PushChat</p>
@@ -101,7 +107,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieatt06p0004jgcr98xw38vc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieatvvwz0004jpcruab3yyw2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -157,7 +163,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cieatt06r0006jgcrb9ccxed8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cieatvvx10006jpcr0s3ozitm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -254,7 +260,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieatt06w0009jgcr3sefpwop" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieatvvx70009jpcrorp6bhg9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -290,7 +296,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cieatt071000cjgcrky8h9q1i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cieatvvxb000cjpcr8uf144cs" class="article-share-link">Share</a>
       
       
     </footer>
@@ -326,7 +332,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cieatt06z000ajgcrmn8f11jz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cieatvvx9000ajpcr8q6vjyie" class="article-share-link">Share</a>
       
       
     </footer>
@@ -363,7 +369,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cieatt070000bjgcrgatmy6wn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cieatvvxa000bjpcrnmouoidz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -406,7 +412,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cieatt06l0002jgcrk57w5dvs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cieatvvww0002jpcr4ssc7z32" class="article-share-link">Share</a>
       
       
     </footer>
@@ -451,7 +457,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cieatt06q0005jgcrd2fsy5y6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cieatvvx00005jpcrupztycaa" class="article-share-link">Share</a>
       
       
     </footer>
@@ -539,7 +545,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cieatt06v0008jgcrv77ablae" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cieatvvx50008jpcre24q9093" class="article-share-link">Share</a>
       
       
     </footer>
@@ -580,7 +586,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cieatt06n0003jgcr1q9t7z73" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cieatvvwx0003jpcrii44f2tb" class="article-share-link">Share</a>
       
       
     </footer>
