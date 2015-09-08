@@ -106,11 +106,12 @@
 <pre><code><span class="escape">`&lt;</span><span class="literal">a</span> href=<span class="string">"http://www.w3school.com.cn"</span>&gt;This is <span class="literal">a</span> link&lt;/<span class="literal">a</span>&gt;`
 </code></pre><p>HTML 图像是通过 <code>&lt;img&gt;</code> 标签进行定义的。</p>
 <pre><code>`&lt;<span class="tag">img</span> src=<span class="string">"w3school.jpg"</span> <span class="attribute">width</span>=<span class="string">"104"</span> <span class="attribute">height</span>=<span class="string">"142"</span> /&gt;`
-</code></pre><h2 id="HTML5">HTML5</h2>
+</code></pre><h2 id="HTML5">HTML5</h2><h2 id="javascript">javascript</h2><p>js预编译 <a href="http://blog.csdn.net/hch126163/article/details/6022557" target="_blank" rel="external">http://blog.csdn.net/hch126163/article/details/6022557</a><br>函数：<br>    function外部声明的变量是全局变量，如果有同名函数，则按先后顺序被覆盖。<br>    function内部生命的变量是局部变量，function运行完后被释放。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cie9scy4d0005npcr7bw0r0tg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cieao71op000557crklyuvcng" class="article-share-link">Share</a>
       
       
     </footer>
@@ -142,11 +143,54 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Native">Native</h2><h3 id="使用方法">使用方法</h3><h4 id="生成WebViewJavascriptBridge变量">生成WebViewJavascriptBridge变量</h4><pre><code><span class="collection">[WebViewJavascriptBridge bridgeForWebView:<span class="list">(<span class="keyword">UIWebView/WebView*</span>)</span>webview 
+                                   handler:<span class="list">(<span class="keyword">WVJBHandler</span>)</span>handler]</span>
+<span class="collection">[WebViewJavascriptBridge bridgeForWebView:<span class="list">(<span class="keyword">UIWebView/WebView*</span>)</span>webview 
+                           webViewDelegate:<span class="list">(<span class="keyword">UIWebViewDelegate*</span>)</span>webViewDelegate 
+                                      handler:<span class="list">(<span class="keyword">WVJBHandler</span>)</span>handler]</span>
+<span class="collection">[WebViewJavascriptBridge bridgeForWebView:_webView
+                            webViewDelegate:self
+                                 handler:^<span class="list">(<span class="keyword">id</span> data, WVJBResponseCallback responseCallback)</span> <span class="collection">{
+                                           NSLog<span class="list">(@<span class="string">"Received message from javascript: %@"</span>, data)</span><span class="comment">;</span>
+                                         }</span>
+                          resourceBundle:<span class="collection">[NSBundle bundleWithURL:<span class="collection">[<span class="collection">[NSBundle mainBundle]</span> URLForResource:@<span class="string">"ResourcesBundle"</span>                                                    withExtension:@<span class="string">"bundle"</span>]</span>]</span>
+]</span><span class="comment">;</span>
+</code></pre><p>Demo：</p>
+<pre><code><span class="title">self</span>.bridge = [<span class="type">WebViewJavascriptBridge</span> bridgeForWebView:webView handler:
+    ^(id <span class="typedef"><span class="keyword">data</span>, <span class="type">WVJBResponseCallback</span> responseCallback) <span class="container">{
+        <span class="type">NSLog</span>(@"<span class="type">Received</span> <span class="title">message</span> <span class="title">from</span> <span class="title">javascript</span>: %@", <span class="title">data</span>);
+        <span class="title">responseCallback</span>(@"<span class="type">Right</span> <span class="title">back</span> <span class="title">atcha</span>");
+    }</span>];</span>
+</code></pre><h4 id="ObjC向javascript发请求">ObjC向javascript发请求</h4><pre><code><span class="collection">[self.bridge send:@<span class="string">"Well hello there"</span>]</span><span class="comment">;</span>
+<span class="collection">[self.bridge send:<span class="collection">[NSDictionary dictionaryWithObject:@<span class="string">"Foo"</span> forKey:@<span class="string">"Bar"</span>]</span>]</span><span class="comment">;</span>
+<span class="collection">[self.bridge send:@<span class="string">"Give me a response, will you?"</span> responseCallback:^<span class="list">(<span class="keyword">id</span> responseData)</span> <span class="collection">{
+    NSLog<span class="list">(@<span class="string">"ObjC got its response! %@"</span>, responseData)</span><span class="comment">;</span>
+}</span>]</span><span class="comment">;</span>
+</code></pre><h4 id="注册handlerName">注册handlerName</h4><pre><code><span class="collection">[bridge registerHandler:<span class="list">(<span class="keyword">NSString*</span>)</span>handlerName handler:<span class="list">(<span class="keyword">WVJBHandler</span>)</span>handler]</span>
+</code></pre><p>javascript调用</p>
+<pre><code>WebViewJavascriptBridge.<span class="function"><span class="title">callHandler</span><span class="params">(<span class="string">"handlerName"</span>)</span></span>
+</code></pre><h4 id="ObjC调用js定义的handlerName">ObjC调用js定义的handlerName</h4><pre><code>[self.bridge callHandler:@<span class="string">"showAlert"</span> <span class="typedef"><span class="keyword">data</span>:@"<span class="type">Hi</span> from <span class="type">ObjC</span> to <span class="type">JS</span>!"];</span>
+[self.bridge callHandler:@<span class="string">"getCurrentPageUrl"</span> <span class="typedef"><span class="keyword">data</span>:nil responseCallback:^<span class="container">(<span class="title">id</span> <span class="title">responseData</span>)</span> <span class="container">{
+    <span class="type">NSLog</span>(@"<span class="type">Current</span> <span class="type">UIWebView</span> <span class="title">page</span> <span class="type">URL</span> <span class="title">is</span>: %@", <span class="title">responseData</span>);
+}</span>];</span>
+</code></pre><h2 id="js">js</h2><h3 id="使用方法-1">使用方法</h3><h4 id="等待WebViewJavascriptBridgeReady的DOM事件">等待WebViewJavascriptBridgeReady的DOM事件</h4><pre><code><span class="built_in">document</span>.addEventListener(<span class="string">'WebViewJavascriptBridgeReady'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{
+    <span class="keyword">var</span> bridge = event.bridge
+    <span class="comment">// Start using the bridge</span>
+}, <span class="literal">false</span>)
+</code></pre><h4 id="js向oc发请求">js向oc发请求</h4><pre><code><span class="tag">bridge</span><span class="class">.send</span>("<span class="tag">Hi</span> <span class="tag">there</span>!")
+<span class="tag">bridge</span><span class="class">.send</span>(<span class="rules">{ <span class="rule"><span class="attribute">Foo</span>:<span class="value"><span class="string">"Bar"</span> })
+bridge.<span class="function">send</span>(<span class="string">"Hi there!"</span>, <span class="function">function</span>(responseData) {
+    <span class="function">alert</span>(<span class="string">"I got a response! "</span>+JSON.<span class="function">stringify</span>(responseData))
+})</span></span></span>
+</code></pre><h4 id="注册handlerName-1">注册handlerName</h4><pre><code>bridge.registerHandler(<span class="string">"showAlert"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{ alert(data) })
+bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data, responseCallback</span>) </span>{
+    responseCallback(<span class="built_in">document</span>.location.toString())
+})
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cie9scy4h0008npcr709nbxtj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieao71ot000857crtuvykq3x" class="article-share-link">Share</a>
       
       
     </footer>
@@ -182,7 +226,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cie9scy4l000bnpcrs9aduptr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cieao71ox000b57cr4b7nt2rw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -218,7 +262,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cie9scy4i0009npcrox1zj3d1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cieao71ou000957cr9mdxides" class="article-share-link">Share</a>
       
       
     </footer>
@@ -255,7 +299,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cie9scy4k000anpcrruozwmzr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cieao71ow000a57cr532yb3v9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -298,7 +342,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cie9scy490002npcrmgj44e5y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cieao71ok000257crl9bxhtlx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -343,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cie9scy4c0004npcrsir3v1es" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cieao71oo000457cr0w0ie2q9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -431,7 +475,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cie9scy4f0007npcr085m0efs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cieao71or000757cr7j408b01" class="article-share-link">Share</a>
       
       
     </footer>
@@ -472,7 +516,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cie9scy4b0003npcrid3cs1jf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cieao71om000357crsosptobj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -508,7 +552,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cie9scy480001npcrgyo0x85b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cieao71oj000157crm5yk8ziz" class="article-share-link">Share</a>
       
       
     </footer>
