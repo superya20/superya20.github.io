@@ -111,7 +111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieb94k2n0004obcr52aeg2pl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieb96cyv0004okcrucytli1v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -167,7 +167,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cieb94k2q0006obcrk6qq45xg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cieb96cyy0006okcrnibe3cab" class="article-share-link">Share</a>
       
       
     </footer>
@@ -475,13 +475,47 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
 }
 </code></pre><hr>
 <h2 id="oc调h5">oc调h5</h2><h3 id="step1:_sendData_:__queueMessage">step1: sendData :  _queueMessage</h3><h3 id="step2:__queueMessage:__dispatchMessage_或_添加进self-startupMessageQueue">step2: _queueMessage: _dispatchMessage 或 添加进self.startupMessageQueue</h3><h3 id="step3:_webViewDidFinishLoad_:_dispatchStartUpMessageQueue">step3: webViewDidFinishLoad : dispatchStartUpMessageQueue</h3><p>oc调h5只能在webViewDidFinishLoad时触发。如果h5静默，则不会调起。</p>
-<h3 id="step4:_dispatchStartUpMessageQueue_：_逐一读取命令，执行_dispatchMessage">step4: dispatchStartUpMessageQueue ： 逐一读取命令，执行_dispatchMessage</h3><h3 id="step5:__dispatchMessage_：格式化命令，并调用h5的函数WebViewJavascriptBridge-_handleMessageFromObjC">step5: _dispatchMessage ：格式化命令，并调用h5的函数WebViewJavascriptBridge._handleMessageFromObjC</h3><h3 id="step6:_h5执行_dispatchMessageFromObjC">step6: h5执行_dispatchMessageFromObjC</h3><hr>
+<h3 id="step4:_dispatchStartUpMessageQueue_：_逐一读取命令，执行_dispatchMessage">step4: dispatchStartUpMessageQueue ： 逐一读取命令，执行_dispatchMessage</h3><h3 id="step5:__dispatchMessage_：格式化命令，并调用h5的函数WebViewJavascriptBridge-_handleMessageFromObjC">step5: _dispatchMessage ：格式化命令，并调用h5的函数WebViewJavascriptBridge._handleMessageFromObjC</h3><h3 id="step6:_h5执行_dispatchMessageFromObjC">step6: h5执行_dispatchMessageFromObjC</h3><pre><code><span class="function"><span class="keyword">function</span> <span class="title">_dispatchMessageFromObjC</span>(<span class="params">messageJSON</span>) </span>{
+    setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">_timeoutDispatchMessageFromObjC</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> message = <span class="built_in">JSON</span>.parse(messageJSON)
+        <span class="keyword">var</span> messageHandler
+        <span class="keyword">var</span> responseCallback
+
+        <span class="keyword">if</span> (message.responseId) {
+            responseCallback = responseCallbacks[message.responseId]
+            <span class="keyword">if</span> (!responseCallback) { <span class="keyword">return</span>; }
+            responseCallback(message.responseData)
+            <span class="keyword">delete</span> responseCallbacks[message.responseId]
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> (message.callbackId) {
+                <span class="keyword">var</span> callbackResponseId = message.callbackId
+                responseCallback = <span class="function"><span class="keyword">function</span>(<span class="params">responseData</span>) </span>{
+                    _doSend({ responseId:callbackResponseId, responseData:responseData })
+                }
+            }
+
+            <span class="keyword">var</span> handler = WebViewJavascriptBridge._messageHandler
+            <span class="keyword">if</span> (message.handlerName) {
+                handler = messageHandlers[message.handlerName]
+            }
+
+            <span class="keyword">try</span> {
+                handler(message.data, responseCallback)
+            } <span class="keyword">catch</span>(exception) {
+                <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">console</span> != <span class="string">'undefined'</span>) {
+                    <span class="built_in">console</span>.log(<span class="string">"WebViewJavascriptBridge: WARNING: javascript handler threw."</span>, message, exception)
+                }
+            }
+        }
+    })
+}
+</code></pre><hr>
 <p>—end wly—</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb94k2w0009obcr4j8acc17" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieb96cz30009okcr1330opog" class="article-share-link">Share</a>
       
       
     </footer>
@@ -517,7 +551,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cieb94k34000cobcrdux6tphz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cieb96cz8000cokcrb5q50js3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -553,7 +587,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cieb94k31000aobcrfcdblrxb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cieb96cz5000aokcrygcpjvqz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -590,7 +624,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cieb94k32000bobcrx14m5zxk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cieb96cz7000bokcrtj6grjpa" class="article-share-link">Share</a>
       
       
     </footer>
@@ -633,7 +667,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cieb94k2j0002obcr4ihl40z6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cieb96cys0002okcr0tkx2rkg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -678,7 +712,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cieb94k2p0005obcr8tbdx84z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cieb96cyx0005okcr7bz8f3iz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -766,7 +800,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cieb94k2v0008obcrl2zl0179" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cieb96cz20008okcrairt17g6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -808,7 +842,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cieb94k2l0003obcrlrnvjxn9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cieb96cyu0003okcrobanrzb2" class="article-share-link">Share</a>
       
       
     </footer>
