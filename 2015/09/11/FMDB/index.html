@@ -13,7 +13,7 @@ FMDB数据库的几种创建路径1.A file system path。这种方式下的文�
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="FMDB是对SQLite的封装。1.FMDatabase  －－ 数据库2.FMResultSet  －－ 查询结果类3.FMDatabaseQueue －－ 如果你需要同时执行多个数据库操作，需要使用这个类。且这个类是线程安全的。
 FMDB数据库的几种创建路径1.A file system path。这种方式下的文件，如果不存在，会自动创建。2.”” 路径为空。该数据库被创建在临时的位置，当FM">
-<meta property="og:updated_time" content="2015-09-11T09:24:04.000Z">
+<meta property="og:updated_time" content="2015-09-11T09:29:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FMDB ＋ JKDBModel">
 <meta name="twitter:description" content="FMDB是对SQLite的封装。1.FMDatabase  －－ 数据库2.FMResultSet  －－ 查询结果类3.FMDatabaseQueue －－ 如果你需要同时执行多个数据库操作，需要使用这个类。且这个类是线程安全的。
@@ -145,7 +145,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
 </ul>
 <p>备注：<br>1.NSStringFromClass<br>2.getColumeAndTypeString<br>3.@”CREATE TABLE IF NOT EXISTS %@(%@);”,tableName,columeAndType<br>4.getTableSchema<br>5.getAllProperties<br>6.@”ALTER TABLE %@ ADD COLUMN %@ “,NSStringFromClass(self.class),fieldSql</p>
 <ul>
-<li><p>(NSArray *)transients   如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写</p>
+<li><p>(NSArray *)transients   <code>如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写</code></p>
 <p>  /<em>* 如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写
    </em>/</p>
 <ul>
@@ -182,11 +182,18 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
 
     <span class="keyword">return</span> [NSDictionary <span class="string">dictionaryWithObjectsAndKeys:</span>proNames,@<span class="string">"name"</span>,proTypes,@<span class="string">"type"</span>,nil];
 }
-</code></pre>
+</code></pre><p>问题：<br>1.复杂对象怎么存储？<br>对象中有的字段是其他对象，有的字段是数组。这样的对象怎么存储？<br>转换成json字串存储。</p>
+<p>2.属性有修改怎么办？<br>V1.0 A：k1，k2,k3<br>V2.0 A:k2,k4</p>
+<p>3.用类名做表明，那么category怎么处理？</p>
+<p>4.主键和联合主键的设置？</p>
+<p>5.表字段校验？</p>
+<hr>
+<p>—end wly—</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciefft8gc000dlqcribkk7s91" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cieffzyvo000dn3cragvq7js8" class="article-share-link">Share</a>
       
       
     </footer>

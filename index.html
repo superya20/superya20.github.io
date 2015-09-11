@@ -143,7 +143,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
 </ul>
 <p>备注：<br>1.NSStringFromClass<br>2.getColumeAndTypeString<br>3.@”CREATE TABLE IF NOT EXISTS %@(%@);”,tableName,columeAndType<br>4.getTableSchema<br>5.getAllProperties<br>6.@”ALTER TABLE %@ ADD COLUMN %@ “,NSStringFromClass(self.class),fieldSql</p>
 <ul>
-<li><p>(NSArray *)transients   如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写</p>
+<li><p>(NSArray *)transients   <code>如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写</code></p>
 <p>  /<em>* 如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写
    </em>/</p>
 <ul>
@@ -180,11 +180,18 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
 
     <span class="keyword">return</span> [NSDictionary <span class="string">dictionaryWithObjectsAndKeys:</span>proNames,@<span class="string">"name"</span>,proTypes,@<span class="string">"type"</span>,nil];
 }
-</code></pre>
+</code></pre><p>问题：<br>1.复杂对象怎么存储？<br>对象中有的字段是其他对象，有的字段是数组。这样的对象怎么存储？<br>转换成json字串存储。</p>
+<p>2.属性有修改怎么办？<br>V1.0 A：k1，k2,k3<br>V2.0 A:k2,k4</p>
+<p>3.用类名做表明，那么category怎么处理？</p>
+<p>4.主键和联合主键的设置？</p>
+<p>5.表字段校验？</p>
+<hr>
+<p>—end wly—</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciefft8gc000dlqcribkk7s91" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cieffzyvo000dn3cragvq7js8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -224,7 +231,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciefft8g00005lqcrav5o17cw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cieffzyvb0005n3crtsi8vm9n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -280,7 +287,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciefft8fz0004lqcrt4smxy52" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cieffzyva0004n3crflfyvi02" class="article-share-link">Share</a>
       
       
     </footer>
@@ -336,7 +343,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciefft8g30007lqcruz2bkg9m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cieffzyve0007n3crf4t7hdth" class="article-share-link">Share</a>
       
       
     </footer>
@@ -684,7 +691,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciefft8g8000alqcr38h3rwps" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cieffzyvj000an3crttigjpdk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -720,7 +727,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciefft8ge000elqcrg5c3mmct" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cieffzyvq000en3cr9d9ostrf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -756,7 +763,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciefft8ga000blqcrx5gohhev" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cieffzyvl000bn3crq2pmnjrx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -793,7 +800,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciefft8gb000clqcr2aqb1ch6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cieffzyvn000cn3cr944nou1b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -836,7 +843,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="ciefft8fv0002lqcrivbek0zy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cieffzyv70002n3crs32f6e18" class="article-share-link">Share</a>
       
       
     </footer>
@@ -881,7 +888,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="ciefft8g20006lqcrx14wnpqw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cieffzyvd0006n3crlt74eevt" class="article-share-link">Share</a>
       
       
     </footer>
