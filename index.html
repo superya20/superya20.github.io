@@ -199,7 +199,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciefg8za7000doncrqgeic7ov" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciefga997000dpdcrmoi65lqg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -235,11 +235,108 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
 <p>iActiveRecord<br>Mantle<br>FMDB<br>JKDBModel – FMDB的封装<br>SQLite3</p>
 <p>JSON和模型之间最快捷方便的转换iOS框架：MJExtension<br><a href="http://www.open-open.com/lib/view/open1426233573592.html#_label1" target="_blank" rel="external">http://www.open-open.com/lib/view/open1426233573592.html#_label1</a></p>
 <p>MJExtension<br>JSONModel<br>Mantle</p>
+<p>iActiveRecord</p>
+<p>地址<br><a href="https://github.com/AlexDenisov/iActiveRecord" target="_blank" rel="external">https://github.com/AlexDenisov/iActiveRecord</a><br>说明文档<br><a href="https://github.com/AlexDenisov/iActiveRecord/wiki/iActiveRecord-description" target="_blank" rel="external">https://github.com/AlexDenisov/iActiveRecord/wiki/iActiveRecord-description</a></p>
+<p>没有CoreData，只有SQLite</p>
+<p>Features</p>
+<pre><code>ARC support
+<span class="keyword">unicode</span> support
+migrations
+validations (<span class="keyword">with</span> <span class="keyword">custom</span> validator support)
+transactions
+support <span class="keyword">for</span> <span class="keyword">custom</span> data types
+relationships (BelongsTo, HasMany, HasManyThrough)
+sorting
+filters (<span class="keyword">where</span> =, !=, <span class="keyword">IN</span>, <span class="keyword">NOT</span> <span class="keyword">IN</span> <span class="keyword">and</span> <span class="keyword">else</span>)
+joins
+CocoaPods support
+no more raw sql!!!
+</code></pre><p>支持单元测试<br>Run tests</p>
+<p>iActiveRecord uses Cedar for UnitTests and CocoaPods for dependency management. Follow this steps to run tests</p>
+<p>[sudo] gem install cocoapods<br>pod setup<br>cd project_dir<br>pod install<br>open iActiveRecord.xcworkspace</p>
+<p>Then build &amp; run UnitTests target.</p>
+<p>使用说明<br>1.当app第一次启动的时候，本框架为所有继承自ActiveRecord的类建立表格<br>声明：</p>
+<p>#import <activerecord activerecord.h=""></activerecord></p>
+<p>@interface User : ActiveRecord</p>
+<p>@property (nonatomic, retain) NSString *name;</p>
+<p>@end<br>使用<br>User *user = [User newRecord];<br>user.name = @”Alex”;<br>[user save];</p>
+<p>NSArray <em>users = [User allRecords];<br>User </em>userForRemove = [users first];<br>[userForRemove dropRecord];</p>
+<p>2.数据类型<br>NSDecimalNumber - real<br>NSNumber - integer<br>NSString - text<br>NSData - blob<br>NSDate - date (real)</p>
+<p>3.自定义数据类型</p>
+<p>All custom property types should implement ARRepresentationProtocol:</p>
+<p>@protocol ARRepresentationProtocol</p>
+<p>@required</p>
+<ul>
+<li>(const char *)sqlType;</li>
+</ul>
+<ul>
+<li>(NSString *)toSql;</li>
+</ul>
+<ul>
+<li>(id)fromSql:(NSString *)sqlData;</li>
+</ul>
+<p>@end</p>
+<p>This is a simple example:</p>
+<p>@implementation NSString (sqlRepresentation)</p>
+<ul>
+<li>(ActiveRecord <em>)fromSql:(NSString </em>)sqlData{<br>  return sqlData;<br>}</li>
+</ul>
+<ul>
+<li>(NSString *)toSql {<br>  return self;<br>}</li>
+</ul>
+<ul>
+<li>(const char *)sqlType {<br>  return “text”;<br>}</li>
+</ul>
+<p>@end</p>
+<p>4.忽略某些字段<br>@implementation User<br>…<br>@synthesize ignoredProperty;<br>…<br>ignore_fields_do(<br>    ignore_field(ignoredProperty)<br>)<br>…<br>@end</p>
+<p>5.验证<br>实现<arvalidatableprotocol>来支持数据校验<br>validation_do(<br>    validate_uniqueness_of(name)<br>    validate_presence_of(name)<br>)<br>目前有两种校验presence and uniqueness。你可以自定义校验。Just describe new class and implement ARValidatorProtocol<br>自定义<br>// ARValidatorProtocol<br>@protocol ARValidatorProtocol <nsobject><br>@optional</nsobject></arvalidatableprotocol></p>
+<ul>
+<li>(NSString *)errorMessage;<br>@required</li>
+<li>(BOOL)validateField:(NSString *)aField ofRecord:(id)aRecord;<br>@end</li>
+</ul>
+<p>//  Custom validator<br>//  PrefixValidator.h<br>@interface PrefixValidator : NSObject<br>    <arvalidatorprotocol><br>@end<br>//  PrefixValidator.m<br>@implementation PrefixValidator</arvalidatorprotocol></p>
+<ul>
+<li>(NSString *)errorMessage {<br>  return @”Invalid prefix”;<br>}</li>
+<li>(BOOL)validateField:(NSString <em>)aField ofRecord:(id)aRecord {<br>  NSString </em>aValue = [aRecord valueForKey:aField];<br>  BOOL valid = [aValue hasPrefix:@”LOL”];<br>  return valid;<br>}<br>@end</li>
+</ul>
+<p>then add validator to your ActiveRecord implementation</p>
+<p>@implementation User<br>@synthesize name;<br>…<br>validation_do(<br>    validate_field_with_validator(name, PrefixValidator)<br>)<br>…<br>@end</p>
+<p>6.移表－支持简单的移表<br>当新增记录或属性时，框架会创建新表或向已存在的表增加记录。<br>如果不需要，在didFinishLaunchingWithOptions中关闭这个功能。<br>[ActiveRecord disableMigrations];</p>
+<p>7.支持简单的事务</p>
+<p>[ActiveRecord transaction:^{<br>    User *alex = [User newRecord];<br>    alex.name = @”Alex”;<br>    [alex save];<br>}];</p>
+<p>[ActiveRecord transaction:^{<br>    User *alex = [User newRecord];<br>    alex.name = @”Alex”;<br>    [alex save];<br>    rollback<br>}];</p>
+<p>8.表关系<br>8.1 HasMany &lt;-&gt; BelongsTo<br>// User.h<br>@interface User : ActiveRecord<br>…<br>@property (nonatomic, retain) NSNumber *groupId;<br>…<br>belongs_to_dec(Group, group, ARDependencyDestroy)<br>…<br>@end<br>// User.m<br>@implementation User<br>…<br>@synthesize groupId;<br>…<br>belongs_to_imp(Group, group, ARDependencyDestroy)<br>…<br>@end</p>
+<p>8.2Describe reverse relationship<br>// Group.h<br>@interface Group : ActiveRecord<br>…<br>has_many_dec(User, users, ARDependencyDestroy)<br>…<br>@end<br>// Group.m<br>@implementation Group<br>…<br>has_many_imp(User, users, ARDependencyDestroy)<br>…<br>@end</p>
+<p>8.3HasManyThrough</p>
+<p>// User.h<br>@interface User : ActiveRecord<br>…<br>has_many_through_dec(Project, UserProjectRelationship, projects, ARDependencyNullify)<br>…<br>@end<br>// User.m<br>@implementation User<br>…<br>has_many_through_imp(Project, UserProjectRelationship, projects, ARDependencyNullify)<br>…<br>@end</p>
+<p>// Project.h<br>@interface Project : ActiveRecord<br>…<br>has_many_through_dec(User, UserProjectRelationship, users, ARDependencyDestroy)<br>…<br>@end<br>// Project.m<br>@implementation Project<br>…<br>has_many_through_imp(User, UserProjectRelationship, users, ARDependencyDestroy)<br>…<br>@end</p>
+<p>9.数据库操作<br>9.1查询<br>NSArray <em>ids = [NSArray arrayWithObjects:<br>               [NSNumber numberWithInt:1],<br>               [NSNumber numberWithInt:15],<br>               nil];<br>NSString </em>username = @”john”;<br>ARLazyFetcher <em>fetcher = [User lazyFetcher];<br>[fetcher where:@”‘user’.’name’ = %@ or ‘user’.’id’ in %@”,<br>               username, ids, nil];<br>[fetcher orderBy:@”id”];<br>NSArray </em>records = [fetcher fetchRecords];</p>
+<p>9.2 查询2</p>
+<ul>
+<li>(ARLazyFetcher <em>)only:(NSString </em>)aFirstParam, …;</li>
+<li>(ARLazyFetcher <em>)except:(NSString </em>)aFirstParam, …;</li>
+</ul>
+<p>ARLazyFetcher <em>fetcher = [[User lazyFetcher] only:@”name”, @”id”, nil];<br>NSArray </em>users = [fetcher fetchRecords];</p>
+<p>9.3排序</p>
+<ul>
+<li>(ARLazyFetcher <em>)orderBy:(NSString </em>)aField ascending:(BOOL)isAscending;</li>
+<li>(ARLazyFetcher <em>)orderBy:(NSString </em>)aField;// ASC by default</li>
+</ul>
+<p>ARLazyFetcher <em>fetcher = [[[User lazyFetcher] offset:2] limit:10];<br>[[fetcher whereField:@”name”<br>       equalToValue:@”Alex”] orderBy:@”name”];<br>NSArray </em>users = [fetcher fetchRecords];</p>
+<p>9.4 连接</p>
+<ul>
+<li>(ARLazyFetcher *)join:(Class)aJoinRecord<pre><code> <span class="attribute">useJoin</span>:(ARJoinType)aJoinType
+ <span class="attribute">onField</span>:(NSString *)aFirstField
+<span class="attribute">andField</span>:(NSString *)aSecondField;
+</code></pre></li>
+</ul>
+<p>10 持久化<br>默认存在CachesDirectory中，名字database。但你可以自己修改。</p>
+<p>11 测试<br>If you want another database for tests you need to add UNIT_TEST=1 to Preprocessor Macros. After that new database will be named with suffix ‘-test’.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciefg8z9u0005oncr2cxwhcec" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciefga98v0005pdcr8vnsfnkj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -295,7 +392,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciefg8z9s0004oncrp3q50e4v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciefga98u0004pdcraad71t6y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -351,7 +448,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciefg8z9x0007oncrn4xcbybv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciefga98y0007pdcruev9i6ui" class="article-share-link">Share</a>
       
       
     </footer>
@@ -699,7 +796,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciefg8za2000aoncrwr3d1k5z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciefga993000apdcro71akg1n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -735,7 +832,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciefg8za8000eoncr966lbjvq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciefga998000epdcrovjragq3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -771,7 +868,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciefg8za4000boncrk098rj5j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciefga994000bpdcrvthvih7d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -808,7 +905,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciefg8za5000concr5escv0fg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciefga995000cpdcrx0gdqb2u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -851,7 +948,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="ciefg8z9p0002oncr2ot6nmfp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="ciefga98s0002pdcrde18bv8q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -896,7 +993,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="ciefg8z9v0006oncra6msxhbd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="ciefga98x0006pdcr93x9a6hr" class="article-share-link">Share</a>
       
       
     </footer>
