@@ -21,7 +21,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
 {
     if ((self != nil) &amp;amp;&amp;amp; !self.initialized) {
         _commandQueue = [[CD">
-<meta property="og:updated_time" content="2015-09-14T05:10:53.000Z">
+<meta property="og:updated_time" content="2015-09-14T05:11:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDVViewController">
 <meta name="twitter:description" content="version:
@@ -210,12 +210,18 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     }];
 }
 </code></pre><p>CDVCommandDelegateImpl</p>
-<pre><code>- (id)initWithViewController:(CDVViewController*)viewController
+<pre><code><span class="pp">- <span class="params">(id)</span>initWithViewController:<span class="params">(<span class="variable">CDVViewController</span>*)</span>viewController
 {
-    _viewController = viewController<span class="comment">;</span>
-    _commandQueue = _viewController.commandQueue<span class="comment">;</span>
+    _viewController = viewController;
+    _commandQueue = _viewController</span>.command<span class="variable">Queue</span>;
 }
-</code></pre><p><code>-</code>(void)evalJs:(NSString<em>)js／- (void)evalJs:(NSString</em>)js scheduledOnRunLoop:(BOOL)scheduledOnRunLoop/- (void)evalJsHelper:(NSString<em>)js/- (void)evalJsHelper2:(NSString</em>)js<br>最终会调用到<code>- (void)evalJsHelper2:(NSString*)js</code><br>1.执行js，并获取返回值<br>2.批量执行返回的commandsJSON</p>
+
+
+<span class="pp">-<span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js
+- <span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js scheduledOnRunLoop:<span class="params">(<span class="variable">BOOL</span>)</span>scheduledOnRunLoop
+- <span class="params">(void)</span>evalJsHelper:<span class="params">(<span class="variable">NSString</span>*)</span>js
+- <span class="params">(void)</span>evalJsHelper2:<span class="params">(<span class="variable">NSString</span>*)</span>js</span>
+</code></pre><p>最终会调用到<code>- (void)evalJsHelper2:(NSString*)js</code><br>1.执行js，并获取返回值<br>2.批量执行返回的commandsJSON</p>
 <pre><code>`-`(<span class="typename">void</span>)<span class="string">evalJsHelper2:</span>(NSString*)js
 {
     NSString* commandsJSON = [_viewController.webView <span class="string">stringByEvaluatingJavaScriptFromString:</span>js];
@@ -285,7 +291,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh301q000g82cr6na5vcqz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh3qqx000g8bcry81f3m8s" class="article-share-link">Share</a>
       
       
     </footer>
