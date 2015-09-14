@@ -91,7 +91,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejh6in2000f93crspemcbnw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejh89lx000f9fcrh4q7h0cu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -124,7 +124,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>version:</p>
-<h2 id="CDVViewController">CDVViewController</h2><p>初始化<code>- (void)__init</code><br>1.生成CDVCommandQueue实例<br>2.生成CDVCommandDelegateImpl实例<br>3.注册本地通知</p>
+<h2 id="CDVViewController">CDVViewController</h2><h4 id="初始化-_(void)__init">初始化<code>- (void)__init</code></h4><p>1.生成CDVCommandQueue实例<br>2.生成CDVCommandDelegateImpl实例<br>3.注册本地通知</p>
 <pre><code>- (<span class="typename">void</span>)__init
 {
     <span class="keyword">if</span> ((self != nil) &amp;&amp; !self.initialized) {
@@ -142,7 +142,7 @@
         [self loadSettings];
     }
 }
-</code></pre><p>读取配置<code>- (void)loadSettings</code><br>1.读取config.xml的内容<br>2.设置<br>    self.pluginsMap<br>    self.starupPluginNames<br>    self.whitelist<br>    self.settings<br>    self.wwwFolderName<br>    self.startPage<br>    self.pluginObjects</p>
+</code></pre><h4 id="读取配置-_(void)loadSettings">读取配置<code>- (void)loadSettings</code></h4><p>1.读取config.xml的内容<br>2.设置<br>    self.pluginsMap<br>    self.starupPluginNames<br>    self.whitelist<br>    self.settings<br>    self.wwwFolderName<br>    self.startPage<br>    self.pluginObjects</p>
 <pre><code>- (<span class="keyword">void</span>)loadSettings
 {
     <span class="comment">//CDVConfigParser解析bundle中的config.xml</span>
@@ -168,8 +168,7 @@
     <span class="comment">// Initialize the plugin objects dict.</span>
     <span class="keyword">self</span><span class="variable">.pluginObjects</span> = [[<span class="built_in">NSMutableDictionary</span> alloc] initWithCapacity:<span class="number">20</span>];
 }
-</code></pre><p>加载页面<code>-(void)setStartPage:(NSString *)startPage</code></p>
-<pre><code>-(<span class="keyword">void</span>)setStartPage:(<span class="built_in">NSString</span> *)startPage
+</code></pre><h4 id="加载页面-(void)setStartPage:(NSString_*)startPage">加载页面<code>-(void)setStartPage:(NSString *)startPage</code></h4><pre><code>-(<span class="keyword">void</span>)setStartPage:(<span class="built_in">NSString</span> *)startPage
 {
     [<span class="keyword">self</span> createGapView];
     <span class="built_in">NSURL</span>* appURL = <span class="literal">nil</span>;
@@ -231,13 +230,12 @@
         }
     }];
 }
-</code></pre><h2 id="CDVCommandDelegateImpl">CDVCommandDelegateImpl</h2><pre><code>- (id)initWithViewController:(CDVViewController*)viewController
+</code></pre><h2 id="CDVCommandDelegateImpl">CDVCommandDelegateImpl</h2><h4 id="初始化">初始化</h4><pre><code>- (id)initWithViewController:(CDVViewController*)viewController
 {
     _viewController = viewController<span class="comment">;</span>
     _commandQueue = _viewController.commandQueue<span class="comment">;</span>
 }
-</code></pre><p> eval系列函数</p>
-<pre><code><span class="pp">-<span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js
+</code></pre><h4 id="eval系列函数">eval系列函数</h4><pre><code><span class="pp">-<span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js
 - <span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js scheduledOnRunLoop:<span class="params">(<span class="variable">BOOL</span>)</span>scheduledOnRunLoop
 - <span class="params">(void)</span>evalJsHelper:<span class="params">(<span class="variable">NSString</span>*)</span>js
 - <span class="params">(void)</span>evalJsHelper2:<span class="params">(<span class="variable">NSString</span>*)</span>js</span>
@@ -247,7 +245,7 @@
     NSString* commandsJSON = [_viewController.webView <span class="string">stringByEvaluatingJavaScriptFromString:</span>js];
     [_commandQueue <span class="string">enqueCommandBatch:</span>commandsJSON];
 }
-</code></pre><h2 id="CDVCommandQueue">CDVCommandQueue</h2><pre><code>- (<span class="keyword">void</span>)executePending
+</code></pre><h2 id="CDVCommandQueue">CDVCommandQueue</h2><h4 id="-_(void)executePending">- (void)executePending</h4><pre><code>- (<span class="keyword">void</span>)executePending
 {
     <span class="comment">// Make us re-entrant-safe.</span>
     <span class="keyword">if</span> (_currentlyExecuting) {
@@ -278,7 +276,7 @@
             _currentlyExecuting = <span class="literal">NO</span>;
     }
 }
-</code></pre><p>执行command<br>1.根据command.className  生成CDVPlugin变量obj<br>2.根据command.methodName生成NSSelectorFromString(methodName)<br>3.若obj能够响应上述SEL，则执行<code>((void (*)(id, SEL, id))objc_msgSend)(obj, normalSelector, command);</code></p>
+</code></pre><h4 id="执行command">执行command</h4><p>1.根据command.className  生成CDVPlugin变量obj<br>2.根据command.methodName生成NSSelectorFromString(methodName)<br>3.若obj能够响应上述SEL，则执行<code>((void (*)(id, SEL, id))objc_msgSend)(obj, normalSelector, command);</code></p>
 <pre><code>- (<span class="built_in">BOOL</span>)execute:(CDVInvokedUrlCommand*)command
 {
     <span class="comment">// Fetch an instance of this class</span>
@@ -310,7 +308,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh6in5000g93cros7bivpf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh89m0000g9fcroqwl0ojc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -454,7 +452,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejh6imz000d93crmvnkkg0c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejh89lv000d9fcr1y15uklk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -591,7 +589,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejh6imq000593cr08m6jgxx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejh89lk00059fcr4h4qryii" class="article-share-link">Share</a>
       
       
     </footer>
@@ -647,7 +645,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejh6imo000493cr2zclkh8g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejh89lj00049fcrvybfgnib" class="article-share-link">Share</a>
       
       
     </footer>
@@ -703,7 +701,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejh6ims000793cr172f7dsc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejh89lm00079fcri92oywq6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1051,7 +1049,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejh6imw000a93cr87s0dagt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejh89lr000a9fcr3s7natv0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1087,7 +1085,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejh6in1000e93criwjnjm04" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejh89lw000e9fcrftzsbfk2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1123,7 +1121,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejh6imx000b93crqwxqnayl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejh89ls000b9fcr8f6b6agt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1160,7 +1158,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejh6imy000c93crk07wlwx1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejh89lt000c9fcre0gottmw" class="article-share-link">Share</a>
       
       
     </footer>
