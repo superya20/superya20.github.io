@@ -91,7 +91,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejkkgbp000fj1crrvnzlvyy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejkl9vw000fj9cr4f40o3vo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -314,7 +314,9 @@
     {}
     return retVal;
 }
-</code></pre><h2 id="—">—</h2><h2 id="CDVURLProtocol">CDVURLProtocol</h2><p>原理与WebviewProxy类似。注册CDVURLProtocol服务，h5通过CDVURLProtocol调用native，native拦截CDVURLProtocol并响应。<br>static NSMutableSet* gRegisteredControllers = nil;</p>
+</code></pre><hr>
+<hr>
+<h2 id="CDVURLProtocol">CDVURLProtocol</h2><p>原理与WebviewProxy类似。注册CDVURLProtocol服务，h5通过CDVURLProtocol调用native，native拦截CDVURLProtocol并响应。<br>static NSMutableSet* gRegisteredControllers = nil;</p>
 <h4 id="注册CDVURLProtocol服务">注册CDVURLProtocol服务</h4><p>1.注册CDVURLProtocol服务<br>2.实例化静态变量gRegisteredControllers。问题，最大容量8？<br>3.初始化静态变量gWhitelist白名单，有问题，随机用第一个viewController的白名单赋值，其他viewController的白名单无效<br>4.存储viewController的地址<br>    [gRegisteredControllers addObject:[NSNumber numberWithLongLong:(long long)viewController]];</p>
 <pre><code>+ (<span class="keyword">void</span>)registerViewController:(CDVViewController*)viewController
 {
@@ -341,7 +343,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejkkgbs000gj1crga840wt6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejkl9vz000gj9crict8dk5o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -485,7 +487,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejkkgbn000dj1cr8cdgj154" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejkl9vt000dj9cry4y1xkc1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -622,7 +624,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejkkgbc0005j1cr2n437a8b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejkl9vj0005j9crxv5hcdhy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -678,7 +680,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejkkgbb0004j1crorpk4krj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejkl9vh0004j9crz2wykrm8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -734,7 +736,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejkkgbf0007j1cruf48beun" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejkl9vl0007j9crs0o0eb12" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1082,7 +1084,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejkkgbj000aj1crsya82pr8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejkl9vq000aj9crrb7yyabx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1118,7 +1120,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejkkgbo000ej1cruxrhx4rr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejkl9vv000ej9crxi3r2jfd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1154,7 +1156,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejkkgbk000bj1crjlisf7mi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejkl9vr000bj9crblchh723" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1191,7 +1193,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejkkgbl000cj1cryagr3z16" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejkl9vs000cj9cr2la6sct0" class="article-share-link">Share</a>
       
       
     </footer>
