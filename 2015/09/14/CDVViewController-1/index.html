@@ -21,7 +21,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
 {
     if ((self != nil) &amp;amp;&amp;amp; !self.initialized) {
         _commandQueue = [[CD">
-<meta property="og:updated_time" content="2015-09-14T06:43:30.000Z">
+<meta property="og:updated_time" content="2015-09-14T06:47:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDVViewController">
 <meta name="twitter:description" content="version:
@@ -101,7 +101,8 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>version:</p>
+        <hr>
+<p>version:</p>
 <h2 id="CDVViewController">CDVViewController</h2><h4 id="初始化-_(void)__init">初始化<code>- (void)__init</code></h4><p>1.生成CDVCommandQueue实例<br>2.生成CDVCommandDelegateImpl实例<br>3.注册本地通知</p>
 <pre><code>- (<span class="typename">void</span>)__init
 {
@@ -229,7 +230,8 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
         [CDVURLProtocol registerViewController:<span class="keyword">self</span>];    <span class="comment">//注册CDVURLProtocol</span>
     }
 }
-</code></pre><h2 id="CDVCommandDelegateImpl">CDVCommandDelegateImpl</h2><h4 id="初始化">初始化</h4><pre><code>- (id)initWithViewController:(CDVViewController*)viewController
+</code></pre><hr>
+<h2 id="CDVCommandDelegateImpl">CDVCommandDelegateImpl</h2><h4 id="初始化">初始化</h4><pre><code>- (id)initWithViewController:(CDVViewController*)viewController
 {
     _viewController = viewController<span class="comment">;</span>
     _commandQueue = _viewController.commandQueue<span class="comment">;</span>
@@ -244,7 +246,8 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     NSString* commandsJSON = [_viewController.webView <span class="string">stringByEvaluatingJavaScriptFromString:</span>js];
     [_commandQueue <span class="string">enqueCommandBatch:</span>commandsJSON];
 }
-</code></pre><h2 id="CDVCommandQueue">CDVCommandQueue</h2><h4 id="-_(void)executePending">- (void)executePending</h4><pre><code>- (<span class="keyword">void</span>)executePending
+</code></pre><hr>
+<h2 id="CDVCommandQueue">CDVCommandQueue</h2><h4 id="-_(void)executePending">- (void)executePending</h4><pre><code>- (<span class="keyword">void</span>)executePending
 {
     <span class="comment">// Make us re-entrant-safe.</span>
     <span class="keyword">if</span> (_currentlyExecuting) {
@@ -289,7 +292,8 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     {}
     return retVal;
 }
-</code></pre><h2 id="CDVURLProtocol">CDVURLProtocol</h2><p>原理与WebviewProxy类似。注册CDVURLProtocol服务，h5通过CDVURLProtocol调用native，native拦截CDVURLProtocol并响应。<br>static NSMutableSet* gRegisteredControllers = nil;</p>
+</code></pre><hr>
+<h2 id="CDVURLProtocol">CDVURLProtocol</h2><p>原理与WebviewProxy类似。注册CDVURLProtocol服务，h5通过CDVURLProtocol调用native，native拦截CDVURLProtocol并响应。<br>static NSMutableSet* gRegisteredControllers = nil;</p>
 <h4 id="注册CDVURLProtocol服务">注册CDVURLProtocol服务</h4><p>1.注册CDVURLProtocol服务<br>2.实例化静态变量gRegisteredControllers。问题，最大容量8？<br>3.初始化静态变量gWhitelist白名单，有问题，随机用第一个viewController的白名单赋值，其他viewController的白名单无效<br>4.存储viewController的地址<br>    [gRegisteredControllers addObject:[NSNumber numberWithLongLong:(long long)viewController]];</p>
 <pre><code>+ (<span class="keyword">void</span>)registerViewController:(CDVViewController*)viewController
 {
@@ -316,7 +320,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejkea6c000giacrxyiynda0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejkj79p000gikcr3j0qxexi" class="article-share-link">Share</a>
       
       
     </footer>
