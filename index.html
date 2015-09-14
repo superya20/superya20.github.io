@@ -65,6 +65,223 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-CDVViewController-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/14/CDVViewController-1/" class="article-date">
+  <time datetime="2015-09-14T02:30:26.000Z" itemprop="datePublished">2015-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/14/CDVViewController-1/">CDVViewController</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>version:</p>
+<p>CDVViewController<br>初始化<code>- (void)__init</code><br>1.生成CDVCommandQueue实例<br>2.生成CDVCommandDelegateImpl实例<br>3.注册本地通知</p>
+<pre><code>- (<span class="typename">void</span>)__init
+{
+    <span class="keyword">if</span> ((self != nil) &amp;&amp; !self.initialized) {
+        _commandQueue = [[CDVCommandQueue alloc] <span class="string">initWithViewController:</span>self];
+        _commandDelegate = [[CDVCommandDelegateImpl alloc] <span class="string">initWithViewController:</span>self];
+        <span class="annotation">@selector</span>(<span class="string">onAppWillTerminate:</span>) ---  <span class="string">name:</span>UIApplicationWillTerminateNotification 
+        <span class="annotation">@selector</span>(<span class="string">onAppWillResignActive:</span>) --- <span class="string">name:</span>UIApplicationWillResignActiveNotification
+        <span class="annotation">@selector</span>(<span class="string">onAppDidBecomeActive:</span>) --- <span class="string">name:</span>UIApplicationDidBecomeActiveNotification
+        <span class="annotation">@selector</span>(<span class="string">onAppWillEnterForeground:</span>) --- <span class="string">name:</span>UIApplicationWillEnterForegroundNotification
+        <span class="annotation">@selector</span>(<span class="string">onAppDidEnterBackground:</span>) --- <span class="string">name:</span>UIApplicationDidEnterBackgroundNotification
+<span class="label">        selector:</span><span class="annotation">@selector</span>(<span class="string">handleOpenURL:</span>) --- <span class="string">name:</span>CDVPluginHandleOpenURLNotification
+        ...其他设置...
+
+        <span class="comment">// load config.xml settings</span>
+        [self loadSettings];
+    }
+}
+</code></pre><p>读取配置<code>- (void)loadSettings</code><br>1.读取config.xml的内容<br>2.设置<br>    self.pluginsMap<br>    self.starupPluginNames<br>    self.whitelist<br>    self.settings<br>    self.wwwFolderName<br>    self.startPage<br>    self.pluginObjects</p>
+<pre><code>- (<span class="keyword">void</span>)loadSettings
+{
+    <span class="comment">//CDVConfigParser解析bundle中的config.xml</span>
+    CDVConfigParser* delegate = [[CDVConfigParser alloc] init];
+       <span class="comment">//读取[[NSBundle mainBundle] pathForResource:@"config" ofType:@"xml"]; </span>
+    configParser = [[<span class="built_in">NSXMLParser</span> alloc] initWithContentsOfURL:url];
+    [configParser setDelegate:((<span class="keyword">id</span> &lt; <span class="built_in">NSXMLParserDelegate</span> &gt;)delegate)];
+    [configParser parse];
+
+    <span class="comment">//设置self.pluginsMap/self.startupPluginNames/self.whitelist/self.settings</span>
+    <span class="keyword">self</span><span class="variable">.pluginsMap</span> = delegate<span class="variable">.pluginsDict</span>;
+    <span class="keyword">self</span><span class="variable">.startupPluginNames</span> = delegate<span class="variable">.startupPluginNames</span>;
+    <span class="keyword">self</span><span class="variable">.whitelist</span> = [[CDVWhitelist alloc] initWithArray:delegate<span class="variable">.whitelistHosts</span>];
+    <span class="keyword">self</span><span class="variable">.settings</span> = delegate<span class="variable">.settings</span>;
+
+    <span class="comment">// And the start folder/page.</span>
+    <span class="comment">//    self.wwwFolderName = @"www";</span>
+    <span class="comment">//    self.startPage = delegate.startPage;</span>
+    <span class="comment">//    if (self.startPage == nil) {</span>
+    <span class="comment">//        self.startPage = @"index.html";</span>
+    <span class="comment">//    }</span>
+
+    <span class="comment">// Initialize the plugin objects dict.</span>
+    <span class="keyword">self</span><span class="variable">.pluginObjects</span> = [[<span class="built_in">NSMutableDictionary</span> alloc] initWithCapacity:<span class="number">20</span>];
+}
+</code></pre><p>加载页面<code>-(void)setStartPage:(NSString *)startPage</code></p>
+<pre><code>-(<span class="keyword">void</span>)setStartPage:(<span class="built_in">NSString</span> *)startPage
+{
+    [<span class="keyword">self</span> createGapView];
+    <span class="built_in">NSURL</span>* appURL = <span class="literal">nil</span>;
+    <span class="built_in">NSString</span>* loadErr = <span class="literal">nil</span>;
+    _startPage = startPage;
+
+    <span class="keyword">if</span> ([<span class="keyword">self</span><span class="variable">.startPage</span> rangeOfString:<span class="string">@"://"</span>]<span class="variable">.location</span> != <span class="built_in">NSNotFound</span>) {
+        appURL = [<span class="built_in">NSURL</span> URLWithString:<span class="keyword">self</span><span class="variable">.startPage</span>];<span class="comment">//self.startPage中包括“://”直接加载</span>
+    } 
+    <span class="keyword">else</span> <span class="keyword">if</span> ([<span class="keyword">self</span><span class="variable">.wwwFolderName</span> rangeOfString:<span class="string">@"://"</span>]<span class="variable">.location</span> != <span class="built_in">NSNotFound</span>) {
+        appURL = [<span class="built_in">NSURL</span> URLWithString:[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@/%@"</span>, <span class="keyword">self</span><span class="variable">.wwwFolderName</span>, <span class="keyword">self</span><span class="variable">.startPage</span>]];<span class="comment">//self.wwwFolderName中包括“://”，则拼接上self.startPage</span>
+    } 
+    <span class="keyword">else</span> 
+    {
+            <span class="built_in">NSRange</span> r = [<span class="keyword">self</span><span class="variable">.startPage</span> rangeOfString:<span class="string">@"?env="</span>];
+            <span class="built_in">NSString</span> *tmpStartPage = <span class="keyword">self</span><span class="variable">.startPage</span>;
+        <span class="keyword">if</span> (r<span class="variable">.location</span> != <span class="built_in">NSNotFound</span>) {
+            tmpStartPage = [<span class="keyword">self</span><span class="variable">.startPage</span> substringToIndex:r<span class="variable">.location</span>];
+        }
+        <span class="built_in">NSMutableString</span> *tmpSource = [<span class="built_in">NSMutableString</span> stringWithFormat:<span class="string">@"%@/%@"</span>, <span class="keyword">self</span><span class="variable">.wwwFolderName</span>,tmpStartPage];
+        <span class="built_in">NSMutableString</span> *source = [<span class="built_in">NSMutableString</span> stringWithFormat:<span class="string">@"%@/%@"</span>, <span class="keyword">self</span><span class="variable">.wwwFolderName</span>,<span class="keyword">self</span><span class="variable">.startPage</span>];
+        <span class="keyword">if</span> ([<span class="built_in">NSURL</span> fileURLWithPath:source]){
+            <span class="keyword">if</span> ([[[<span class="built_in">NSFileManager</span> alloc] init] fileExistsAtPath:tmpSource]) {
+                appURL =[<span class="built_in">NSURL</span> fileURLWithPath:source];
+            }
+        }
+        <span class="keyword">else</span>
+        {
+            <span class="built_in">NSURL</span>* startURL = [<span class="built_in">NSURL</span> URLWithString:<span class="keyword">self</span><span class="variable">.startPage</span>];
+            <span class="built_in">NSString</span>* startFilePath = [<span class="keyword">self</span><span class="variable">.commandDelegate</span> pathForResource:[startURL path]];
+
+            <span class="keyword">if</span> (startFilePath == <span class="literal">nil</span>) {
+                loadErr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"ERROR: Start Page at '%@/%@' was not found."</span>, <span class="keyword">self</span><span class="variable">.wwwFolderName</span>, <span class="keyword">self</span><span class="variable">.startPage</span>];
+                <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, loadErr);
+                <span class="keyword">self</span><span class="variable">.loadFromString</span> = <span class="literal">YES</span>;
+                appURL = <span class="literal">nil</span>;
+            } <span class="keyword">else</span> {
+                <span class="comment">// CB-3005 we know that the page exists : reconstruct full path from bundle</span>
+                <span class="built_in">NSURL</span>* relativeURL = [<span class="built_in">NSURL</span> fileURLWithPath:[[<span class="built_in">NSBundle</span> mainBundle] bundlePath]];
+                <span class="built_in">NSString</span>* localURL = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@/%@"</span>, <span class="keyword">self</span><span class="variable">.wwwFolderName</span>, <span class="keyword">self</span><span class="variable">.startPage</span>];
+                appURL = [<span class="built_in">NSURL</span> URLWithString:localURL relativeToURL:relativeURL];
+            }
+        }
+    }
+
+    <span class="comment">// /////////////////</span>
+    [CDVUserAgentUtil acquireLock:^(<span class="built_in">NSInteger</span> lockToken) {
+        _userAgentLockToken = lockToken;
+        [CDVUserAgentUtil setUserAgent:<span class="keyword">self</span><span class="variable">.userAgent</span> lockToken:lockToken];
+        <span class="keyword">if</span> (!loadErr) {
+            <span class="keyword">if</span> (appURL){
+                <span class="built_in">NSURLRequest</span>* appReq = [<span class="built_in">NSURLRequest</span> requestWithURL:appURL cachePolicy:<span class="built_in">NSURLRequestUseProtocolCachePolicy</span> timeoutInterval:<span class="number">20.0</span>];
+
+                [<span class="keyword">self</span><span class="variable">.webView</span> loadRequest:appReq];<span class="comment">//加载远程url</span>
+            }
+        } <span class="keyword">else</span> {
+            <span class="built_in">NSString</span>* html = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"&lt;html&gt;&lt;body&gt; %@ &lt;/body&gt;&lt;/html&gt;"</span>, loadErr];
+            [<span class="keyword">self</span><span class="variable">.webView</span> loadHTMLString:html baseURL:<span class="literal">nil</span>];<span class="comment">//加载本地html</span>
+        }
+    }];
+}
+</code></pre><p>CDVCommandDelegateImpl</p>
+<pre><code>- (id)initWithViewController:(CDVViewController*)viewController
+{
+    _viewController = viewController<span class="comment">;</span>
+    _commandQueue = _viewController.commandQueue<span class="comment">;</span>
+}
+</code></pre><ul>
+<li><p>(void)evalJs:(NSString<em>)js／- (void)evalJs:(NSString</em>)js scheduledOnRunLoop:(BOOL)scheduledOnRunLoop/- (void)evalJsHelper:(NSString<em>)js/- (void)evalJsHelper2:(NSString</em>)js<br>最终会调用到<code>- (void)evalJsHelper2:(NSString*)js</code><br>1.执行js，并获取返回值<br>2.批量执行返回的commandsJSON</p>
+<ul>
+<li>(void)evalJsHelper2:(NSString<em>)js<br>{<br>  NSString</em> commandsJSON = [_viewController.webView stringByEvaluatingJavaScriptFromString:js];<br>  [_commandQueue enqueCommandBatch:commandsJSON];<br>}</li>
+</ul>
+</li>
+</ul>
+<p>CDVCommandQueue</p>
+<pre><code>- (<span class="keyword">void</span>)executePending
+{
+    <span class="comment">// Make us re-entrant-safe.</span>
+    <span class="keyword">if</span> (_currentlyExecuting) {
+        <span class="keyword">return</span>;
+    }
+    <span class="keyword">@try</span> 
+    {
+        _currentlyExecuting = <span class="literal">YES</span>;
+
+        <span class="keyword">for</span> (<span class="built_in">NSUInteger</span> i = <span class="number">0</span>; i &lt; [_queue count]; ++i) {
+            <span class="comment">// Parse the returned JSON array.</span>
+            <span class="built_in">NSArray</span>* commandBatch = [[_queue objectAtIndex:i] JSONObject];
+
+            <span class="comment">// Iterate over and execute all of the commands.</span>
+            <span class="keyword">for</span> (<span class="built_in">NSArray</span>* jsonEntry <span class="keyword">in</span> commandBatch) {
+                <span class="keyword">@autoreleasepool</span> {
+                    CDVInvokedUrlCommand* command = [CDVInvokedUrlCommand commandFromJson:jsonEntry];
+                    CDV_EXEC_LOG(<span class="string">@"Exec(%@): Calling %@.%@"</span>, command<span class="variable">.callbackId</span>, command<span class="variable">.className</span>, command<span class="variable">.methodName</span>);
+                    <span class="keyword">if</span> (![<span class="keyword">self</span> execute:command]) {
+                    }
+                }
+            }
+        }
+        [_queue removeAllObjects];
+    } 
+    <span class="keyword">@finally</span>
+    {
+            _currentlyExecuting = <span class="literal">NO</span>;
+    }
+}
+</code></pre><p>执行command<br>1.根据command.className  生成CDVPlugin变量obj<br>2.根据command.methodName生成NSSelectorFromString(methodName)<br>3.若obj能够响应上述SEL，则执行<code>((void (*)(id, SEL, id))objc_msgSend)(obj, normalSelector, command);</code></p>
+<pre><code>- (<span class="built_in">BOOL</span>)execute:(CDVInvokedUrlCommand*)command
+{
+    <span class="comment">// Fetch an instance of this class</span>
+    `CDVPlugin`* obj = [_viewController<span class="variable">.commandDelegate</span> getCommandInstance:command<span class="variable">.className</span>];
+
+    CDVPluginResult* result = <span class="literal">nil</span>;
+    <span class="built_in">NSString</span> *error = <span class="literal">nil</span>;
+
+    <span class="built_in">BOOL</span> retVal = <span class="literal">YES</span>;
+    <span class="keyword">double</span> started = [[<span class="built_in">NSDate</span> date] timeIntervalSince1970] * <span class="number">1000.0</span>;
+    <span class="comment">// Find the proper selector to call.</span>
+    <span class="built_in">NSString</span>* methodName = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@:"</span>, command<span class="variable">.methodName</span>];
+    SEL normalSelector = <span class="built_in">NSSelectorFromString</span>(methodName);
+    <span class="keyword">if</span> ([obj respondsToSelector:normalSelector]) {
+        <span class="comment">// [obj performSelector:normalSelector withObject:command];</span>
+        <span class="comment">//        objc_msgSend(obj, normalSelector, command);</span>
+        ((<span class="keyword">void</span> (*)(<span class="keyword">id</span>, SEL, <span class="keyword">id</span>))objc_msgSend)(obj, normalSelector, command);
+    } 
+    <span class="keyword">else</span> 
+    {
+    }
+    <span class="keyword">double</span> elapsed = [[<span class="built_in">NSDate</span> date] timeIntervalSince1970] * <span class="number">1000.0</span> - started;
+    <span class="keyword">if</span> (elapsed &gt; <span class="number">10</span>) {
+        <span class="built_in">NSLog</span>(<span class="string">@"THREAD WARNING: ['%@'] took '%f' ms. Plugin should use a background thread."</span>, command<span class="variable">.className</span>, elapsed);
+    }
+    <span class="keyword">return</span> retVal;
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh01h3000f75crbzxbq59x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-FMDB" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/11/FMDB/" class="article-date">
@@ -199,7 +416,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciefga997000dpdcrmoi65lqg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejh01gz000d75crf5g5gq86" class="article-share-link">Share</a>
       
       
     </footer>
@@ -336,7 +553,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciefga98v0005pdcr8vnsfnkj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejh01gn000575crd9a64vu6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -392,7 +609,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciefga98u0004pdcraad71t6y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejh01gl000475cr41go5dmi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -448,7 +665,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciefga98y0007pdcruev9i6ui" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejh01gp000775crl0u3k5aj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -796,7 +1013,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciefga993000apdcro71akg1n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejh01gu000a75cre9rgoxa1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -832,7 +1049,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciefga998000epdcrovjragq3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejh01h1000e75crm0aantjc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -868,7 +1085,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciefga994000bpdcrvthvih7d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejh01gw000b75crc4bocrya" class="article-share-link">Share</a>
       
       
     </footer>
@@ -905,7 +1122,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciefga995000cpdcrx0gdqb2u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejh01gx000c75crb6v0v34r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -948,52 +1165,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="ciefga98s0002pdcrde18bv8q" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-iOS-app-工程目录模版" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/07/iOS-app-工程目录模版/" class="article-date">
-  <time datetime="2015-09-07T04:10:47.000Z" itemprop="datePublished">2015-09-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/07/iOS-app-工程目录模版/">iOS app 工程目录模版</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="工程目录">工程目录</h2><p>–Application<br>    |-AppDelegate.m<br>    |-AppDelegate.h<br>–Vendors     //第三方库<br>  |-xxx<br>  |-xxx<br>–General<br>  |-Category<br>  |-base<br>–Sections    //基础模块<br>  |-network<br>  |-storage<br>  |-xxx<br>–Macro         //基础宏<br>–Classes<br>–Resource    //资源<br>  |-1.0<br>  |-文本化配置资源<br>  |-xxx<br>–Plugins     //CDV插件<br>–Others</p>
-<h2 id="流程">流程</h2><h3 id="app启动配置">app启动配置</h3><pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
-</code></pre><p>注册数据库<br>注册IM服务<br>注册听云服务<br>注册统计类服务<br>注册日志类服务<br>注册微信服务<br>网络配置初始化，最大连接数，缓存，接口控制<br>读取默认数据<br>注册网络监测服务<br>注册图片缓存路径<br>注册消息推送<br>更新本地配置数据</p>
-<h3 id="app前端配置">app前端配置</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationDidBecomeActive:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
-</code></pre><p>上传本地日志<br>检查新版本<br>IM配置</p>
-<h3 id="app进入后台">app进入后台</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationDidEnterBackground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
-</code></pre><p>上传本地日志<br>IM配置<br>内存数据实例化</p>
-<h3 id="app终止配置">app终止配置</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationWillTerminate:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
-</code></pre><p>IM配置<br>内存数据实例化</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="ciefga98x0006pdcr93x9a6hr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="ciejh01gi000275crwx83ry2k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1022,7 +1194,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -1032,6 +1204,10 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/09/14/CDVViewController-1/">CDVViewController</a>
+          </li>
         
           <li>
             <a href="/2015/09/11/FMDB/">FMDB ＋ JKDBModel</a>
@@ -1047,10 +1223,6 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
         
           <li>
             <a href="/2015/09/07/html基础知识/">html+JavaScript基础知识</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/07/WebViewJavascriptBridge/">WebViewJavascriptBridge</a>
           </li>
         
       </ul>
