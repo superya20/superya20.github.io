@@ -91,7 +91,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejh3qqu000f8bcrtqh2y2g8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejh4eg2000f8ncrsvbsay9n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -232,14 +232,13 @@
     }];
 }
 </code></pre><p>CDVCommandDelegateImpl</p>
-<pre><code><span class="pp">- <span class="params">(id)</span>initWithViewController:<span class="params">(<span class="variable">CDVViewController</span>*)</span>viewController
+<pre><code>- (id)initWithViewController:(CDVViewController*)viewController
 {
-    _viewController = viewController;
-    _commandQueue = _viewController</span>.command<span class="variable">Queue</span>;
+    _viewController = viewController<span class="comment">;</span>
+    _commandQueue = _viewController.commandQueue<span class="comment">;</span>
 }
-
-
-<span class="pp">-<span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js
+</code></pre><p> eval系列函数</p>
+<pre><code><span class="pp">-<span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js
 - <span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js scheduledOnRunLoop:<span class="params">(<span class="variable">BOOL</span>)</span>scheduledOnRunLoop
 - <span class="params">(void)</span>evalJsHelper:<span class="params">(<span class="variable">NSString</span>*)</span>js
 - <span class="params">(void)</span>evalJsHelper2:<span class="params">(<span class="variable">NSString</span>*)</span>js</span>
@@ -313,7 +312,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh3qqx000g8bcry81f3m8s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh4eg5000g8ncrrp7a8ir5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -457,7 +456,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejh3qqs000d8bcr9ai6kmcy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejh4eg0000d8ncri52whbo7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -594,7 +593,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejh3qqi00058bcrjsd16qko" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejh4efp00058ncrbfo184hm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -650,7 +649,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejh3qqg00048bcramwzdczr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejh4efo00048ncroeh6mndo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -706,7 +705,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejh3qqk00078bcrf4uv56m4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejh4efs00078ncrz12hc6zy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1054,7 +1053,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejh3qqo000a8bcrapyrtzc6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejh4efw000a8ncryq4ek0cx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1090,7 +1089,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejh3qqt000e8bcrup093zi9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejh4eg1000e8ncr87lf34pi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1126,7 +1125,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejh3qqp000b8bcrbvfos7ym" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejh4efx000b8ncrdbpmziq1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1163,7 +1162,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejh3qqq000c8bcrfgjtrohl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejh4efy000c8ncrw751d7ns" class="article-share-link">Share</a>
       
       
     </footer>
