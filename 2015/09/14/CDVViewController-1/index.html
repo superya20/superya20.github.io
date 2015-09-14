@@ -21,7 +21,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
 {
     if ((self != nil) &amp;amp;&amp;amp; !self.initialized) {
         _commandQueue = [[CD">
-<meta property="og:updated_time" content="2015-09-14T05:14:59.000Z">
+<meta property="og:updated_time" content="2015-09-14T06:43:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDVViewController">
 <meta name="twitter:description" content="version:
@@ -208,6 +208,27 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
         }
     }];
 }
+</code></pre><h4 id="-_(void)createGapView创建self-webView">- (void)createGapView创建self.webView</h4><p>1.创建self.webView<br>2.注册CDVURLProtocol。每个CDVViewController都注册了，这里有没有什么问题？</p>
+<pre><code>- (<span class="keyword">void</span>)createGapView
+{
+    <span class="built_in">CGRect</span> webViewBounds = <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.bounds</span>;
+
+    webViewBounds<span class="variable">.origin</span> = <span class="keyword">self</span><span class="variable">.view</span><span class="variable">.bounds</span><span class="variable">.origin</span>;
+
+    <span class="keyword">if</span> (!<span class="keyword">self</span><span class="variable">.webView</span>) {
+        <span class="keyword">self</span><span class="variable">.webView</span> = [<span class="keyword">self</span> newCordovaViewWithFrame:webViewBounds];
+        <span class="keyword">self</span><span class="variable">.webView</span><span class="variable">.autoresizingMask</span> = (<span class="built_in">UIViewAutoresizingFlexibleWidth</span> | <span class="built_in">UIViewAutoresizingFlexibleHeight</span>);
+
+        [<span class="keyword">self</span><span class="variable">.view</span> addSubview:<span class="keyword">self</span><span class="variable">.webView</span>];
+        [<span class="keyword">self</span><span class="variable">.view</span> sendSubviewToBack:<span class="keyword">self</span><span class="variable">.webView</span>];
+
+        _webViewDelegate = [[CDVWebViewDelegate alloc] initWithDelegate:<span class="keyword">self</span>];
+        <span class="keyword">self</span><span class="variable">.webView</span><span class="variable">.delegate</span> = _webViewDelegate;
+
+        <span class="comment">// register this viewcontroller with the NSURLProtocol, only after the User-Agent is set</span>
+        [CDVURLProtocol registerViewController:<span class="keyword">self</span>];    <span class="comment">//注册CDVURLProtocol</span>
+    }
+}
 </code></pre><h2 id="CDVCommandDelegateImpl">CDVCommandDelegateImpl</h2><h4 id="初始化">初始化</h4><pre><code>- (id)initWithViewController:(CDVViewController*)viewController
 {
     _viewController = viewController<span class="comment">;</span>
@@ -255,38 +276,47 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     }
 }
 </code></pre><h4 id="执行command">执行command</h4><p>1.根据command.className  生成CDVPlugin变量obj<br>2.根据command.methodName生成NSSelectorFromString(methodName)<br>3.若obj能够响应上述SEL，则执行<code>((void (*)(id, SEL, id))objc_msgSend)(obj, normalSelector, command);</code></p>
-<pre><code>- (<span class="built_in">BOOL</span>)execute:(CDVInvokedUrlCommand*)command
+<pre><code>- <span class="params">(BOOL)</span>execute:<span class="params">(CDVInvokedUrlCommand*)</span>command
 {
-    <span class="comment">// Fetch an instance of this class</span>
-    `CDVPlugin`* obj = [_viewController<span class="variable">.commandDelegate</span> getCommandInstance:command<span class="variable">.className</span>];
+    `CDVPlugin`<span class="built_in">*</span> obj = [_viewController.commandDelegate getCommandInstance:command.className];
 
-    CDVPluginResult* result = <span class="literal">nil</span>;
-    <span class="built_in">NSString</span> *error = <span class="literal">nil</span>;
-
-    <span class="built_in">BOOL</span> retVal = <span class="literal">YES</span>;
-    <span class="keyword">double</span> started = [[<span class="built_in">NSDate</span> date] timeIntervalSince1970] * <span class="number">1000.0</span>;
-    <span class="comment">// Find the proper selector to call.</span>
-    <span class="built_in">NSString</span>* methodName = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@:"</span>, command<span class="variable">.methodName</span>];
-    SEL normalSelector = <span class="built_in">NSSelectorFromString</span>(methodName);
-    <span class="keyword">if</span> ([obj respondsToSelector:normalSelector]) {
-        <span class="comment">// [obj performSelector:normalSelector withObject:command];</span>
-        <span class="comment">//        objc_msgSend(obj, normalSelector, command);</span>
-        ((<span class="keyword">void</span> (*)(<span class="keyword">id</span>, SEL, <span class="keyword">id</span>))objc_msgSend)(obj, normalSelector, command);
+    NSString<span class="built_in">*</span> methodName = [NSString stringWithFormat:@<span class="string">"%@:"</span>, command.methodName];
+    SEL normalSelector = NSSelectorFromString<span class="params">(methodName)</span>;
+    <span class="keyword">if</span> <span class="params">([obj respondsToSelector:normalSelector])</span> {
+        <span class="params">(<span class="params">(void <span class="params">(*)</span><span class="params">(id, SEL, id)</span>)</span>objc_msgSend)</span><span class="params">(obj, normalSelector, command)</span>;
     } 
     <span class="keyword">else</span> 
-    {
+    {}
+    return retVal;
+}
+</code></pre><h2 id="CDVURLProtocol">CDVURLProtocol</h2><p>原理与WebviewProxy类似。注册CDVURLProtocol服务，h5通过CDVURLProtocol调用native，native拦截CDVURLProtocol并响应。<br>static NSMutableSet* gRegisteredControllers = nil;</p>
+<h4 id="注册CDVURLProtocol服务">注册CDVURLProtocol服务</h4><p>1.注册CDVURLProtocol服务<br>2.实例化静态变量gRegisteredControllers。问题，最大容量8？<br>3.初始化静态变量gWhitelist白名单，有问题，随机用第一个viewController的白名单赋值，其他viewController的白名单无效<br>4.存储viewController的地址<br>    [gRegisteredControllers addObject:[NSNumber numberWithLongLong:(long long)viewController]];</p>
+<pre><code>+ (<span class="keyword">void</span>)registerViewController:(CDVViewController*)viewController
+{
+    <span class="keyword">if</span> (gRegisteredControllers == <span class="literal">nil</span>) {
+        [<span class="built_in">NSURLProtocol</span> registerClass:[CDVURLProtocol class]];
+        gRegisteredControllers = [[<span class="built_in">NSMutableSet</span> alloc] initWithCapacity:<span class="number">8</span>];
+        <span class="comment">// The whitelist doesn't change, so grab the first one and store it.</span>
+        gWhitelist = viewController<span class="variable">.whitelist</span>;
+
+        <span class="comment">// Note that we grab the whitelist from the first viewcontroller for now - but this will change</span>
+        <span class="comment">// when we allow a registered viewcontroller to have its own whitelist (e.g InAppBrowser)</span>
+        <span class="comment">// Differentiating the requests will be through the 'vc' http header below as used for the js-&gt;objc bridge.</span>
+        <span class="comment">//  The 'vc' value is generated by casting the viewcontroller object to a (long long) value (see CDVViewController::webViewDidFinishLoad)</span>
+        <span class="keyword">if</span> (gWhitelist == <span class="literal">nil</span>) {
+            <span class="built_in">NSLog</span>(<span class="string">@"WARNING: NO whitelist has been set in CDVURLProtocol."</span>);
+        }
     }
-    <span class="keyword">double</span> elapsed = [[<span class="built_in">NSDate</span> date] timeIntervalSince1970] * <span class="number">1000.0</span> - started;
-    <span class="keyword">if</span> (elapsed &gt; <span class="number">10</span>) {
-        <span class="built_in">NSLog</span>(<span class="string">@"THREAD WARNING: ['%@'] took '%f' ms. Plugin should use a background thread."</span>, command<span class="variable">.className</span>, elapsed);
+
+    <span class="keyword">@synchronized</span>(gRegisteredControllers) {
+        [gRegisteredControllers addObject:[<span class="built_in">NSNumber</span> numberWithLongLong:(<span class="keyword">long</span> <span class="keyword">long</span>)viewController]];
     }
-    <span class="keyword">return</span> retVal;
 }
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh89m0000g9fcroqwl0ojc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejkea6c000giacrxyiynda0" class="article-share-link">Share</a>
       
       
     </footer>
