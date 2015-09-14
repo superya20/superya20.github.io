@@ -21,7 +21,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
 {
     if ((self != nil) &amp;amp;&amp;amp; !self.initialized) {
         _commandQueue = [[CD">
-<meta property="og:updated_time" content="2015-09-14T06:47:26.000Z">
+<meta property="og:updated_time" content="2015-09-14T06:48:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDVViewController">
 <meta name="twitter:description" content="version:
@@ -292,8 +292,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     {}
     return retVal;
 }
-</code></pre><hr>
-<h2 id="CDVURLProtocol">CDVURLProtocol</h2><p>原理与WebviewProxy类似。注册CDVURLProtocol服务，h5通过CDVURLProtocol调用native，native拦截CDVURLProtocol并响应。<br>static NSMutableSet* gRegisteredControllers = nil;</p>
+</code></pre><h2 id="—">—</h2><h2 id="CDVURLProtocol">CDVURLProtocol</h2><p>原理与WebviewProxy类似。注册CDVURLProtocol服务，h5通过CDVURLProtocol调用native，native拦截CDVURLProtocol并响应。<br>static NSMutableSet* gRegisteredControllers = nil;</p>
 <h4 id="注册CDVURLProtocol服务">注册CDVURLProtocol服务</h4><p>1.注册CDVURLProtocol服务<br>2.实例化静态变量gRegisteredControllers。问题，最大容量8？<br>3.初始化静态变量gWhitelist白名单，有问题，随机用第一个viewController的白名单赋值，其他viewController的白名单无效<br>4.存储viewController的地址<br>    [gRegisteredControllers addObject:[NSNumber numberWithLongLong:(long long)viewController]];</p>
 <pre><code>+ (<span class="keyword">void</span>)registerViewController:(CDVViewController*)viewController
 {
@@ -320,7 +319,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejkj79p000gikcr3j0qxexi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejkkgbs000gj1crga840wt6" class="article-share-link">Share</a>
       
       
     </footer>
