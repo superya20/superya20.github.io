@@ -21,7 +21,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
 {
     if ((self != nil) &amp;amp;&amp;amp; !self.initialized) {
         _commandQueue = [[CD">
-<meta property="og:updated_time" content="2015-09-14T05:12:37.000Z">
+<meta property="og:updated_time" content="2015-09-14T05:13:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDVViewController">
 <meta name="twitter:description" content="version:
@@ -102,7 +102,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     <div class="article-entry" itemprop="articleBody">
       
         <p>version:</p>
-<p>CDVViewController<br>初始化<code>- (void)__init</code><br>1.生成CDVCommandQueue实例<br>2.生成CDVCommandDelegateImpl实例<br>3.注册本地通知</p>
+<h2 id="CDVViewController">CDVViewController</h2><p>初始化<code>- (void)__init</code><br>1.生成CDVCommandQueue实例<br>2.生成CDVCommandDelegateImpl实例<br>3.注册本地通知</p>
 <pre><code>- (<span class="typename">void</span>)__init
 {
     <span class="keyword">if</span> ((self != nil) &amp;&amp; !self.initialized) {
@@ -209,8 +209,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
         }
     }];
 }
-</code></pre><p>CDVCommandDelegateImpl</p>
-<pre><code>- (id)initWithViewController:(CDVViewController*)viewController
+</code></pre><h2 id="CDVCommandDelegateImpl">CDVCommandDelegateImpl</h2><pre><code>- (id)initWithViewController:(CDVViewController*)viewController
 {
     _viewController = viewController<span class="comment">;</span>
     _commandQueue = _viewController.commandQueue<span class="comment">;</span>
@@ -220,14 +219,13 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
 - <span class="params">(void)</span>evalJs:<span class="params">(<span class="variable">NSString</span>*)</span>js scheduledOnRunLoop:<span class="params">(<span class="variable">BOOL</span>)</span>scheduledOnRunLoop
 - <span class="params">(void)</span>evalJsHelper:<span class="params">(<span class="variable">NSString</span>*)</span>js
 - <span class="params">(void)</span>evalJsHelper2:<span class="params">(<span class="variable">NSString</span>*)</span>js</span>
-</code></pre><p>最终会调用到<code>- (void)evalJsHelper2:(NSString*)js</code><br>1.执行js，并获取返回值<br>2.批量执行返回的commandsJSON</p>
+</code></pre><p>最终会调用到<code>- (void)evalJsHelper2:(NSString*)js</code><br>1.执行js，获取返回值<br>2.批量执行返回的commandsJSON</p>
 <pre><code>`-`(<span class="typename">void</span>)<span class="string">evalJsHelper2:</span>(NSString*)js
 {
     NSString* commandsJSON = [_viewController.webView <span class="string">stringByEvaluatingJavaScriptFromString:</span>js];
     [_commandQueue <span class="string">enqueCommandBatch:</span>commandsJSON];
 }
-</code></pre><p>CDVCommandQueue</p>
-<pre><code>- (<span class="keyword">void</span>)executePending
+</code></pre><h2 id="CDVCommandQueue">CDVCommandQueue</h2><pre><code>- (<span class="keyword">void</span>)executePending
 {
     <span class="comment">// Make us re-entrant-safe.</span>
     <span class="keyword">if</span> (_currentlyExecuting) {
@@ -290,7 +288,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh4eg5000g8ncrrp7a8ir5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh6in5000g93cros7bivpf" class="article-share-link">Share</a>
       
       
     </footer>
