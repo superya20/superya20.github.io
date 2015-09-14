@@ -91,7 +91,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejltqno000fltcr5td1vzmu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejm6aye000fnfcr5uwgneh1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -269,7 +269,14 @@
     [_commandQueue <span class="string">enqueCommandBatch:</span>commandsJSON];
 }
 </code></pre><hr>
-<h2 id="CDVCommandQueue">CDVCommandQueue</h2><h4 id="-_(void)executePending">- (void)executePending</h4><pre><code>- (<span class="keyword">void</span>)executePending
+<h2 id="CDVCommandQueue">CDVCommandQueue</h2><h4 id="-_(void)enqueCommandBatch:(NSString*)batchJSON">- (void)enqueCommandBatch:(NSString*)batchJSON</h4><pre><code><span class="tag">-</span> (void)<span class="tag">enqueCommandBatch</span>:(NSString*)<span class="tag">batchJSON</span>
+{
+    <span class="tag">if</span> ([batchJSON length] &gt; <span class="number">0</span>) {
+        <span class="attr_selector">[_queue addObject:batchJSON]</span>;
+        <span class="attr_selector">[self executePending]</span>;
+    }
+}
+</code></pre><h4 id="-_(void)executePending">- (void)executePending</h4><pre><code>- (<span class="keyword">void</span>)executePending
 {
     <span class="comment">// Make us re-entrant-safe.</span>
     <span class="keyword">if</span> (_currentlyExecuting) {
@@ -299,6 +306,26 @@
     {
             _currentlyExecuting = <span class="literal">NO</span>;
     }
+}
+</code></pre><h4 id="-_(void)maybeFetchCommandsFromJs:(NSNumber*)requestId"><code>- (void)maybeFetchCommandsFromJs:(NSNumber*)requestId</code></h4><pre><code>- (<span class="keyword">void</span>)maybeFetchCommandsFromJs:(<span class="built_in">NSNumber</span>*)requestId
+{
+    <span class="comment">// Use the request ID to determine if we've already flushed for this request.</span>
+    <span class="comment">// This is required only because the NSURLProtocol enqueues the same request</span>
+    <span class="comment">// multiple times.</span>
+    <span class="keyword">if</span> ([requestId integerValue] &gt; _lastCommandQueueFlushRequestId) {
+        _lastCommandQueueFlushRequestId = [requestId integerValue];
+        [<span class="keyword">self</span> fetchCommandsFromJs];
+    }
+}
+
+- (<span class="keyword">void</span>)fetchCommandsFromJs
+{
+    <span class="comment">// Grab all the queued commands from the JS side.</span>
+
+    <span class="built_in">NSString</span>* queuedCommandsJSON = [_viewController<span class="variable">.webView</span> stringByEvaluatingJavaScriptFromString:
+    <span class="string">@"cordova.require('cordova/exec').nativeFetchMessages()"</span>];
+
+    [<span class="keyword">self</span> enqueCommandBatch:queuedCommandsJSON];
 }
 </code></pre><h4 id="执行command">执行command</h4><p>1.根据command.className  生成CDVPlugin变量obj<br>2.根据command.methodName生成NSSelectorFromString(methodName)<br>3.若obj能够响应上述SEL，则执行<code>((void (*)(id, SEL, id))objc_msgSend)(obj, normalSelector, command);</code></p>
 <pre><code>- <span class="params">(BOOL)</span>execute:<span class="params">(CDVInvokedUrlCommand*)</span>command
@@ -403,7 +430,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejltqnq000gltcro6mt1cpi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejm6ayh000gnfcrnf7o3pfu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -547,7 +574,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejltqnl000dltcrx6xunsi4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejm6ayc000dnfcr3f4fx2gq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -684,7 +711,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejltqnb0005ltcrn99c03j5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejm6ay10005nfcr7ic595c1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -740,7 +767,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejltqn90004ltcrf6dcrwd1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejm6axz0004nfcrhtotjehy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -796,7 +823,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejltqnd0007ltcr06mvsd55" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejm6ay30007nfcrvjksbvoz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1144,7 +1171,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejltqnh000altcr0an50rsv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejm6ay7000anfcr08cywmkc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1180,7 +1207,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejltqnm000eltcr26fq3d7p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejm6ayd000enfcrpei5h6jl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1216,7 +1243,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejltqnj000bltcrze1fzt7s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejm6ay9000bnfcr36hsalen" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1253,7 +1280,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejltqnk000cltcrub5gmsza" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejm6aya000cnfcrr470rvq6" class="article-share-link">Share</a>
       
       
     </footer>

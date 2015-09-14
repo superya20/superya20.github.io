@@ -21,7 +21,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
 {
     if ((self != nil) &amp;amp;&amp;amp; !self.initialized) {
         _commandQueue = [[CD">
-<meta property="og:updated_time" content="2015-09-14T07:23:38.000Z">
+<meta property="og:updated_time" content="2015-09-14T07:31:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDVViewController">
 <meta name="twitter:description" content="version:
@@ -247,7 +247,14 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     [_commandQueue <span class="string">enqueCommandBatch:</span>commandsJSON];
 }
 </code></pre><hr>
-<h2 id="CDVCommandQueue">CDVCommandQueue</h2><h4 id="-_(void)executePending">- (void)executePending</h4><pre><code>- (<span class="keyword">void</span>)executePending
+<h2 id="CDVCommandQueue">CDVCommandQueue</h2><h4 id="-_(void)enqueCommandBatch:(NSString*)batchJSON">- (void)enqueCommandBatch:(NSString*)batchJSON</h4><pre><code><span class="tag">-</span> (void)<span class="tag">enqueCommandBatch</span>:(NSString*)<span class="tag">batchJSON</span>
+{
+    <span class="tag">if</span> ([batchJSON length] &gt; <span class="number">0</span>) {
+        <span class="attr_selector">[_queue addObject:batchJSON]</span>;
+        <span class="attr_selector">[self executePending]</span>;
+    }
+}
+</code></pre><h4 id="-_(void)executePending">- (void)executePending</h4><pre><code>- (<span class="keyword">void</span>)executePending
 {
     <span class="comment">// Make us re-entrant-safe.</span>
     <span class="keyword">if</span> (_currentlyExecuting) {
@@ -277,6 +284,26 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
     {
             _currentlyExecuting = <span class="literal">NO</span>;
     }
+}
+</code></pre><h4 id="-_(void)maybeFetchCommandsFromJs:(NSNumber*)requestId"><code>- (void)maybeFetchCommandsFromJs:(NSNumber*)requestId</code></h4><pre><code>- (<span class="keyword">void</span>)maybeFetchCommandsFromJs:(<span class="built_in">NSNumber</span>*)requestId
+{
+    <span class="comment">// Use the request ID to determine if we've already flushed for this request.</span>
+    <span class="comment">// This is required only because the NSURLProtocol enqueues the same request</span>
+    <span class="comment">// multiple times.</span>
+    <span class="keyword">if</span> ([requestId integerValue] &gt; _lastCommandQueueFlushRequestId) {
+        _lastCommandQueueFlushRequestId = [requestId integerValue];
+        [<span class="keyword">self</span> fetchCommandsFromJs];
+    }
+}
+
+- (<span class="keyword">void</span>)fetchCommandsFromJs
+{
+    <span class="comment">// Grab all the queued commands from the JS side.</span>
+
+    <span class="built_in">NSString</span>* queuedCommandsJSON = [_viewController<span class="variable">.webView</span> stringByEvaluatingJavaScriptFromString:
+    <span class="string">@"cordova.require('cordova/exec').nativeFetchMessages()"</span>];
+
+    [<span class="keyword">self</span> enqueCommandBatch:queuedCommandsJSON];
 }
 </code></pre><h4 id="执行command">执行command</h4><p>1.根据command.className  生成CDVPlugin变量obj<br>2.根据command.methodName生成NSSelectorFromString(methodName)<br>3.若obj能够响应上述SEL，则执行<code>((void (*)(id, SEL, id))objc_msgSend)(obj, normalSelector, command);</code></p>
 <pre><code>- <span class="params">(BOOL)</span>execute:<span class="params">(CDVInvokedUrlCommand*)</span>command
@@ -381,7 +408,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejltqnq000gltcro6mt1cpi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejm6ayh000gnfcrnf7o3pfu" class="article-share-link">Share</a>
       
       
     </footer>
