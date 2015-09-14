@@ -65,6 +65,49 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-从项目中移除storyboards" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/07/从项目中移除storyboards/" class="article-date">
+  <time datetime="2015-09-07T06:08:57.000Z" itemprop="datePublished">2015-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/07/从项目中移除storyboards/">从项目中移除storyboards</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在xcode6的新建工程中移除storyboards步骤<br>1.删除:<br>    .plist中Main storyboard file base name<br>    Main.storyboard<br>    LaunchScreen.xib<br>2.置空:<br>    Main Interface<br>    Launch Screen File<br>3.添加:<br>    在</p>
+<pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
+</code></pre><p>中添加</p>
+<pre><code>self.window = <span class="comment">[<span class="comment">[UIWindow alloc]</span> initWithFrame:<span class="comment">[<span class="comment">[UIScreen mainScreen]</span> bounds]</span>]</span>;
+ self.window.backgroundColor = <span class="comment">[UIColor whiteColor]</span>;
+<span class="comment">[self.window makeKeyAndVisible]</span>;
+</code></pre><p>4.设置LaunchScreenFile</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="ciejh1rop00027kcrr0y24py2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-iOS-app-工程目录模版" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/07/iOS-app-工程目录模版/" class="article-date">
@@ -100,7 +143,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="ciejh01go000675cr7wcmos3g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="ciejh1rou00067kcr2cl2gcte" class="article-share-link">Share</a>
       
       
     </footer>
@@ -188,7 +231,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="ciejh01gs000975crx0l9rmfa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="ciejh1rox00097kcr2hnsfnyn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -230,7 +273,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="ciejh01gk000375crjx00uiw1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="ciejh1roq00037kcrl2a5uohq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -266,7 +309,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="ciejh01gh000175cruwwj747q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="ciejh1ron00017kcrnj4r3eoh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -528,7 +571,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="ciejh01fu000075crfbtahh8s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="ciejh1ro300007kcr3sy9dkwe" class="article-share-link">Share</a>
       
       
     </footer>
@@ -573,7 +616,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="ciejh01gr000875crtwge2f17" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="ciejh1row00087kcr0gwujvoo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -602,7 +645,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -612,6 +655,10 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/09/14/CDVViewController-2/">CDVViewController</a>
+          </li>
         
           <li>
             <a href="/2015/09/14/CDVViewController-1/">CDVViewController</a>
@@ -627,10 +674,6 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
         
           <li>
             <a href="/2015/09/08/iOS-生成-net和APNS通信的证书/">iOS 生成各类证书</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/07/html基础知识/">html+JavaScript基础知识</a>
           </li>
         
       </ul>
