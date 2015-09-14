@@ -91,7 +91,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejh1rp6000f7kcrlxdgzuu3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciejh2cy5000f7ucr0x3c9xya" class="article-share-link">Share</a>
       
       
     </footer>
@@ -237,14 +237,13 @@
     _viewController = viewController<span class="comment">;</span>
     _commandQueue = _viewController.commandQueue<span class="comment">;</span>
 }
-</code></pre><ul>
-<li><p>(void)evalJs:(NSString<em>)js／- (void)evalJs:(NSString</em>)js scheduledOnRunLoop:(BOOL)scheduledOnRunLoop/- (void)evalJsHelper:(NSString<em>)js/- (void)evalJsHelper2:(NSString</em>)js<br>最终会调用到<code>- (void)evalJsHelper2:(NSString*)js</code><br>1.执行js，并获取返回值<br>2.批量执行返回的commandsJSON</p>
-<ul>
-<li>(void)evalJsHelper2:(NSString<em>)js<br>{<br>  NSString</em> commandsJSON = [_viewController.webView stringByEvaluatingJavaScriptFromString:js];<br>  [_commandQueue enqueCommandBatch:commandsJSON];<br>}</li>
-</ul>
-</li>
-</ul>
-<p>CDVCommandQueue</p>
+</code></pre><p>-(void)evalJs:(NSString<em>)js／- (void)evalJs:(NSString</em>)js scheduledOnRunLoop:(BOOL)scheduledOnRunLoop/- (void)evalJsHelper:(NSString<em>)js/- (void)evalJsHelper2:(NSString</em>)js<br>最终会调用到<code>- (void)evalJsHelper2:(NSString*)js</code><br>1.执行js，并获取返回值<br>2.批量执行返回的commandsJSON</p>
+<pre><code>-(<span class="typename">void</span>)<span class="string">evalJsHelper2:</span>(NSString*)js
+{
+    NSString* commandsJSON = [_viewController.webView <span class="string">stringByEvaluatingJavaScriptFromString:</span>js];
+    [_commandQueue <span class="string">enqueCommandBatch:</span>commandsJSON];
+}
+</code></pre><p>CDVCommandQueue</p>
 <pre><code>- (<span class="keyword">void</span>)executePending
 {
     <span class="comment">// Make us re-entrant-safe.</span>
@@ -308,7 +307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh1rp8000g7kcr0p81ag2m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejh2cy8000g7ucrje18gepm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -452,7 +451,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejh1rp3000d7kcrzfoar0yt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciejh2cy2000d7ucrwyqkfkm3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -589,7 +588,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejh1rot00057kcr0a3189xq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciejh2cxr00057ucru9mno3p1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -645,7 +644,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejh1ror00047kcr3ixeipvw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciejh2cxp00047ucr774kyylt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -701,7 +700,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejh1rov00077kcr1uk489hz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciejh2cxt00077ucrd6fr11wl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1049,7 +1048,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejh1roz000a7kcr246s7xuc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciejh2cxy000a7ucr6pidkhlg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1085,7 +1084,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejh1rp4000e7kcrb54md8hg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciejh2cy4000e7ucr18cnjogg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1121,7 +1120,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejh1rp1000b7kcrftdc0e00" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciejh2cy0000b7ucrcv13iuml" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1158,7 +1157,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejh1rp2000c7kcr40k14vvi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="ciejh2cy1000c7ucr3ar0d8up" class="article-share-link">Share</a>
       
       
     </footer>
