@@ -21,7 +21,7 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
 {
     if ((self != nil) &amp;amp;&amp;amp; !self.initialized) {
         _commandQueue = [[CD">
-<meta property="og:updated_time" content="2015-09-14T06:49:02.000Z">
+<meta property="og:updated_time" content="2015-09-14T07:23:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CDVViewController">
 <meta name="twitter:description" content="version:
@@ -317,11 +317,71 @@ CDVViewController初始化- (void)__init1.生成CDVCommandQueue实例2.生成CDV
         [gRegisteredControllers addObject:[<span class="built_in">NSNumber</span> numberWithLongLong:(<span class="keyword">long</span> <span class="keyword">long</span>)viewController]];
     }
 }
+</code></pre><p>NSURLRequest代理<code>+ (BOOL)canInitWithRequest:(NSURLRequest*)theRequest</code><br>1.根据theRequest取出viewController变量<br>2.若theRequest.URL包含@”assets-library://“前缀－－kCDVAssetsLibraryPrefixs<br>3.若[[theUrl path] isEqualToString:@”/!gap_exec”]<br>3.1 取[theRequest valueForHTTPHeaderField:@”cmds”]<br>3.2 [viewController.commandQueue performSelectorOnMainThread:@selector(enqueCommandBatch:) withObject:queuedCommandsJSON<br>3.3 [viewController.commandQueue performSelectorOnMainThread:@selector(maybeFetchCommandsFromJs:) withObject:[NSNumber numberWithInteger:[requestId integerValue]] waitUntilDone:NO];</p>
+<pre><code>+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span>*)theRequest
+{
+        <span class="built_in">NSURL</span>* theUrl = [theRequest URL];
+    CDVViewController* viewController = viewControllerForRequest(theRequest);
+
+    <span class="keyword">if</span> ([[theUrl absoluteString] hasPrefix:kCDVAssetsLibraryPrefixs]) {
+        <span class="keyword">return</span> <span class="literal">YES</span>;
+    } <span class="keyword">else</span> <span class="keyword">if</span> (viewController != <span class="literal">nil</span>) {
+        <span class="keyword">if</span> ([[theUrl path] isEqualToString:<span class="string">@"/!gap_exec"</span>]) 
+        {
+            <span class="built_in">NSString</span>* queuedCommandsJSON = [theRequest valueForHTTPHeaderField:<span class="string">@"cmds"</span>];
+            <span class="built_in">NSString</span>* requestId = [theRequest valueForHTTPHeaderField:<span class="string">@"rc"</span>];
+            <span class="keyword">if</span> (requestId == <span class="literal">nil</span>) {
+                <span class="built_in">NSLog</span>(<span class="string">@"!cordova request missing rc header"</span>);
+                <span class="keyword">return</span> <span class="literal">NO</span>;
+            }
+            <span class="built_in">BOOL</span> hasCmds = [queuedCommandsJSON length] &gt; <span class="number">0</span>;
+            <span class="keyword">if</span> (hasCmds) {
+                SEL sel = <span class="keyword">@selector</span>(enqueCommandBatch:);
+                [viewController<span class="variable">.commandQueue</span> performSelectorOnMainThread:sel withObject:queuedCommandsJSON waitUntilDone:<span class="literal">NO</span>];
+            } <span class="keyword">else</span> {
+                SEL sel = <span class="keyword">@selector</span>(maybeFetchCommandsFromJs:);
+                [viewController<span class="variable">.commandQueue</span> performSelectorOnMainThread:sel withObject:[<span class="built_in">NSNumber</span> numberWithInteger:[requestId integerValue]] waitUntilDone:<span class="literal">NO</span>];
+            }
+            <span class="comment">// Returning NO here would be 20% faster, but it spams WebInspector's console with failure messages.</span>
+            <span class="comment">// If JS-&gt;Native bridge speed is really important for an app, they should use the iframe bridge.</span>
+            <span class="comment">// Returning YES here causes the request to come through canInitWithRequest two more times.</span>
+            <span class="comment">// For this reason, we return NO when cmds exist.</span>
+            <span class="keyword">return</span> !hasCmds;
+        }
+    }
+    <span class="keyword">return</span> <span class="literal">NO</span>;
+}
+</code></pre><p>根据NSURLRequest，取CDVViewController变量<code>static CDVViewController *viewControllerForRequest(NSURLRequest* request)</code><br>从这个静态函数可以看出，h5发起的每个request带有@”vc”头，存储的是CDVViewController地址。</p>
+<pre><code><span class="keyword">static</span> CDVViewController *viewControllerForRequest(<span class="built_in">NSURLRequest</span>* request)
+{
+    <span class="comment">// The exec bridge explicitly sets the VC address in a header.</span>
+    <span class="comment">// This works around the User-Agent not being set for file: URLs.</span>
+    <span class="built_in">NSString</span>* addrString = [request valueForHTTPHeaderField:<span class="string">@"vc"</span>];
+
+    <span class="keyword">if</span> (addrString == <span class="literal">nil</span>) {
+        <span class="built_in">NSString</span>* userAgent = [request valueForHTTPHeaderField:<span class="string">@"User-Agent"</span>];
+        <span class="keyword">if</span> (userAgent == <span class="literal">nil</span>) {
+            <span class="keyword">return</span> <span class="literal">nil</span>;
+        }
+        <span class="built_in">NSUInteger</span> bracketLocation = [userAgent rangeOfString:<span class="string">@"("</span> options:<span class="built_in">NSBackwardsSearch</span>]<span class="variable">.location</span>;
+        <span class="keyword">if</span> (bracketLocation == <span class="built_in">NSNotFound</span>) {
+            <span class="keyword">return</span> <span class="literal">nil</span>;
+        }
+        addrString = [userAgent substringFromIndex:bracketLocation + <span class="number">1</span>];
+    }
+    <span class="keyword">long</span> <span class="keyword">long</span> viewControllerAddress = [addrString longLongValue];
+    <span class="keyword">@synchronized</span>(gRegisteredControllers) {
+        <span class="keyword">if</span> (![gRegisteredControllers containsObject:[<span class="built_in">NSNumber</span> numberWithLongLong:viewControllerAddress]]) {
+            <span class="keyword">return</span> <span class="literal">nil</span>;
+        }
+        }
+    <span class="keyword">return</span> (__bridge CDVViewController*)(<span class="keyword">void</span>*)viewControllerAddress;
+}
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejkl9vz000gj9crict8dk5o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciejltqnq000gltcro6mt1cpi" class="article-share-link">Share</a>
       
       
     </footer>
