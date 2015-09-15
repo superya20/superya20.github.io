@@ -87,11 +87,36 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h4 id="声明变量/常量">声明变量/常量</h4><p>1.声明常量<br>let myConstant = 42<br>2.指定类型<br>let explicitDouble:Double = 70 //指定类型<br>3.强制类型转换<br>let label = “The width is”<br>let width = 94<br>let widthlabel = label + Sting(width)</p>
+<h4 id="数组和字典">数组和字典</h4><p>1.声明数组/字典<br>var shoppingList = [“catfish”,”water”,”tulips”]<br>var occupations = [“Malcolm”:”Captain”,”Kaylee”:”Mechanic”]<br>2.声明空的数组/字典<br>let emptyArray = <a href="">String</a></p>
+<h4 id="控制流">控制流</h4><p>1.if<br>包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。<br>if optionalName == greeting<br>{<br>    greeting = greeting + optionalname<br>}<br>2.switch<br>switch支持任意类型的数据以及各种比较操作，不仅仅是整数以及测试相等<br>不需要break<br>let vegetable = “red pepper”<br>switch<br>case “celery”<br>    debugPrintln “Add some raisins and make ants on a log”<br>case “cucumber” “watercress”<br>    debugPrintln “That would make a good tea sandwitch”<br>case let where hasSuffix “pepper”<br>    debugPrintln “Is it a spicy ()?”<br>default<br>    debugPrintln “Everything tastes good in soup”</p>
+<h4 id="ARC">ARC</h4><p>swift没有指针？<br>只要你将一个类的实例赋值给一个属性或者常量或者变量,这个属性、 常量或者变量就是这个实例的<code>强引用</code>(strong reference)。</p>
+<p>1.实例间的强引用环<br>强引用不能检测出来吗？</p>
+<p>Swift提供两种方法来解决强引用环:弱引用和无主引用。<br>Person 和 Apartment 的例子说明了下面的场景:两个属性的值都可能是 nil,并有可能产生<br>强引用环。这种场景下适合使用弱引用。<br>Customer 和 CreditCard 的例子则说明了另外的场景:一个属性可以是 nil,另外一个属性<br>不允许是 nil,并有可能产生强引用环。这种场景下适合使用无主引用。<br>但是,存在第三种场景:两个属性都必须有值,且初始化完成后不能为 nil。这种场景下,则 要一个类用无主引用属性,另一个类用隐式展开的可选属性。</p>
+<p>1.1 弱引用<br>对于生命周期中引用会变为 nil 的实例,使用弱引用;弱引用不会增加实例的引用记数。关键字weak表明引用为弱引用。<br>注意：弱引用只能声明为变量类型,因为运行时它的值可能改变。弱引用绝对不能声明为常量。因为弱引用可以没有值,所以声明弱引用的时候必须是可选类型的。<br>你可以想检查其他的可选值一样<code>检查弱引用是否存在,永远 也不会碰到引用了也被销毁的实例的情况</code>。<br>1.2 无主引用<br>unowned<br>对于初始化时赋值之后引用再也不会赋值为 nil 的实例,使用无主引用。<br>和弱引用相似,无主引用也不强持有实例。但是和弱引用不同的是,无主引用默认始终有值。<br>因此,无主引用只能定义为非可选类型(non-optional type)。在属性、变量前添加 unowned<br>关键字,可以声明一个无主引用。<br>注意:<br>当实例被销毁后,试图访问该实例的无主引用会触发运行时错误。使用无主引用时请确保引 用始终指向一个未销毁的实例。 上面的非法操作会百分百让应用崩溃,不会发生无法预期 的行为。因此,你应该避免这种情况。</p>
+<p>2.闭包产生的强引用环<br>Swift 有如下约束:只要在闭包内使用 self 的成员,就要用 self.someProperty 或者<br>self.someMethod(而非只是 someProperty 或 someMethod)。这可以􏰁醒你可能会不小心 就占有了 self。<br>2.1 占有列表<br>占有列表中的每个元素都是由 weak 或者 unowned 关键字和实例的引用(如 self 或<br>someInstance)组成。每一对都在花括号中,通过逗号分开。<br>例：<br>有参数和返回值<br>@lazy var someClosure: (Int, String) -&gt; String = {<br>    [unowned self] (index: Int, stringToProcess: String) -&gt; String in<br>     // closure body goes here<br>}<br>或<br>没有参数和返回值<br>@lazy var someClosure: () -&gt; String = {<br>    [unowned self] in<br>    // closure body goes here<br>    }</p>
+<p>当闭包和占有的实例总是互相引用时并且总是同时销毁时,将闭包内的占有定义为无主引用。<br>相反的,当占有引用有时可能会是 nil 时,将闭包内的占有定义为弱引用。弱引用总是可选<br>类型,并且当引用的实例被销毁后,弱引用的值会自动置为 nil。利用这个特性,我们可以在<br>闭包内检查他们是否存在。</p>
+<p>什么时候用弱引用，变量可设置为nil<br>什么时候用无主引用，变量不可设置为nil</p>
+<h4 id="定义类">定义类</h4><p>swift文件不再区分.h/.m，统一为.swift文件<br>有继承<br>变量和函数声明在一起，同在class大括号范围域内,注意class 小写<br>类中声明变量var card: CreditCard?<br>class Person {<br>    let name: String<br>    init(name: String) {       //初始化函数<br>        self.name = name<br>        println(“(name) is being initialized”)</p>
+<pre><code>}
+
+<span class="keyword">deinit</span> {                    <span class="comment">//销毁函数</span>
+    <span class="built_in">println</span>(<span class="string">"<span class="subst">\(name)</span> is being deinitialized"</span>)
+}
+</code></pre><p>}<br>调用<br>var reference1: Person?<br>reference1 = Person(name: “John Appleseed”)</p>
+<h4 id="泛型">泛型</h4><p>泛型是 Swift 强大特征中的其中一个,许多 Swift 标准库是通过泛型代码构建出来的。例如,Swift 的数组和字典类型都是泛型集。你可以创建一个 Int 数组,也可创建一个 String 数组,或者甚至于可<br>以是任何其他 Swift 的类型数据数组。思考：objc中的NSArray和NSDictionary也可以存储任意类型的对象。还有id类型，也是可以支持任意类型。objc也支持泛型？？</p>
+<p>因为objc的对象是基于指针的，传递的是指针类型，所以就算不支持泛型，NSArray和NSDictionary都可以存储不同类型的变量，而且还有一个id类型，全场通用。但swift摈弃了指针类型，传的都是对象，所以必须解决泛型这个问题。<br>所以，泛型这个概念，到底是swift进步，还是退步了？？？<br>func swapTwoValues<t>(inout a: T, inout b: T)<br>func swapTwoValues<keytype,valuetype>(inout a: KeyType, inout b: ValueType)</keytype,valuetype></t></p>
+<p>这样定义，a和b必须是同一类型。弱，需要泛型，且a和b不是同一类型怎么办？</p>
+<p>占位类型T是一种类型参数的示例。可用来定义参数和返回类型。可以支持多个类型参数。<br>请始终使用大写字母开头的驼峰式命名法(例如 T 和 KeyType)来给类型参数命 名,以表明它们是类型的占位符,而非类型值。</p>
+<h4 id="其他">其他</h4><p>objc NSString  -&gt; swift String<br>swift 没有分号<br>@lazy 属性 ：第一次被调用的时候才会计算其初始值的属性。 必须使用var关键字。因为属性的值在实例构造完成之前可能无法得到。而常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。常量无法声明称lazy属性。用于比较耗时的属性。<br>inout 如果你想让函数改变形参值，并想要在函数调用结束后保持形参值的改变，那你可以把形参定义为in-out形参，传值调用和引用调用，可以理解为引用调用，传递地址？？？？使用的时候，传入的实参必须是&amp;开头。</p>
+<p>Swift 是类型安全的语言,所以它不允许一个 String 类型的变量和一个Double 类型的变量互相交换值。如果一定要做,Swift 将报编译错误。。。所以不会自动做强制转换？<br>mutating</p>
+<p>swift 有三种类型，class，structure，enumeration<br>“Structures and enumerations are value types.By default, the properties of a value type cannot be modified from within its instance methods.”<br> structure，enumeration 也可以定义属性和方法，但与class不同的是，structure，enumeration中的方法不能修改属性的值，除非在方法前加上mutating<br> 在引用类型中(即class)中的方法默认情况下就可以修改属性值，不存在以上问题。</p>
+<p> 函数没有参数，要写一个空的().与oc不同，不带参数后面不写:()就行</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/15/swift学习/" data-id="ciekyo2ac0004q6cr1cw1a4be" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/15/swift学习/" data-id="cielafztr0004u9crrq32auyx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -127,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="ciekyo2au000gq6crgv83aq9j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cielafzu8000gu9crspy6csk1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -466,7 +491,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="ciekyo2av000hq6cr8o29n7h5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cielafzu9000hu9crgeey4v8w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -610,7 +635,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="ciekyo2aq000eq6crclzlx0kr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cielafzu4000eu9cri3mqlc75" class="article-share-link">Share</a>
       
       
     </footer>
@@ -747,7 +772,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="ciekyo2af0006q6cryvw3pwh1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cielafztt0006u9crb3c2chlk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -803,7 +828,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="ciekyo2ae0005q6crf0jan3wv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cielafzts0005u9crtoesii1f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -859,7 +884,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="ciekyo2ah0008q6cr10ny3f1n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cielafztv0008u9cru05o8ngc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1207,7 +1232,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="ciekyo2am000bq6crtp89mbrf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cielafzu0000bu9cresj31ckt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1243,7 +1268,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="ciekyo2as000fq6cr7vnbxs2b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cielafzu5000fu9crsaowa7bl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1279,7 +1304,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciekyo2ao000cq6cr9r0ea2ay" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cielafzu1000cu9crp356p5kh" class="article-share-link">Share</a>
       
       
     </footer>
