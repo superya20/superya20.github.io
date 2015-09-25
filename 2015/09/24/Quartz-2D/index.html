@@ -3,18 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ReaciveCocoa学习笔记 | magicya的技术博客</title>
+  <title>Quartz 2D | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="Transforms1.CTM（current transformation matrix）通过操作CTM来修改user spaceQuartz 2D提供了5个函数来获取和修改CTM。你可以对CTM做旋转/平移/缩放的操作，且可以和affine transformation matrix 级联。
+2.Affine Transforms（仿射变换，与CTM类似，平移/旋转/缩放/串联）ATM并不做用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ReaciveCocoa学习笔记">
-<meta property="og:url" content="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/index.html">
+<meta property="og:title" content="Quartz 2D">
+<meta property="og:url" content="http://yoursite.com/2015/09/24/Quartz-2D/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description">
-<meta property="og:updated_time" content="2015-09-07T09:08:15.000Z">
+<meta property="og:description" content="Transforms1.CTM（current transformation matrix）通过操作CTM来修改user spaceQuartz 2D提供了5个函数来获取和修改CTM。你可以对CTM做旋转/平移/缩放的操作，且可以和affine transformation matrix 级联。
+2.Affine Transforms（仿射变换，与CTM类似，平移/旋转/缩放/串联）ATM并不做用">
+<meta property="og:updated_time" content="2015-09-24T11:54:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ReaciveCocoa学习笔记">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Quartz 2D">
+<meta name="twitter:description" content="Transforms1.CTM（current transformation matrix）通过操作CTM来修改user spaceQuartz 2D提供了5个函数来获取和修改CTM。你可以对CTM做旋转/平移/缩放的操作，且可以和affine transformation matrix 级联。
+2.Affine Transforms（仿射变换，与CTM类似，平移/旋转/缩放/串联）ATM并不做用">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -62,10 +65,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-ReaciveCocoa学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Quartz-2D" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/07/ReaciveCocoa学习笔记/" class="article-date">
-  <time datetime="2015-09-07T09:07:35.000Z" itemprop="datePublished">2015-09-07</time>
+    <a href="/2015/09/24/Quartz-2D/" class="article-date">
+  <time datetime="2015-09-24T11:01:10.000Z" itemprop="datePublished">2015-09-24</time>
 </a>
     
   </div>
@@ -76,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ReaciveCocoa学习笔记
+      Quartz 2D
     </h1>
   
 
@@ -84,11 +87,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>Transforms<br>1.CTM（current transformation matrix）通过操作CTM来修改user space<br>Quartz 2D提供了5个函数来获取和修改CTM。你可以对CTM做旋转/平移/缩放的操作，且可以和affine transformation matrix 级联。</p>
+<p>2.Affine Transforms（仿射变换，与CTM类似，平移/旋转/缩放/串联）<br>ATM并不做用于user space，直到你决定将这个trnasform提交给CTM。<br>1.创建变换矩阵，CGAffineTransform<br>2.CGContextConcatCTM 提交给CTM<br>使用<br>UIView.transform =<br>3.函数<br>CGAffineTransformMakeScale  xy按倍数缩放/拉伸<br>若有其他的子view add在被拉伸的view上，有的子view不见了，有的字view坐标诡异。。<br>其他view不受影响。<br>3.</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="ciezkkvjw000cqncrs0iocl70" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/24/Quartz-2D/" data-id="ciezkkvjy000dqncr2qpf7wez" class="article-share-link">Share</a>
       
       
     </footer>
@@ -97,19 +102,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/09/07/CDVViewController/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/09/25/CloudKit/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          CDVViewController
+          CloudKit
         
       </div>
     </a>
   
   
-    <a href="/2015/09/07/JKTabBarController/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/09/15/swift学习/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">JKTabBarController</div>
+      <div class="article-nav-title">swift学习</div>
     </a>
   
 </nav>
