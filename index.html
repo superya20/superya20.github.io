@@ -90,7 +90,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cif3u6j24000l92cr7sj9kcaf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cif3um7uf000lflcr73j6lpo0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -145,7 +145,7 @@
 </ul>
 <p>@interface POPAnimator : NSObject  －－单例<br>@protocol POPAnimatorDelegate <nsobject>   POPAnimator协议<br>class POPAnimatorItem   C++类<br>_dict 保存POPAnimation的key－value对，capacity为5<br>CFRunLoopAddObserver(CFRunLoopGetMain(), _pendingListObserver,  kCFRunLoopCommonModes);</nsobject></p>
 <p>static void applyAnimationToValue(id obj, POPAnimationState <em>state)<br>1.updateAnimatable(obj, ps, true);<br>static void updateAnimatable(id obj, POPPropertyAnimationState </em>anim, bool shouldAvoidExtraneousWrite = false)<br>2.[self _scheduleProcessPendingList];－－&gt; - (void)_processPendingList -&gt; - (void)_renderTime:(CFTimeInterval)time items:(std::list<popanimatoritemref>)items -&gt; - (void)_renderTime:(CFTimeInterval)time item:(POPAnimatorItemRef)item -&gt; virtual void willRun(bool started, id obj) -&gt; POPVector<br>具体每帧的渲染过程有两步：<br>1.renderTime，更新state的状态。<br>2.updateAnimatable，把state的变化更新到obj的具体属性上 </popanimatoritemref></p>
-<p>参考：<br><a href="http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎" target="_blank" rel="external">http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎</a> pop 源码阅读笔记<br><a href="http://www.cocoachina.com/industry/20140527/8565.html－－Facebook" target="_blank" rel="external">http://www.cocoachina.com/industry/20140527/8565.html－－Facebook</a> Pop 使用指南<br><a href="http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v" target="_blank" rel="external">http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v</a>)<br><a href="http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook" target="_blank" rel="external">http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook</a> Paper中的设计细节<br><a href="http://subjc.com/spark-camera/" target="_blank" rel="external">http://subjc.com/spark-camera/</a></p>
+<p>CADisplayLink<br><a href="http://www.flakor.cn/2015-03-28-876.html?utm_source=tuicool" target="_blank" rel="external">http://www.flakor.cn/2015-03-28-876.html?utm_source=tuicool</a> – NSTimer和CADisplayLink的基本用法<br><a href="http://blog.csdn.net/ch_soft/article/details/9408855" target="_blank" rel="external">http://blog.csdn.net/ch_soft/article/details/9408855</a> – CADisplayLink 及定时器的使用<br><a href="http://www.jianshu.com/p/c35a81c3b9eb" target="_blank" rel="external">http://www.jianshu.com/p/c35a81c3b9eb</a> – CADisplayLink<br>参考：<br><a href="http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎" target="_blank" rel="external">http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎</a> pop 源码阅读笔记<br><a href="http://www.cocoachina.com/industry/20140527/8565.html－－Facebook" target="_blank" rel="external">http://www.cocoachina.com/industry/20140527/8565.html－－Facebook</a> Pop 使用指南<br><a href="http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v" target="_blank" rel="external">http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v</a>)<br><a href="http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook" target="_blank" rel="external">http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook</a> Paper中的设计细节<br><a href="http://subjc.com/spark-camera/" target="_blank" rel="external">http://subjc.com/spark-camera/</a><br><a href="https://github.com/facebook/pop" target="_blank" rel="external">https://github.com/facebook/pop</a></p>
 <p>topic1<br>大量用到IOS开发之<strong>bridge，</strong>bridge_transfer和__bridge_retained<br>参考：<a href="http://blog.csdn.net/sanpintian/article/details/8139878" target="_blank" rel="external">http://blog.csdn.net/sanpintian/article/details/8139878</a><br>Core Foundation框架 (CoreFoundation.framework) 是一组C语言接口，它们为iOS应用程序提供基本数据管理和服务功能。Core Foundation框架和Foundation框架紧密相关，它们为相同功能提供接口，但Foundation框架提供Objective-C接口。如果您将Foundation对象和Core Foundation类型掺杂使用，则可利用两个框架之间的 “toll-free bridging”<br>Toll-Free bridged<br>在iOS世界，主要有两种对象：Objective-C 对象和 Core Foundation 对象0。Core Foundation 对象主要是有C语言实现的 Core Foundation Framework 的对象，其中也有对象引用计数的概念，只是不是 Cocoa Framework::Foundation Framework 的 retain/release，而是自身的 CFRetain/CFRelease 接口。主要用于ARC。正因为Objective-C是ARC管理的对象，而Core Foundation不是ARC管理的对象，所以才要特意这样转换，这与id类型向void*转换是一个概念。也就是说，当这两种类型（有ARC管理，没有ARC管理）在转换时，需要告诉编译器怎样处理对象的所有权。</p>
 <p>topic2<br>capacity<br>在with capacity的情况下，在初始化的时候分配的内存为n ＊ sizeof(elem)–假设capacity为n。如果在使用的过程中需要加入更多的元素需要给array扩容了，那么必须去找系统再次要求分配内存，而这次要求的内存的大小和扩容因子有关系，如果扩容因子为2，那么扩容之后总共分配的堆内存就成了2n*sizeof(elem)..扩容因子应该自己可以指定吧一般。</p>
 <p>好处是:如果指定capacity,而且元素数量没有超过这个值的话就不需要老是欲求不满找系统要内存，而找系统要内存这个操作会带来一定的系统开销(涉及到系统调用,当然我们使用起来事实上是感受不到这个区别的)。</p>
@@ -156,7 +156,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cif3u6j1q000a92cr2pr2t2t4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cif3um7tx000aflcr74jfk87r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -195,7 +195,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/25/CloudKit/" data-id="cif3u6j20000h92crfvv2xwhm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/25/CloudKit/" data-id="cif3um7ua000hflcrheu6nq7r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -233,7 +233,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/24/Quartz-2D/" data-id="cif3u6j1w000e92cr59xxkj21" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/24/Quartz-2D/" data-id="cif3um7u4000eflcr0m0mewkm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,7 +294,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/15/swift学习/" data-id="cif3u6j1j000492crx405f2nb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/15/swift学习/" data-id="cif3um7to0004flcr1nu97ev9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -330,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cif3u6j23000j92crk5ehaxs4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cif3um7uc000jflcrwuuquxc5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -669,7 +669,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cif3u6j24000k92crhxin9tdg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cif3um7ue000kflcr16cqpoo4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -813,7 +813,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cif3u6j1z000g92crckom000g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cif3um7u8000gflcrzt11usua" class="article-share-link">Share</a>
       
       
     </footer>
@@ -950,7 +950,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cif3u6j1l000692cr6z8z6x5w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cif3um7tr0006flcrwj3o7mdq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1006,7 +1006,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cif3u6j1k000592cr3h1y1t4l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cif3um7tp0005flcrmilsjp3e" class="article-share-link">Share</a>
       
       
     </footer>
