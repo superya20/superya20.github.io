@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>facebook-pop | magicya的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象
+四种类型，spring，decay，basic，custom
+POPDecayAnimation：POPPropertyAnimation  Decay动画
+
+(void)_initState{_state = new POPDecayAnimationState(self);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="facebook-pop">
+<meta property="og:url" content="http://yoursite.com/2015/09/28/facebook-pop/index.html">
+<meta property="og:site_name" content="magicya的技术博客">
+<meta property="og:description" content="Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象
+四种类型，spring，decay，basic，custom
+POPDecayAnimation：POPPropertyAnimation  Decay动画
+
+(void)_initState{_state = new POPDecayAnimationState(self);">
+<meta property="og:updated_time" content="2015-09-28T11:12:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="facebook-pop">
+<meta name="twitter:description" content="Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象
+四种类型，spring，decay，basic，custom
+POPDecayAnimation：POPPropertyAnimation  Decay动画
+
+(void)_initState{_state = new POPDecayAnimationState(self);">
+  
+    <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">magicya的技术博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">海纳百川，有容乃大；壁立千仞，无欲则刚</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-facebook-pop" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/28/facebook-pop/" class="article-date">
+  <time datetime="2015-09-28T06:58:40.000Z" itemprop="datePublished">2015-09-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      facebook-pop
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象</p>
+<p>四种类型，spring，decay，basic，custom</p>
+<p>POPDecayAnimation：POPPropertyAnimation  Decay动画</p>
+<ul>
+<li>(void)_initState<br>{<br>_state = new POPDecayAnimationState(self);<br>}<br>velocity 支持的类型 POPValueTypes ：kPOPValuePoint, kPOPValueInteger, kPOPValueFloat, kPOPValueRect, and kPOPValueSize</li>
+</ul>
+<p>POPAnimatableProperty: NSObject <nscopying, nsmutablecopying=""></nscopying,></p>
+<p>pop_animatable_write_block／pop_animatable_read_block</p>
+<p>struct _POPAnimationState  动画结构体<br>struct _POPDecayAnimationState : _POPPropertyAnimationState  Decay动画结构体</p>
+<p>POPPropertyAnimation : POPAnimation 带上属性的动画基类</p>
+<p>CAMediaTimingFunction  定义动画的节奏时间曲线<br>POPAnimation : NSObject  动画基类<br>_state</p>
+<p>POPAnimationDelegate  动画代理</p>
+<p>POPAnimationTracer</p>
+<p>@interface NSObject (POP)   －－ 给所有的NSObject子类都加上了POP方法</p>
+<ul>
+<li>(void)pop_addAnimation:(POPAnimation <em>)anim forKey:(NSString </em>)key;<br>Demo：[v1.layer pop_addAnimation:anim forKey:@”slide”];</li>
+<li>(void)pop_removeAllAnimations;</li>
+<li>(void)pop_removeAnimationForKey:(NSString *)key;</li>
+<li>(NSArray *)pop_animationKeys;</li>
+<li>(id)pop_animationForKey:(NSString *)key;<br>@end</li>
+</ul>
+<p>@interface POPAnimator : NSObject  －－单例<br>@protocol POPAnimatorDelegate <nsobject>   POPAnimator协议<br>class POPAnimatorItem   C++类<br>_dict 保存POPAnimation的key－value对，capacity为5<br>CFRunLoopAddObserver(CFRunLoopGetMain(), _pendingListObserver,  kCFRunLoopCommonModes);</nsobject></p>
+<p>static void applyAnimationToValue(id obj, POPAnimationState <em>state)<br>1.updateAnimatable(obj, ps, true);<br>static void updateAnimatable(id obj, POPPropertyAnimationState </em>anim, bool shouldAvoidExtraneousWrite = false)<br>2.[self _scheduleProcessPendingList];－－&gt; - (void)_processPendingList -&gt; - (void)_renderTime:(CFTimeInterval)time items:(std::list<popanimatoritemref>)items -&gt; - (void)_renderTime:(CFTimeInterval)time item:(POPAnimatorItemRef)item -&gt; virtual void willRun(bool started, id obj) -&gt; POPVector<br>具体每帧的渲染过程有两步：<br>1.renderTime，更新state的状态。<br>2.updateAnimatable，把state的变化更新到obj的具体属性上 </popanimatoritemref></p>
+<p>参考：<br><a href="http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎" target="_blank" rel="external">http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎</a> pop 源码阅读笔记<br><a href="http://www.cocoachina.com/industry/20140527/8565.html－－Facebook" target="_blank" rel="external">http://www.cocoachina.com/industry/20140527/8565.html－－Facebook</a> Pop 使用指南<br><a href="http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v" target="_blank" rel="external">http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v</a>)<br><a href="http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook" target="_blank" rel="external">http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook</a> Paper中的设计细节<br><a href="http://subjc.com/spark-camera/" target="_blank" rel="external">http://subjc.com/spark-camera/</a></p>
+<p>topic1<br>大量用到IOS开发之<strong>bridge，</strong>bridge_transfer和__bridge_retained<br>参考：<a href="http://blog.csdn.net/sanpintian/article/details/8139878" target="_blank" rel="external">http://blog.csdn.net/sanpintian/article/details/8139878</a><br>Core Foundation框架 (CoreFoundation.framework) 是一组C语言接口，它们为iOS应用程序提供基本数据管理和服务功能。Core Foundation框架和Foundation框架紧密相关，它们为相同功能提供接口，但Foundation框架提供Objective-C接口。如果您将Foundation对象和Core Foundation类型掺杂使用，则可利用两个框架之间的 “toll-free bridging”<br>Toll-Free bridged<br>在iOS世界，主要有两种对象：Objective-C 对象和 Core Foundation 对象0。Core Foundation 对象主要是有C语言实现的 Core Foundation Framework 的对象，其中也有对象引用计数的概念，只是不是 Cocoa Framework::Foundation Framework 的 retain/release，而是自身的 CFRetain/CFRelease 接口。主要用于ARC。正因为Objective-C是ARC管理的对象，而Core Foundation不是ARC管理的对象，所以才要特意这样转换，这与id类型向void*转换是一个概念。也就是说，当这两种类型（有ARC管理，没有ARC管理）在转换时，需要告诉编译器怎样处理对象的所有权。</p>
+<p>topic2<br>capacity<br>在with capacity的情况下，在初始化的时候分配的内存为n ＊ sizeof(elem)–假设capacity为n。如果在使用的过程中需要加入更多的元素需要给array扩容了，那么必须去找系统再次要求分配内存，而这次要求的内存的大小和扩容因子有关系，如果扩容因子为2，那么扩容之后总共分配的堆内存就成了2n*sizeof(elem)..扩容因子应该自己可以指定吧一般。</p>
+<p>好处是:如果指定capacity,而且元素数量没有超过这个值的话就不需要老是欲求不满找系统要内存，而找系统要内存这个操作会带来一定的系统开销(涉及到系统调用,当然我们使用起来事实上是感受不到这个区别的)。</p>
+<p>缺点是:如果实际元素个数也capacity相差甚远就浪费了内存空间。</p>
+<p>所以这里有个tradeoff,要根据实际情况来操作。</p>
+<p>在without capacity的情况下，事实上应该也是有个默认的capacity的，具体是多少应该和实现有关系，一般来说是10/12大约? </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cif3u6j1q000a92cr2pr2t2t4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/28/CALayer-Core-Animation-UIView/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CALayer,Core Animation,UIView
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/25/CloudKit/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CloudKit</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/09/28/CALayer-Core-Animation-UIView/">CALayer,Core Animation,UIView</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/28/facebook-pop/">facebook-pop</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/25/CloudKit/">CloudKit</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/24/Quartz-2D/">Quartz 2D</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/15/swift学习/">swift学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 magicya<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+    <div>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256422028'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1256422028%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
