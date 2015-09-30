@@ -3,18 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>CALayer,Core Animation,UIView | magicya的技术博客</title>
+  <title>BlocksKit | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="http://www.cnblogs.com/kenshincui/p/3972100.html">
+  <meta name="description" content="UIView+BLocksKit方法：@interface UIView (BlocksKit)
+
+(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block;
+(void)bk_whenTapped:(void (^)(void))bl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CALayer,Core Animation,UIView">
-<meta property="og:url" content="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/index.html">
+<meta property="og:title" content="BlocksKit">
+<meta property="og:url" content="http://yoursite.com/2015/09/29/BlocksKit/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="http://www.cnblogs.com/kenshincui/p/3972100.html">
-<meta property="og:updated_time" content="2015-09-28T10:41:14.000Z">
+<meta property="og:description" content="UIView+BLocksKit方法：@interface UIView (BlocksKit)
+
+(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block;
+(void)bk_whenTapped:(void (^)(void))bl">
+<meta property="og:updated_time" content="2015-09-29T08:42:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CALayer,Core Animation,UIView">
-<meta name="twitter:description" content="http://www.cnblogs.com/kenshincui/p/3972100.html">
+<meta name="twitter:title" content="BlocksKit">
+<meta name="twitter:description" content="UIView+BLocksKit方法：@interface UIView (BlocksKit)
+
+(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block;
+(void)bk_whenTapped:(void (^)(void))bl">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -62,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-CALayer-Core-Animation-UIView" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-BlocksKit" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/28/CALayer-Core-Animation-UIView/" class="article-date">
-  <time datetime="2015-09-28T10:40:59.000Z" itemprop="datePublished">2015-09-28</time>
+    <a href="/2015/09/29/BlocksKit/" class="article-date">
+  <time datetime="2015-09-29T08:31:43.000Z" itemprop="datePublished">2015-09-29</time>
 </a>
     
   </div>
@@ -76,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      CALayer,Core Animation,UIView
+      BlocksKit
     </h1>
   
 
@@ -84,12 +93,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="http://www.cnblogs.com/kenshincui/p/3972100.html" target="_blank" rel="external">http://www.cnblogs.com/kenshincui/p/3972100.html</a></p>
+        <p>UIView+BLocksKit<br>方法：<br>@interface UIView (BlocksKit)</p>
+<ul>
+<li>(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block;</li>
+<li>(void)bk_whenTapped:(void (^)(void))block;</li>
+<li>(void)bk_whenDoubleTapped:(void (^)(void))block;</li>
+<li>(void)bk_eachSubview:(void (^)(UIView *subview))block;//遍历subview，给每个subview添加事件</li>
+</ul>
+<p>原理：</p>
+<ul>
+<li>(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block<br>UIGestureRecognizer+BlocksKit<br>self.bk_handler<br>self.bk_handlerDelay</li>
+</ul>
+<ul>
+<li>(id)bk_recognizerWithHandler:(void (^)(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location))block</li>
+</ul>
+<ul>
+<li>(void)bk_handleAction:(UIGestureRecognizer *)recognizer<br>{     dispatch_after(popTime, dispatch_get_main_queue(), block);}</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cif6rpuae000nbycr9r5r0834" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/29/BlocksKit/" data-id="cif6rpuaf000obycrzyz8jkry" class="article-share-link">Share</a>
       
       
     </footer>
@@ -98,19 +123,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/09/28/NSRunLoop/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          NSRunLoop
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/28/facebook-pop/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/09/28/NSRunTime/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">facebook-pop</div>
+      <div class="article-nav-title">NSRunTime</div>
     </a>
   
 </nav>

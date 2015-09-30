@@ -63,6 +63,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-BlocksKit" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/29/BlocksKit/" class="article-date">
+  <time datetime="2015-09-29T08:31:43.000Z" itemprop="datePublished">2015-09-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/29/BlocksKit/">BlocksKit</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>UIView+BLocksKit<br>方法：<br>@interface UIView (BlocksKit)</p>
+<ul>
+<li>(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block;</li>
+<li>(void)bk_whenTapped:(void (^)(void))block;</li>
+<li>(void)bk_whenDoubleTapped:(void (^)(void))block;</li>
+<li>(void)bk_eachSubview:(void (^)(UIView *subview))block;//遍历subview，给每个subview添加事件</li>
+</ul>
+<p>原理：</p>
+<ul>
+<li>(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block<br>UIGestureRecognizer+BlocksKit<br>self.bk_handler<br>self.bk_handlerDelay</li>
+</ul>
+<ul>
+<li>(id)bk_recognizerWithHandler:(void (^)(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location))block</li>
+</ul>
+<ul>
+<li>(void)bk_handleAction:(UIGestureRecognizer *)recognizer<br>{     dispatch_after(popTime, dispatch_get_main_queue(), block);}</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/29/BlocksKit/" data-id="cif6rpuaf000obycrzyz8jkry" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-NSRunTime" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/28/NSRunTime/" class="article-date">
@@ -89,7 +142,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/NSRunTime/" data-id="cif3v0uiw000fk8creaumjj8x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/NSRunTime/" data-id="cif6rpua2000fbycrdb4a4e47" class="article-share-link">Share</a>
       
       
     </footer>
@@ -125,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/NSRunLoop/" data-id="cif3v0uiy000gk8cr06s6vqpg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/NSRunLoop/" data-id="cif6rpua4000gbycrgoi8s5y9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -162,7 +215,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cif3v0ujb000nk8crtrammjw8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cif6rpuae000nbycr9r5r0834" class="article-share-link">Share</a>
       
       
     </footer>
@@ -228,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cif3v0uin000ak8crrd81hg1x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cif6rpu9u000abycrh0vqni73" class="article-share-link">Share</a>
       
       
     </footer>
@@ -267,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/25/CloudKit/" data-id="cif3v0uj3000jk8cryd9p00o6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/25/CloudKit/" data-id="cif6rpua8000jbycrjj5iaeg4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -305,7 +358,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/24/Quartz-2D/" data-id="cif3v0uiu000ek8cr9umsm453" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/24/Quartz-2D/" data-id="cif6rpua0000ebycrsw4i3klv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -366,7 +419,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/15/swift学习/" data-id="cif3v0uic0004k8crsup0ijpp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/15/swift学习/" data-id="cif6rpu9l0004bycrc10xwjet" class="article-share-link">Share</a>
       
       
     </footer>
@@ -402,7 +455,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cif3v0uj5000lk8cr93gd9z6l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cif6rpua9000lbycrner2bn2z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -741,151 +794,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cif3v0uj9000mk8crjgfhr1sa" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-FMDB" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/11/FMDB/" class="article-date">
-  <time datetime="2015-09-11T08:15:29.000Z" itemprop="datePublished">2015-09-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/11/FMDB/">FMDB ＋ JKDBModel</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">https://github.com/ccgus/fmdb</a><br><a href="https://github.com/Joker-King/JKDBModel" target="_blank" rel="external">https://github.com/Joker-King/JKDBModel</a><br><a href="http://www.mobile-open.com/2014/3449.html" target="_blank" rel="external">http://www.mobile-open.com/2014/3449.html</a></p>
-<p>FMDB是对SQLite的封装。<br>1.FMDatabase  －－ 数据库<br>2.FMResultSet  －－ 查询结果类<br>3.FMDatabaseQueue －－ 如果你需要同时执行多个数据库操作，需要使用这个类。且这个类是线程安全的。</p>
-<p>FMDB数据库的几种创建路径<br>1.A file system path。这种方式下的文件，如果不存在，会自动创建。<br>2.”” 路径为空。该数据库被创建在临时的位置，当FMDatabase链接关闭时清除。<br>3.NULL 数据库被存在内存中，当FMDatabase链接关闭时清除。</p>
-<p>1.创建数据库</p>
-<pre><code>FMDatabase <span class="keyword">*</span>db = [FMDatabase databaseWithPath:<span class="comment">@"/tmp/tmp.db"];</span>
-</code></pre><p>2.Open<br>    当空间不足，或访问被限制时，会打开失败。</p>
-<pre><code><span class="keyword">if</span>(![<span class="keyword">db</span> <span class="keyword">open</span>])
-{
-    [<span class="keyword">db</span> release];
-    <span class="keyword">return</span>;
-}
-</code></pre><hr>
-<p>JKDBModel</p>
-<p>JKDBModel</p>
-<ul>
-<li><p>(BOOL)createTable ，创建表格。升级表格，若表格已经存在，则增加新增的表字段。若有属性被删除，则不管。</p>
-<ul>
-<li><p>(BOOL)createTable<br>{<br>  __block BOOL res = YES;<br>  JKDBHelper <em>jkDB = [JKDBHelper shareInstance];<br>  [jkDB.dbQueue inTransaction:^(FMDatabase </em>db, BOOL *rollback) {</p>
-<pre><code><span class="built_in">NSString</span> *tableName = <span class="built_in">NSStringFromClass</span>(<span class="keyword">self</span><span class="variable">.class</span>);  <span class="comment">//用类名称做表名</span>
-<span class="built_in">NSString</span> *columeAndType = [<span class="keyword">self</span><span class="variable">.class</span> getColumeAndTypeString];
-<span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"CREATE TABLE IF NOT EXISTS %@(%@);"</span>,tableName,columeAndType];
-<span class="keyword">if</span> (![db executeUpdate:sql]) {
-    res = <span class="literal">NO</span>;
-    *rollback = <span class="literal">YES</span>;
-    <span class="keyword">return</span>;
-};
-
-<span class="built_in">NSMutableArray</span> *columns = [<span class="built_in">NSMutableArray</span> array];
-FMResultSet *resultSet = [db getTableSchema:tableName];
-<span class="keyword">while</span> ([resultSet next]) {
-    <span class="built_in">NSString</span> *column = [resultSet stringForColumn:<span class="string">@"name"</span>];
-    [columns addObject:column];
-}
-<span class="built_in">NSDictionary</span> *dict = [<span class="keyword">self</span><span class="variable">.class</span> getAllProperties];
-<span class="built_in">NSArray</span> *properties = [dict objectForKey:<span class="string">@"name"</span>];
-<span class="built_in">NSPredicate</span> *filterPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"NOT (SELF IN %@)"</span>,columns];
-<span class="comment">//过滤数组</span>
-<span class="built_in">NSArray</span> *resultArray = [properties filteredArrayUsingPredicate:filterPredicate];
-<span class="keyword">for</span> (<span class="built_in">NSString</span> *column <span class="keyword">in</span> resultArray) {
-    <span class="built_in">NSUInteger</span> index = [properties indexOfObject:column];
-    <span class="built_in">NSString</span> *proType = [[dict objectForKey:<span class="string">@"type"</span>] objectAtIndex:index];
-    <span class="built_in">NSString</span> *fieldSql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@ %@"</span>,column,proType];
-    <span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"ALTER TABLE %@ ADD COLUMN %@ "</span>,<span class="built_in">NSStringFromClass</span>(<span class="keyword">self</span><span class="variable">.class</span>),fieldSql];
-    <span class="keyword">if</span> (![db executeUpdate:sql]) {
-        res = <span class="literal">NO</span>;
-        *rollback = <span class="literal">YES</span>;
-        <span class="keyword">return</span> ;
-    }
-}
-</code></pre><p>  }];</p>
-<p>  return res;<br>}</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>备注：<br>1.NSStringFromClass<br>2.getColumeAndTypeString<br>3.@”CREATE TABLE IF NOT EXISTS %@(%@);”,tableName,columeAndType<br>4.getTableSchema<br>5.getAllProperties<br>6.@”ALTER TABLE %@ ADD COLUMN %@ “,NSStringFromClass(self.class),fieldSql</p>
-<ul>
-<li><p>(NSArray *)transients   <code>如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写</code></p>
-<p>  /<em>* 如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写
-   </em>/</p>
-<ul>
-<li>(NSArray *)transients<br>{<br>  return [NSArray array];<br>}</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>(NSDictionary *)getPropertys  获取该类的所有属性</p>
-<p>  /**</p>
-<ul>
-<li>获取该类的所有属性<br>*/<ul>
-<li>(NSDictionary <em>)getPropertys<br>{<br>NSMutableArray </em>proNames = [NSMutableArray array];<br>NSMutableArray <em>proTypes = [NSMutableArray array];<br>NSArray </em>theTransients = [[self class] transients];<br>unsigned int outCount, i;<br>objc_property_t <em>properties = class_copyPropertyList([self class], &amp;outCount);<br>for (i = 0; i &lt; outCount; i++) {<br>  objc_property_t property = properties[i];<br>  //获取属性名<br>  NSString </em>propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];<br>  if ([theTransients containsObject:propertyName]) {<pre><code><span class="keyword">continue</span>;
-</code></pre>  }<br>  [proNames addObject:propertyName];<br>  //获取属性类型等参数<br>  NSString <em>propertyType = [NSString stringWithCString: property_getAttributes(property) encoding:NSUTF8StringEncoding];<br>  /</em><br>   各种符号对应类型，部分类型在新版SDK中有所变化，如long 和long long<br>   c char         C unsigned char<br>   i int          I unsigned int<br>   l long         L unsigned long<br>   s short        S unsigned short<br>   d double       D unsigned double<br>   f float        F unsigned float<br>   q long long    Q unsigned long long<br>   B BOOL<br>   @ 对象类型 //指针 对象类型 如NSString 是@“NSString”</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<pre><code>         <span class="number">64</span>位下<span class="typename">long</span> 和<span class="typename">long</span> <span class="typename">long</span> 都是Tq
-         SQLite 默认支持五种数据类型TEXT、INTEGER、REAL、BLOB、NULL
-         因为在项目中用的类型不多，故只考虑了少数类型
-         */
-        <span class="keyword">if</span> ([propertyType <span class="string">hasPrefix:</span>@<span class="string">"T@"</span>]) {
-            [proTypes <span class="string">addObject:</span>SQLTEXT];
-        } <span class="keyword">else</span> <span class="keyword">if</span> ([propertyType <span class="string">hasPrefix:</span>@<span class="string">"Ti"</span>]||[propertyType <span class="string">hasPrefix:</span>@<span class="string">"TI"</span>]||[propertyType <span class="string">hasPrefix:</span>@<span class="string">"Ts"</span>]||[propertyType <span class="string">hasPrefix:</span>@<span class="string">"TS"</span>]||[propertyType <span class="string">hasPrefix:</span>@<span class="string">"TB"</span>]) {
-            [proTypes <span class="string">addObject:</span>SQLINTEGER];
-        } <span class="keyword">else</span> {
-            [proTypes <span class="string">addObject:</span>SQLREAL];
-        }
-
-    }
-    free(properties);
-
-    <span class="keyword">return</span> [NSDictionary <span class="string">dictionaryWithObjectsAndKeys:</span>proNames,@<span class="string">"name"</span>,proTypes,@<span class="string">"type"</span>,nil];
-}
-</code></pre><p>1.class_copyPropertyList   取属性数组<br>2.property_getName(property)／property_getAttributes(property) 取属性名和属性类型<br>3./<em>* SQLite五种数据类型 </em>/</p>
-<p>#define SQLTEXT     @”TEXT”</p>
-<p>#define SQLINTEGER  @”INTEGER”</p>
-<p>#define SQLREAL     @”REAL”</p>
-<p>#define SQLBLOB     @”BLOB”</p>
-<p>#define SQLNULL     @”NULL”</p>
-<p>#define PrimaryKey  @”primary key”</p>
-<p>问题：<br>1.复杂对象怎么存储？<br>对象中有的字段是其他对象，有的字段是数组。这样的对象怎么存储？<br>转换成json字串存储。</p>
-<p>2.属性有修改怎么办？<br>V1.0 A：k1，k2,k3<br>V2.0 A:k2,k4</p>
-<p>3.用类名做表明，那么category怎么处理？</p>
-<p>4.主键和联合主键的设置？</p>
-<p>5.表字段校验？</p>
-<hr>
-<p>—end wly—</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cif3v0uj1000ik8crimy4hkvi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cif6rpuac000mbycrxh73k9fb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -914,7 +823,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -924,6 +833,10 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/09/29/BlocksKit/">BlocksKit</a>
+          </li>
         
           <li>
             <a href="/2015/09/28/NSRunTime/">NSRunTime</a>
@@ -939,10 +852,6 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
         
           <li>
             <a href="/2015/09/28/facebook-pop/">facebook-pop</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/25/CloudKit/">CloudKit</a>
           </li>
         
       </ul>

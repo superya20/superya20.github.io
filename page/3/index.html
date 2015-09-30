@@ -63,6 +63,94 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-WebViewProxy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/01/WebViewProxy/" class="article-date">
+  <time datetime="2015-09-01T08:26:55.000Z" itemprop="datePublished">2015-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/01/WebViewProxy/">WebViewProxy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="原理">原理</h2><p><code>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</code><br>·自定义请求和响应<br>·提供自定义的全局缓存支持<br>·重定向网络请求<br>·提供HTTP Mocking (方便前期测试)<br>·其他一些全局的网络请求修改需求</p>
+<hr>
+<h3 id="NSURLProtocol使用方法">NSURLProtocol使用方法</h3><p><code>继承NSURLPorotocl，并注册你的NSURLProtocol.当NSURLConnection准备发起请求时，它会遍历所有已注册的NSURLProtocol，询问它们能否处理当前请求。所以你需要尽早注册这个Protocol。</code></p>
+<pre><code><span class="collection">[NSURLProtocol registerClass:<span class="collection">[YXURLProtocol class]</span>]</span><span class="comment">;</span>
+</code></pre><p><code>实现NSURLProtocol的相关方法.当遍历到我们自定义的NSURLProtocol时，系统先会调用canInitWithRequest:这个方法。顾名思义，这是整个流程的入口，只有这个方法返回YES我们才能够继续后续的处理。我们可以在这个方法的实现里面进行请求的过滤，筛选出需要进行处理的请求。</code></p>
+<pre><code>+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request
++ (<span class="built_in">NSURLRequest</span> *)canonicalRequestForRequest:(<span class="built_in">NSURLRequest</span> *)request
++ (<span class="built_in">BOOL</span>)requestIsCacheEquivalent:(<span class="built_in">NSURLRequest</span> *)a
+                   toRequest:(<span class="built_in">NSURLRequest</span> *)b
+- (<span class="keyword">void</span>)startLoading
+</code></pre><hr>
+<h2 id="WebViewProxy使用方法：在需要使用的viewcontroller调用">WebViewProxy使用方法：在需要使用的viewcontroller调用</h2><pre><code>[WebViewProxy <span class="string">handleRequestsWithHost:</span>@<span class="string">"www.google.com"</span> <span class="string">path:</span>@<span class="string">"/images/srpr/logo3w.png"</span> <span class="string">handler:</span>^(NSURLRequest* req, WVPResponse *res)
+</code></pre><hr>
+<h3 id="WebViewProxy流程">WebViewProxy流程</h3><h4 id="0-配置－－全局静态变量">0.配置－－全局静态变量</h4><pre><code><span class="keyword">static</span> <span class="built_in">NSMutableArray</span>* requestMatchers;
+<span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewUserAgentTest;
+<span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewProxyLoopDetection;
+</code></pre><h5 id="1-WebViewProxy:NSObject_，编译的时候，做些初始化操作，并向NSURLProtocol注册WebViewProxyURLProtocol">1.WebViewProxy:NSObject ，编译的时候，做些初始化操作，并向NSURLProtocol注册WebViewProxyURLProtocol</h5><pre><code>+ (void)initialize {
+    [WebViewProxy removeAllHandlers];
+    webViewUserAgentTest = [NSPredicate predicateWithFormat:@"self MATCHES '^Mozilla.*Mac OS X.*'"];
+    webViewProxyLoopDetection = [NSPredicate predicateWithFormat:@"self.fragment MATCHES '__webviewproxyreq__'"];
+    // e.g. "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403"
+    [NSURLProtocol registerClass:[WebViewProxyURLProtocol class]];
+}
+
++ (void)handleRequestsWithHost:(NSString *)host path:(NSString *)path <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+    [<span class="keyword">self</span> handleRequestsMatching:predicate <span class="keyword">handler</span>:<span class="keyword">handler</span>];</span>
+}
+
+
++ (void)handleRequestsMatching:(NSPredicate*)predicate <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+// <span class="keyword">Match</span> <span class="keyword">on</span> <span class="keyword">any</span> property <span class="keyword">of</span> NSURL, <span class="keyword">e</span>.<span class="keyword">g</span>. <span class="string">"scheme MATCHES 'http' AND host MATCHES 'www.google.com'"</span>
+    [requestMatchers addObject:[WVPRequestMatcher matchWithPredicate:predicate <span class="keyword">handler</span>:<span class="keyword">handler</span>]];</span>
+} 
+</code></pre><h5 id="2-WebViewProxyURLProtocol">2.WebViewProxyURLProtocol</h5><pre><code><span class="comment">//canInitWithRequest －－ 过滤可处理的请求</span>
++ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request {
+    <span class="built_in">NSString</span>* userAgent = request<span class="variable">.allHTTPHeaderFields</span>[<span class="string">@"User-Agent"</span>];
+    <span class="keyword">if</span> (userAgent &amp;&amp; ![webViewUserAgentTest evaluateWithObject:userAgent]) { <span class="keyword">return</span> <span class="literal">NO</span>; }
+    <span class="keyword">if</span> ([webViewProxyLoopDetection evaluateWithObject:request<span class="variable">.URL</span>]) { <span class="keyword">return</span> <span class="literal">NO</span>; }
+    <span class="keyword">return</span> ([<span class="keyword">self</span> findRequestMatcher:request<span class="variable">.URL</span>] != <span class="literal">nil</span>);
+}
+<span class="comment">//startLoading -- 执行注册的handler</span>
+- (<span class="keyword">void</span>)startLoading {
+    <span class="keyword">self</span><span class="variable">.requestMatcher</span><span class="variable">.handler</span>(_correctedRequest, <span class="keyword">self</span><span class="variable">.proxyResponse</span>);
+}
+</code></pre><h5 id="3-WVPRequestMatcher:NSObject">3.WVPRequestMatcher:NSObject</h5><pre><code>+ (WVPRequestMatcher*)matchWithPredicate:(NSPredicate *)predicate <span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+    WVPRequestMatcher* matcher = [[WVPRequestMatcher alloc] init];
+    matcher.<span class="keyword">handler</span> = <span class="keyword">handler</span>;
+    matcher.predicate = predicate;
+    <span class="keyword">return</span> matcher;
+}
+</code></pre><p>参考文章：<br><a href="http://www.cocoachina.com/ios/20141225/10765.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20141225/10765.html</a><br><a href="https://github.com/marcuswestin/WebViewProxy" target="_blank" rel="external">https://github.com/marcuswestin/WebViewProxy</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cif6rpu9w000bbycrj15twnju" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-一些博客地址" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/08/28/一些博客地址/" class="article-date">
@@ -85,7 +173,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="论坛：http://www-v2ex-com/">论坛：<a href="http://www.v2ex.com/" target="_blank" rel="external">http://www.v2ex.com/</a></h2><h2 id="安卓：http://www-stormzhang-com/">安卓：<a href="http://www.stormzhang.com/" target="_blank" rel="external">http://www.stormzhang.com/</a></h2><h2 id="iOS:">iOS:</h2><p><a href="http://blog.daimajia.com/" target="_blank" rel="external">http://blog.daimajia.com/</a>    –  代码家<br><a href="http://www.trinea.cn/" target="_blank" rel="external">http://www.trinea.cn/</a> －－－ trinea<br><a href="http://www.zhihu.com/question/26417244" target="_blank" rel="external">http://www.zhihu.com/question/26417244</a> －－－ 安卓学习之路<br><a href="http://hukai.me/android-training-course-in-chinese/basics/index.html" target="_blank" rel="external">http://hukai.me/android-training-course-in-chinese/basics/index.html</a> — Android入门基础：从这里开始<br><a href="http://www.jianshu.com/users/eaec1fc422e9/latest_articles" target="_blank" rel="external">http://www.jianshu.com/users/eaec1fc422e9/latest_articles</a><br><a href="http://www.cnblogs.com/mjios/" target="_blank" rel="external">http://www.cnblogs.com/mjios/</a><br><a href="http://www.coderyi.com/archives" target="_blank" rel="external">http://www.coderyi.com/archives</a><br><a href="http://linianjian.cn/" target="_blank" rel="external">http://linianjian.cn/</a><br><a href="https://github.com/lesschat" target="_blank" rel="external">https://github.com/lesschat</a><br><a href="https://github.com/WorktileTech" target="_blank" rel="external">https://github.com/WorktileTech</a><br><a href="http://www.cnblogs.com/taintain1984/" target="_blank" rel="external">http://www.cnblogs.com/taintain1984/</a>  －－－ 沧海一粟<br><a href="http://www.jianshu.com/collection/5be41e88940c－－－寒哥管理的技术专题" target="_blank" rel="external">http://www.jianshu.com/collection/5be41e88940c－－－寒哥管理的技术专题</a></p>
+        <p>论坛：<a href="http://www.v2ex.com/" target="_blank" rel="external">http://www.v2ex.com/</a></p>
+<h2 id="https://www-cocoacontrols-com/"><a href="https://www.cocoacontrols.com/" target="_blank" rel="external">https://www.cocoacontrols.com/</a></h2><h2 id="安卓：http://www-stormzhang-com/">安卓：<a href="http://www.stormzhang.com/" target="_blank" rel="external">http://www.stormzhang.com/</a></h2><h2 id="iOS:">iOS:</h2><p><a href="http://blog.daimajia.com/" target="_blank" rel="external">http://blog.daimajia.com/</a>    –  代码家<br><a href="http://www.trinea.cn/" target="_blank" rel="external">http://www.trinea.cn/</a> －－－ trinea<br><a href="http://www.zhihu.com/question/26417244" target="_blank" rel="external">http://www.zhihu.com/question/26417244</a> －－－ 安卓学习之路<br><a href="http://hukai.me/android-training-course-in-chinese/basics/index.html" target="_blank" rel="external">http://hukai.me/android-training-course-in-chinese/basics/index.html</a> — Android入门基础：从这里开始<br><a href="http://www.jianshu.com/users/eaec1fc422e9/latest_articles" target="_blank" rel="external">http://www.jianshu.com/users/eaec1fc422e9/latest_articles</a><br><a href="http://www.cnblogs.com/mjios/" target="_blank" rel="external">http://www.cnblogs.com/mjios/</a><br><a href="http://www.coderyi.com/archives" target="_blank" rel="external">http://www.coderyi.com/archives</a><br><a href="http://linianjian.cn/" target="_blank" rel="external">http://linianjian.cn/</a><br><a href="https://github.com/lesschat" target="_blank" rel="external">https://github.com/lesschat</a><br><a href="https://github.com/WorktileTech" target="_blank" rel="external">https://github.com/WorktileTech</a><br><a href="http://www.cnblogs.com/taintain1984/" target="_blank" rel="external">http://www.cnblogs.com/taintain1984/</a>  －－－ 沧海一粟<br><a href="http://www.jianshu.com/collection/5be41e88940c－－－寒哥管理的技术专题" target="_blank" rel="external">http://www.jianshu.com/collection/5be41e88940c－－－寒哥管理的技术专题</a></p>
 <p><a href="https://github.com/mobileresearch" target="_blank" rel="external">https://github.com/mobileresearch</a><br><a href="http://longtimenoc.com/" target="_blank" rel="external">http://longtimenoc.com/</a></p>
 <p><a href="https://github.com/ChenYilong?tab=repositories" target="_blank" rel="external">https://github.com/ChenYilong?tab=repositories</a></p>
 <p><a href="http://matthewmorey.com/" target="_blank" rel="external">http://matthewmorey.com/</a></p>
@@ -95,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cif3v0uib0003k8crk7gv2cod" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cif6rpu9k0003bycrqtacugir" class="article-share-link">Share</a>
       
       
     </footer>
@@ -131,7 +220,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cif3v0ui70001k8cr1or6m67b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cif6rpu9c0001bycrb5d4islg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -393,7 +482,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cif3v0uhx0000k8crdrse5spl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cif6rpu8v0000bycrvr0qwf0c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -438,7 +527,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cif3v0uik0009k8crgcbiqlzy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cif6rpu9r0009bycrhj4gjl3q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -467,7 +556,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -477,6 +566,10 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/09/29/BlocksKit/">BlocksKit</a>
+          </li>
         
           <li>
             <a href="/2015/09/28/NSRunTime/">NSRunTime</a>
@@ -492,10 +585,6 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
         
           <li>
             <a href="/2015/09/28/facebook-pop/">facebook-pop</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/25/CloudKit/">CloudKit</a>
           </li>
         
       </ul>
