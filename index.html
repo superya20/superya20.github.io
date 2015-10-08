@@ -106,7 +106,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/29/BlocksKit/" data-id="cif6rpuaf000obycrzyz8jkry" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/29/BlocksKit/" data-id="cifi4jlkf000orfcrigbdpvjj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -142,7 +142,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/NSRunTime/" data-id="cif6rpua2000fbycrdb4a4e47" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/NSRunTime/" data-id="cifi4jlk0000frfcr2b8s2k0c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -178,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/NSRunLoop/" data-id="cif6rpua4000gbycrgoi8s5y9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/NSRunLoop/" data-id="cifi4jlk1000grfcr9pwna1om" class="article-share-link">Share</a>
       
       
     </footer>
@@ -215,7 +215,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cif6rpuae000nbycr9r5r0834" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cifi4jlke000nrfcrsal74up9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -270,7 +270,16 @@
 </ul>
 <p>@interface POPAnimator : NSObject  －－单例<br>@protocol POPAnimatorDelegate <nsobject>   POPAnimator协议<br>class POPAnimatorItem   C++类<br>_dict 保存POPAnimation的key－value对，capacity为5<br>CFRunLoopAddObserver(CFRunLoopGetMain(), _pendingListObserver,  kCFRunLoopCommonModes);</nsobject></p>
 <p>static void applyAnimationToValue(id obj, POPAnimationState <em>state)<br>1.updateAnimatable(obj, ps, true);<br>static void updateAnimatable(id obj, POPPropertyAnimationState </em>anim, bool shouldAvoidExtraneousWrite = false)<br>2.[self _scheduleProcessPendingList];－－&gt; - (void)_processPendingList -&gt; - (void)_renderTime:(CFTimeInterval)time items:(std::list<popanimatoritemref>)items -&gt; - (void)_renderTime:(CFTimeInterval)time item:(POPAnimatorItemRef)item -&gt; virtual void willRun(bool started, id obj) -&gt; POPVector<br>具体每帧的渲染过程有两步：<br>1.renderTime，更新state的状态。<br>2.updateAnimatable，把state的变化更新到obj的具体属性上 </popanimatoritemref></p>
-<p>CADisplayLink<br><a href="http://www.flakor.cn/2015-03-28-876.html?utm_source=tuicool" target="_blank" rel="external">http://www.flakor.cn/2015-03-28-876.html?utm_source=tuicool</a> – NSTimer和CADisplayLink的基本用法<br><a href="http://blog.csdn.net/ch_soft/article/details/9408855" target="_blank" rel="external">http://blog.csdn.net/ch_soft/article/details/9408855</a> – CADisplayLink 及定时器的使用<br><a href="http://www.jianshu.com/p/c35a81c3b9eb" target="_blank" rel="external">http://www.jianshu.com/p/c35a81c3b9eb</a> – CADisplayLink<br>参考：<br><a href="http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎" target="_blank" rel="external">http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎</a> pop 源码阅读笔记<br><a href="http://www.cocoachina.com/industry/20140527/8565.html－－Facebook" target="_blank" rel="external">http://www.cocoachina.com/industry/20140527/8565.html－－Facebook</a> Pop 使用指南<br><a href="http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v" target="_blank" rel="external">http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v</a>)<br><a href="http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook" target="_blank" rel="external">http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook</a> Paper中的设计细节<br><a href="http://subjc.com/spark-camera/" target="_blank" rel="external">http://subjc.com/spark-camera/</a><br><a href="https://github.com/facebook/pop" target="_blank" rel="external">https://github.com/facebook/pop</a></p>
+<p>CADisplayLink<br><a href="http://www.flakor.cn/2015-03-28-876.html?utm_source=tuicool" target="_blank" rel="external">http://www.flakor.cn/2015-03-28-876.html?utm_source=tuicool</a> – NSTimer和CADisplayLink的基本用法<br><a href="http://blog.csdn.net/ch_soft/article/details/9408855" target="_blank" rel="external">http://blog.csdn.net/ch_soft/article/details/9408855</a> – CADisplayLink 及定时器的使用<br><a href="http://www.jianshu.com/p/c35a81c3b9eb" target="_blank" rel="external">http://www.jianshu.com/p/c35a81c3b9eb</a> – CADisplayLink<br>参考：<br><a href="http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎" target="_blank" rel="external">http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎</a> pop 源码阅读笔记<br><a href="http://www.cocoachina.com/industry/20140527/8565.html－－Facebook" target="_blank" rel="external">http://www.cocoachina.com/industry/20140527/8565.html－－Facebook</a> Pop 使用指南<br><a href="http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v" target="_blank" rel="external">http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v</a>)<br><a href="http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook" target="_blank" rel="external">http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook</a> Paper中的设计细节<br><a href="http://subjc.com/spark-camera/" target="_blank" rel="external">http://subjc.com/spark-camera/</a><br><a href="https://github.com/facebook/pop" target="_blank" rel="external">https://github.com/facebook/pop</a><br>CADisplayLink不能被继承,以display rate 为单位。<br>要使用CADisplayLink，需要加入QuartzCore.framework及#import <quartzcore cadisplaylink.h=""><br>1.创建一个CADisplayLink，并指定target和selector</quartzcore></p>
+<ul>
+<li>(CADisplayLink *)displayLinkWithTarget:(id)target<pre><code><span class="label">selector:</span>(SEL)sel
+</code></pre></li>
+</ul>
+<ul>
+<li>(void) selector:(CADisplayLink *)<br>sender<br>;<br>2.将display link添加到runloop</li>
+<li>(void)addToRunLoop:(NSRunLoop *)runloop<pre><code><span class="label">forMode:</span>(NSString *)mode
+</code></pre>display link with multiple input modes可以添加到多种runloop模式下。run loop持有display link，通过向display link发送 invalidate消息来移除（同时display link release the target）。<br>3.config<br>duration 屏幕刷新间隔，只读<br>frameInterval CADisplayLink默认每秒运行60次，通过它的frameInterval属性改变每秒运行帧数，如设置为2，意味CADisplayLink每隔一帧运行一次，有效的逻辑每秒运行30次。<br>paused 默认值是NO，如果设为YES，则暂停刷新通知<br>timestamp 只读，上一帧显示的时间。<br>3.invalidate display link<br>4.remove it from run loop<br>5。disassociate it from the target</li>
+</ul>
 <p>topic1<br>大量用到IOS开发之<strong>bridge，</strong>bridge_transfer和__bridge_retained<br>参考：<a href="http://blog.csdn.net/sanpintian/article/details/8139878" target="_blank" rel="external">http://blog.csdn.net/sanpintian/article/details/8139878</a><br>Core Foundation框架 (CoreFoundation.framework) 是一组C语言接口，它们为iOS应用程序提供基本数据管理和服务功能。Core Foundation框架和Foundation框架紧密相关，它们为相同功能提供接口，但Foundation框架提供Objective-C接口。如果您将Foundation对象和Core Foundation类型掺杂使用，则可利用两个框架之间的 “toll-free bridging”<br>Toll-Free bridged<br>在iOS世界，主要有两种对象：Objective-C 对象和 Core Foundation 对象0。Core Foundation 对象主要是有C语言实现的 Core Foundation Framework 的对象，其中也有对象引用计数的概念，只是不是 Cocoa Framework::Foundation Framework 的 retain/release，而是自身的 CFRetain/CFRelease 接口。主要用于ARC。正因为Objective-C是ARC管理的对象，而Core Foundation不是ARC管理的对象，所以才要特意这样转换，这与id类型向void*转换是一个概念。也就是说，当这两种类型（有ARC管理，没有ARC管理）在转换时，需要告诉编译器怎样处理对象的所有权。</p>
 <p>topic2<br>capacity<br>在with capacity的情况下，在初始化的时候分配的内存为n ＊ sizeof(elem)–假设capacity为n。如果在使用的过程中需要加入更多的元素需要给array扩容了，那么必须去找系统再次要求分配内存，而这次要求的内存的大小和扩容因子有关系，如果扩容因子为2，那么扩容之后总共分配的堆内存就成了2n*sizeof(elem)..扩容因子应该自己可以指定吧一般。</p>
 <p>好处是:如果指定capacity,而且元素数量没有超过这个值的话就不需要老是欲求不满找系统要内存，而找系统要内存这个操作会带来一定的系统开销(涉及到系统调用,当然我们使用起来事实上是感受不到这个区别的)。</p>
@@ -281,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cif6rpu9u000abycrh0vqni73" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cifi4jljr000arfcrdf0sb0vu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -320,7 +329,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/25/CloudKit/" data-id="cif6rpua8000jbycrjj5iaeg4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/25/CloudKit/" data-id="cifi4jlk5000jrfcrpiwq60z0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -358,7 +367,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/24/Quartz-2D/" data-id="cif6rpua0000ebycrsw4i3klv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/24/Quartz-2D/" data-id="cifi4jljy000erfcrv54opm8j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -419,7 +428,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/15/swift学习/" data-id="cif6rpu9l0004bycrc10xwjet" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/15/swift学习/" data-id="cifi4jljh0004rfcrcvlw12ey" class="article-share-link">Share</a>
       
       
     </footer>
@@ -455,7 +464,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cif6rpua9000lbycrner2bn2z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cifi4jlk9000lrfcrzrv6wnsg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -794,7 +803,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cif6rpuac000mbycrxh73k9fb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cifi4jlkc000mrfcrsg17q1bo" class="article-share-link">Share</a>
       
       
     </footer>
