@@ -63,6 +63,49 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-从项目中移除storyboards" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/07/从项目中移除storyboards/" class="article-date">
+  <time datetime="2015-09-07T06:08:57.000Z" itemprop="datePublished">2015-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/07/从项目中移除storyboards/">从项目中移除storyboards</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在xcode6的新建工程中移除storyboards步骤<br>1.删除:<br>    .plist中Main storyboard file base name<br>    Main.storyboard<br>    LaunchScreen.xib<br>2.置空:<br>    Main Interface<br>    Launch Screen File<br>3.添加:<br>    在</p>
+<pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
+</code></pre><p>中添加</p>
+<pre><code>self.window = <span class="comment">[<span class="comment">[UIWindow alloc]</span> initWithFrame:<span class="comment">[<span class="comment">[UIScreen mainScreen]</span> bounds]</span>]</span>;
+ self.window.backgroundColor = <span class="comment">[UIColor whiteColor]</span>;
+<span class="comment">[self.window makeKeyAndVisible]</span>;
+</code></pre><p>4.设置LaunchScreenFile</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cifqnb5n100032ycrsptawbox" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-iOS-app-工程目录模版" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/07/iOS-app-工程目录模版/" class="article-date">
@@ -98,7 +141,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cifqgtt0b00085ecr1wm215pz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cifqnb5n800082ycrboruuic1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -186,7 +229,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cifqgtt0j000c5ecr8jxlruxd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cifqnb5nf000d2ycra5gun4ri" class="article-share-link">Share</a>
       
       
     </footer>
@@ -229,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cifqgtt0500045ecr1m1277ax" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cifqnb5n300042ycrte55owjx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -265,7 +308,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cifqgtszz00015ecrnyvnzxsc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cifqnb5my00012ycrydu14kzq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -527,7 +570,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cifqgtsza00005ecr0v70hec7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cifqnb5mg00002ycrpvzm4uzv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -572,7 +615,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cifqgtt0g000a5ecrd36hv6b3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cifqnb5nc000a2ycre4i9aihz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -601,7 +644,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -611,6 +654,10 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/10/14/cocoapods/">cocoapods</a>
+          </li>
         
           <li>
             <a href="/2015/10/14/图文混编和图文混排/">图文混编和图文混排</a>
@@ -626,10 +673,6 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
         
           <li>
             <a href="/2015/09/28/NSRunLoop/">NSRunLoop</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/28/CALayer-Core-Animation-UIView/">CALayer,Core Animation,UIView</a>
           </li>
         
       </ul>
