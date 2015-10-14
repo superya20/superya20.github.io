@@ -63,6 +63,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS-app-工程目录模版" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/07/iOS-app-工程目录模版/" class="article-date">
+  <time datetime="2015-09-07T04:10:47.000Z" itemprop="datePublished">2015-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/07/iOS-app-工程目录模版/">iOS app 工程目录模版</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="工程目录">工程目录</h2><p>–Application<br>    |-AppDelegate.m<br>    |-AppDelegate.h<br>–Vendors     //第三方库<br>  |-xxx<br>  |-xxx<br>–General<br>  |-Category<br>  |-base<br>–Sections    //基础模块<br>  |-network<br>  |-storage<br>  |-xxx<br>–Macro         //基础宏<br>–Classes<br>–Resource    //资源<br>  |-1.0<br>  |-文本化配置资源<br>  |-xxx<br>–Plugins     //CDV插件<br>–Others</p>
+<h2 id="流程">流程</h2><h3 id="app启动配置">app启动配置</h3><pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
+</code></pre><p>注册数据库<br>注册IM服务<br>注册听云服务<br>注册统计类服务<br>注册日志类服务<br>注册微信服务<br>网络配置初始化，最大连接数，缓存，接口控制<br>读取默认数据<br>注册网络监测服务<br>注册图片缓存路径<br>注册消息推送<br>更新本地配置数据</p>
+<h3 id="app前端配置">app前端配置</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationDidBecomeActive:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>上传本地日志<br>检查新版本<br>IM配置</p>
+<h3 id="app进入后台">app进入后台</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationDidEnterBackground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>上传本地日志<br>IM配置<br>内存数据实例化</p>
+<h3 id="app终止配置">app终止配置</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationWillTerminate:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>IM配置<br>内存数据实例化</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cifqgtt0b00085ecr1wm215pz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-WebViewProxy" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/01/WebViewProxy/" class="article-date">
@@ -141,7 +186,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cifi4jlju000brfcr2y4ru3fh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cifqgtt0j000c5ecr8jxlruxd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -184,7 +229,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cifi4jljf0003rfcr8zoetqga" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cifqgtt0500045ecr1m1277ax" class="article-share-link">Share</a>
       
       
     </footer>
@@ -220,7 +265,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cifi4jljb0001rfcruo6ie3lh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cifqgtszz00015ecrnyvnzxsc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -482,7 +527,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cifi4jlip0000rfcr929p1iyo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cifqgtsza00005ecr0v70hec7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -527,7 +572,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cifi4jljo0009rfcr3oo36i81" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/hello-world/" data-id="cifqgtt0g000a5ecrd36hv6b3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -556,7 +601,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -566,6 +611,10 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/10/14/图文混编和图文混排/">图文混编和图文混排</a>
+          </li>
         
           <li>
             <a href="/2015/09/29/BlocksKit/">BlocksKit</a>
@@ -581,10 +630,6 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
         
           <li>
             <a href="/2015/09/28/CALayer-Core-Animation-UIView/">CALayer,Core Animation,UIView</a>
-          </li>
-        
-          <li>
-            <a href="/2015/09/28/facebook-pop/">facebook-pop</a>
           </li>
         
       </ul>
