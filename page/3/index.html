@@ -63,6 +63,354 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-WebViewJavascriptBridge" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/07/WebViewJavascriptBridge/" class="article-date">
+  <time datetime="2015-09-07T09:17:33.000Z" itemprop="datePublished">2015-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/07/WebViewJavascriptBridge/">WebViewJavascriptBridge</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Native">Native</h2><h3 id="使用方法">使用方法</h3><h4 id="生成WebViewJavascriptBridge变量">生成WebViewJavascriptBridge变量</h4><p><code>WebViewJavascriptBridge : NSObject&lt;UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate&gt;</code></p>
+<pre><code><span class="collection">[WebViewJavascriptBridge bridgeForWebView:<span class="list">(<span class="keyword">UIWebView/WebView*</span>)</span>webview 
+                                   handler:<span class="list">(<span class="keyword">WVJBHandler</span>)</span>handler]</span>
+<span class="collection">[WebViewJavascriptBridge bridgeForWebView:<span class="list">(<span class="keyword">UIWebView/WebView*</span>)</span>webview 
+                           webViewDelegate:<span class="list">(<span class="keyword">UIWebViewDelegate*</span>)</span>webViewDelegate 
+                                      handler:<span class="list">(<span class="keyword">WVJBHandler</span>)</span>handler]</span>
+<span class="collection">[WebViewJavascriptBridge bridgeForWebView:_webView
+                            webViewDelegate:self
+                                 handler:^<span class="list">(<span class="keyword">id</span> data, WVJBResponseCallback responseCallback)</span> <span class="collection">{
+                                           NSLog<span class="list">(@<span class="string">"Received message from javascript: %@"</span>, data)</span><span class="comment">;</span>
+                                         }</span>
+                          resourceBundle:<span class="collection">[NSBundle bundleWithURL:<span class="collection">[<span class="collection">[NSBundle mainBundle]</span> URLForResource:@<span class="string">"ResourcesBundle"</span>                                                    withExtension:@<span class="string">"bundle"</span>]</span>]</span>
+]</span><span class="comment">;</span>
+</code></pre><p>Demo：</p>
+<pre><code><span class="title">self</span>.bridge = [<span class="type">WebViewJavascriptBridge</span> bridgeForWebView:webView handler:
+    ^(id <span class="typedef"><span class="keyword">data</span>, <span class="type">WVJBResponseCallback</span> responseCallback) <span class="container">{
+        <span class="type">NSLog</span>(@"<span class="type">Received</span> <span class="title">message</span> <span class="title">from</span> <span class="title">javascript</span>: %@", <span class="title">data</span>);
+        <span class="title">responseCallback</span>(@"<span class="type">Right</span> <span class="title">back</span> <span class="title">atcha</span>");
+    }</span>];</span>
+</code></pre><p>实现：</p>
+<pre><code>WebViewJavascriptBridge* bridge = [[WebViewJavascriptBridge alloc] init];
+[bridge <span class="string">_platformSpecificSetup:</span>webView <span class="string">webViewDelegate:</span>webViewDelegate <span class="string">handler:</span>messageHandler <span class="string">resourceBundle:</span>bundle];
+
+- (<span class="typename">void</span>) <span class="string">_platformSpecificSetup:</span>(WVJB_WEBVIEW_TYPE*)webView <span class="string">webViewDelegate:</span>(id&lt;UIWebViewDelegate&gt;)webViewDelegate <span class="string">handler:</span>        (WVJBHandler)messageHandler <span class="string">resourceBundle:</span>(NSBundle*)bundle{
+    _webView = webView;
+    _webView.delegate = self;
+    _webViewDelegate = webViewDelegate;
+    _base = [[WebViewJavascriptBridgeBase alloc] <span class="string">initWithHandler:</span>(WVJBHandler)messageHandler <span class="string">resourceBundle:</span>(NSBundle*)bundle];
+    _base.delegate = self;
+}
+</code></pre><h4 id="ObjC向javascript发请求">ObjC向javascript发请求</h4><pre><code><span class="collection">[self.bridge send:@<span class="string">"Well hello there"</span>]</span><span class="comment">;</span>
+<span class="collection">[self.bridge send:<span class="collection">[NSDictionary dictionaryWithObject:@<span class="string">"Foo"</span> forKey:@<span class="string">"Bar"</span>]</span>]</span><span class="comment">;</span>
+<span class="collection">[self.bridge send:@<span class="string">"Give me a response, will you?"</span> responseCallback:^<span class="list">(<span class="keyword">id</span> responseData)</span> <span class="collection">{
+    NSLog<span class="list">(@<span class="string">"ObjC got its response! %@"</span>, responseData)</span><span class="comment">;</span>
+}</span>]</span><span class="comment">;</span>
+</code></pre><p>实现：</p>
+<pre><code>[_base <span class="string">sendData:</span>data <span class="string">responseCallback:</span>responseCallback <span class="string">handlerName:</span>nil];    
+</code></pre><h4 id="注册handlerName">注册handlerName</h4><pre><code><span class="collection">[bridge registerHandler:<span class="list">(<span class="keyword">NSString*</span>)</span>handlerName handler:<span class="list">(<span class="keyword">WVJBHandler</span>)</span>handler]</span>
+</code></pre><p>实现：</p>
+<pre><code>_base.messageHandlers<span class="comment">[handlerName]</span> = <span class="comment">[handler copy]</span>;
+</code></pre><p>javascript调用：</p>
+<pre><code>WebViewJavascriptBridge.<span class="function"><span class="title">callHandler</span><span class="params">(<span class="string">"handlerName"</span>)</span></span>
+</code></pre><h4 id="ObjC调用js定义的handlerName">ObjC调用js定义的handlerName</h4><pre><code>[self.bridge callHandler:@<span class="string">"showAlert"</span> <span class="typedef"><span class="keyword">data</span>:@"<span class="type">Hi</span> from <span class="type">ObjC</span> to <span class="type">JS</span>!"];</span>
+[self.bridge callHandler:@<span class="string">"getCurrentPageUrl"</span> <span class="typedef"><span class="keyword">data</span>:nil responseCallback:^<span class="container">(<span class="title">id</span> <span class="title">responseData</span>)</span> <span class="container">{
+    <span class="type">NSLog</span>(@"<span class="type">Current</span> <span class="type">UIWebView</span> <span class="title">page</span> <span class="type">URL</span> <span class="title">is</span>: %@", <span class="title">responseData</span>);
+}</span>];</span>
+</code></pre><p>实现：</p>
+<pre><code>[_base <span class="string">sendData:</span>data <span class="string">responseCallback:</span>responseCallback <span class="string">handlerName:</span>handlerName];
+</code></pre><h2 id="js">js</h2><h3 id="使用方法-1">使用方法</h3><h4 id="等待WebViewJavascriptBridgeReady的DOM事件">等待WebViewJavascriptBridgeReady的DOM事件</h4><pre><code><span class="built_in">document</span>.addEventListener(<span class="string">'WebViewJavascriptBridgeReady'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{
+    <span class="keyword">var</span> bridge = event.bridge
+    <span class="comment">// Start using the bridge</span>
+}, <span class="literal">false</span>)
+</code></pre><h4 id="js向oc发请求">js向oc发请求</h4><pre><code><span class="tag">bridge</span><span class="class">.send</span>("<span class="tag">Hi</span> <span class="tag">there</span>!")
+<span class="tag">bridge</span><span class="class">.send</span>(<span class="rules">{ <span class="rule"><span class="attribute">Foo</span>:<span class="value"><span class="string">"Bar"</span> })
+bridge.<span class="function">send</span>(<span class="string">"Hi there!"</span>, <span class="function">function</span>(responseData) {
+    <span class="function">alert</span>(<span class="string">"I got a response! "</span>+JSON.<span class="function">stringify</span>(responseData))
+})</span></span></span>
+</code></pre><h4 id="注册handlerName-1">注册handlerName</h4><pre><code>bridge.registerHandler(<span class="string">"showAlert"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>{ alert(data) })
+bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data, responseCallback</span>) </span>{
+    responseCallback(<span class="built_in">document</span>.location.toString())
+})
+</code></pre><h2 id="源码分析">源码分析</h2><p>js和native有自己的uniqueId，并不共用。<br>js和native各自注册handlername，给对方调用，那么是同一个变量吗，可以重复注册吗？比如js注册@”handlername1”,native也注册”handlername1”,但各自的实现不一样，会怎么样？</p>
+<h4 id="WebViewJavascriptBridge">WebViewJavascriptBridge</h4><p>成员变量：<br>_webViewDelegate ，用于向ViewController放开以下四个代理。<br>实现webview的四个代理</p>
+<pre><code>- (BOOL)<span class="string">webView:</span>(UIWebView *)webView <span class="string">shouldStartLoadWithRequest:</span>(NSURLRequest *)request <span class="string">navigationType:</span>(UIWebViewNavigationType)navigationType {
+    <span class="keyword">if</span> (webView != _webView) { <span class="keyword">return</span> YES; }
+    NSURL *url = [request URL];
+    __strong WVJB_WEBVIEW_DELEGATE_TYPE* strongDelegate = _webViewDelegate;
+    <span class="keyword">if</span> ([_base <span class="string">isCorrectProcotocolScheme:</span>url]) {
+        <span class="keyword">if</span> ([_base <span class="string">isCorrectHost:</span>url]) {
+            NSString *messageQueueString = [self <span class="string">_evaluateJavascript:</span>[_base webViewJavascriptFetchQueyCommand]];
+            [_base <span class="string">flushMessageQueue:</span>messageQueueString];
+        } <span class="keyword">else</span> {
+            [_base <span class="string">logUnkownMessage:</span>url];
+        }
+        <span class="keyword">return</span> NO;
+    } <span class="keyword">else</span> <span class="keyword">if</span> (strongDelegate &amp;&amp; [strongDelegate <span class="string">respondsToSelector:</span><span class="annotation">@selector</span>(<span class="string">webView:</span><span class="string">shouldStartLoadWithRequest:</span><span class="string">navigationType:</span>)]) {
+        <span class="keyword">return</span> [strongDelegate <span class="string">webView:</span>webView <span class="string">shouldStartLoadWithRequest:</span>request <span class="string">navigationType:</span>navigationType];
+    } <span class="keyword">else</span> {
+        <span class="keyword">return</span> YES;
+    }
+}
+
+- (<span class="typename">void</span>)<span class="string">webViewDidStartLoad:</span>(UIWebView *)webView {
+    <span class="keyword">if</span> (webView != _webView) { <span class="keyword">return</span>; }
+
+    _numRequestsLoading++;
+
+    __strong WVJB_WEBVIEW_DELEGATE_TYPE* strongDelegate = _webViewDelegate;
+    <span class="keyword">if</span> (strongDelegate &amp;&amp; [strongDelegate <span class="string">respondsToSelector:</span><span class="annotation">@selector</span>(<span class="string">webViewDidStartLoad:</span>)]) {
+        [strongDelegate <span class="string">webViewDidStartLoad:</span>webView];
+    }
+}
+
+- (<span class="typename">void</span>)<span class="string">webViewDidFinishLoad:</span>(UIWebView *)webView {
+    <span class="keyword">if</span> (webView != _webView) { <span class="keyword">return</span>; }
+
+    _numRequestsLoading--;
+
+    <span class="keyword">if</span> (_numRequestsLoading == <span class="number">0</span> &amp;&amp; ![[webView <span class="string">stringByEvaluatingJavaScriptFromString:</span>[_base webViewJavascriptCheckCommand]] <span class="string">isEqualToString:</span>@<span class="string">"true"</span>]) {
+        [_base <span class="string">injectJavascriptFile:</span>YES];
+    }
+    [_base dispatchStartUpMessageQueue];
+
+    __strong WVJB_WEBVIEW_DELEGATE_TYPE* strongDelegate = _webViewDelegate;
+    <span class="keyword">if</span> (strongDelegate &amp;&amp; [strongDelegate <span class="string">respondsToSelector:</span><span class="annotation">@selector</span>(<span class="string">webViewDidFinishLoad:</span>)]) {
+        [strongDelegate <span class="string">webViewDidFinishLoad:</span>webView];
+    }
+}
+
+- (<span class="typename">void</span>)<span class="string">webView:</span>(UIWebView *)webView <span class="string">didFailLoadWithError:</span>(NSError *)error {
+    <span class="keyword">if</span> (webView != _webView) { <span class="keyword">return</span>; }
+
+    _numRequestsLoading--;
+
+    __strong WVJB_WEBVIEW_DELEGATE_TYPE* strongDelegate = _webViewDelegate;
+    <span class="keyword">if</span> (strongDelegate &amp;&amp; [strongDelegate <span class="string">respondsToSelector:</span><span class="annotation">@selector</span>(<span class="string">webView:</span><span class="string">didFailLoadWithError:</span>)]) {
+        [strongDelegate <span class="string">webView:</span>webView <span class="string">didFailLoadWithError:</span>error];
+    }
+}
+</code></pre><p>oc调h5/h5调oc，最终由WebViewJavascriptBridge对其hold住的_webView发送<code>stringByEvaluatingJavaScriptFromString</code>消息来执行。<code>WebViewJavascriptBridgeBase</code>做消息的序列化。</p>
+<p><code>执行一串js命令</code></p>
+<pre><code><span class="tag">-</span> (<span class="tag">NSString</span>*) <span class="rule"><span class="attribute">_evaluateJavascript</span>:<span class="value">(NSString*)javascriptCommand
+{
+    return [_webView stringByEvaluatingJavaScriptFromString:javascriptCommand]</span></span>;
+}
+</code></pre><h4 id="WebViewJavascriptBridgeBase">WebViewJavascriptBridgeBase</h4><p>常用命令</p>
+<pre><code>-(<span class="built_in">NSString</span> *)webViewJavascriptCheckCommand {
+    <span class="keyword">return</span> <span class="string">@"typeof WebViewJavascriptBridge == \'object\';"</span>;
+}
+
+-(<span class="built_in">NSString</span> *)webViewJavascriptFetchQueyCommand {
+    <span class="keyword">return</span> <span class="string">@"WebViewJavascriptBridge._fetchQueue();"</span>;
+}
+</code></pre><p>对应</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">_fetchQueue</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> messageQueueString = <span class="built_in">JSON</span>.stringify(sendMessageQueue)
+    sendMessageQueue = []
+    <span class="keyword">return</span> messageQueueString
+}
+</code></pre><p><code>self.responseCallbacks</code> WebViewJavascriptBridgeBase的成员变量，数组类型，存储callbackId对应的WVJBResponseCallback。<br>格式：callbackId:WVJBResponseCallback<br>添加</p>
+<pre><code>- (void)sendData:(id)<span class="typedef"><span class="keyword">data</span> responseCallback:<span class="container">(<span class="type">WVJBResponseCallback</span>)</span>responseCallback handlerName:<span class="container">(<span class="type">NSString</span>*)</span>handlerName     <span class="container">{
+    ...
+    <span class="title">self</span>.<span class="title">responseCallbacks</span>[<span class="title">callbackId</span>] = [<span class="title">responseCallback</span> <span class="title">copy</span>];
+    ...
+}</span></span>
+</code></pre><p>删除</p>
+<pre><code><span class="tag">-</span> (void)<span class="tag">flushMessageQueue</span>:(NSString *)<span class="tag">messageQueueString</span>{
+    ...
+    <span class="tag">if</span> (responseId) {
+        <span class="attr_selector">[self.responseCallbacks removeObjectForKey:responseId]</span>;
+    }
+    ...
+}
+</code></pre><p><code>- (void)sendData:(id)data responseCallback:(WVJBResponseCallback)responseCallback handlerName:(NSString*)handlerName</code><br>组包，格式如下：<br>message[@”data”]<br>message[@”callbackId”]<br>message[@”handlerName”]</p>
+<pre><code><span class="tag">-</span> (void)<span class="tag">sendData</span>:(id)<span class="tag">data</span> <span class="tag">responseCallback</span>:(WVJBResponseCallback)<span class="tag">responseCallback</span> <span class="tag">handlerName</span>:(NSString*)<span class="tag">handlerName</span>     {
+    <span class="attr_selector">[self _queueMessage:message]</span>;
+}
+
+<span class="tag">-</span> (void)<span class="tag">_queueMessage</span>:(WVJBMessage*)<span class="tag">message</span> {
+    <span class="tag">if</span> (self.startupMessageQueue) {
+        <span class="attr_selector">[self.startupMessageQueue addObject:message]</span>;
+    } <span class="tag">else</span> {
+        <span class="attr_selector">[self _dispatchMessage:message]</span>;
+    }
+}
+</code></pre><p><code>注入WebViewJavascriptBridge.js</code></p>
+<pre><code>- (<span class="keyword">void</span>)injectJavascriptFile:(<span class="built_in">BOOL</span>)shouldInject {
+    <span class="keyword">if</span>(shouldInject){
+            <span class="built_in">NSBundle</span> *bundle = _resourceBundle ? _resourceBundle : [<span class="built_in">NSBundle</span> mainBundle];
+            <span class="built_in">NSString</span> *filePath = [bundle pathForResource:<span class="string">@"WebViewJavascriptBridge.js"</span> ofType:<span class="string">@"txt"</span>];
+        <span class="built_in">NSString</span> *js = [<span class="built_in">NSString</span> stringWithContentsOfFile:filePath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];
+        [<span class="keyword">self</span> _evaluateJavascript:js];<span class="comment">//加载WebViewJavascriptBridge.js.txt</span>
+
+        [<span class="keyword">self</span> dispatchStartUpMessageQueue];
+    }
+}
+</code></pre><p><code>派发self.startupMessageQueue中的命令</code></p>
+<pre><code>- (<span class="keyword">void</span>)dispatchStartUpMessageQueue {
+    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.startupMessageQueue</span>) {
+        <span class="keyword">for</span> (<span class="keyword">id</span> queuedMessage <span class="keyword">in</span> <span class="keyword">self</span><span class="variable">.startupMessageQueue</span>) {
+            [<span class="keyword">self</span> _dispatchMessage:queuedMessage];
+        }
+        <span class="keyword">self</span><span class="variable">.startupMessageQueue</span> = <span class="literal">nil</span>;
+    }
+}    
+</code></pre><p><code>发送WVJBMessage</code></p>
+<pre><code>- (<span class="typename">void</span>)<span class="string">_dispatchMessage:</span>(WVJBMessage*)message {
+    NSString *messageJSON = [self <span class="string">_serializeMessage:</span>message];
+    [self <span class="string">_log:</span>@<span class="string">"SEND"</span> <span class="string">json:</span>messageJSON];
+    messageJSON = [messageJSON <span class="string">stringByReplacingOccurrencesOfString:</span>@<span class="string">"\\"</span> <span class="string">withString:</span>@<span class="string">"\\\\"</span>];
+    messageJSON = [messageJSON <span class="string">stringByReplacingOccurrencesOfString:</span>@<span class="string">"\""</span> <span class="string">withString:</span>@<span class="string">"\\\""</span>];
+    messageJSON = [messageJSON <span class="string">stringByReplacingOccurrencesOfString:</span>@<span class="string">"\'"</span> <span class="string">withString:</span>@<span class="string">"\\\'"</span>];
+        messageJSON = [messageJSON <span class="string">stringByReplacingOccurrencesOfString:</span>@<span class="string">"\n"</span> <span class="string">withString:</span>@<span class="string">"\\n"</span>];
+    messageJSON = [messageJSON <span class="string">stringByReplacingOccurrencesOfString:</span>@<span class="string">"\r"</span> <span class="string">withString:</span>@<span class="string">"\\r"</span>];
+    messageJSON = [messageJSON <span class="string">stringByReplacingOccurrencesOfString:</span>@<span class="string">"\f"</span> <span class="string">withString:</span>@<span class="string">"\\f"</span>];
+    messageJSON = [messageJSON <span class="string">stringByReplacingOccurrencesOfString:</span>@<span class="string">"\u2028"</span> <span class="string">withString:</span>@<span class="string">"\\u2028"</span>];
+    messageJSON = [messageJSON <span class="string">stringByReplacingOccurrencesOfString:</span>@<span class="string">"\u2029"</span> <span class="string">withString:</span>@<span class="string">"\\u2029"</span>];
+
+    NSString* javascriptCommand = [NSString <span class="string">stringWithFormat:</span>@<span class="string">"WebViewJavascriptBridge._handleMessageFromObjC('%@');"</span>, messageJSON];
+    <span class="keyword">if</span> ([[NSThread currentThread] isMainThread]) {
+        [self <span class="string">_evaluateJavascript:</span>javascriptCommand];
+
+    } <span class="keyword">else</span> {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self <span class="string">_evaluateJavascript:</span>javascriptCommand];
+        });
+    }
+}
+</code></pre><p><code>发送命令－－执行</code></p>
+<pre><code><span class="tag">-</span> (void) <span class="tag">_evaluateJavascript</span>:(NSString *)<span class="tag">javascriptCommand</span> {
+    <span class="attr_selector">[self.delegate _evaluateJavascript:javascriptCommand]</span>;
+}
+</code></pre><hr>
+<h1 id="过程流">过程流</h1><hr>
+<h2 id="h5调oc">h5调oc</h2><h3 id="step1:_send">step1: send</h3><p>格式:<br>message[@”callbackId”]<br>message[@”handlerName”]<br>message[@”data”]</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">send</span><span class="params">(data, responseCallback)</span> {</span>                <span class="comment">//调用默认handler</span>
+    _doSend<span class="params">({ data:data }, responseCallback)</span>
+}
+<span class="function"><span class="keyword">function</span> <span class="title">callHandler</span><span class="params">(handlerName, data, responseCallback)</span> {</span>                <span class="comment">//调用指定handler</span>
+    _doSend<span class="params">({ handlerName:handlerName, data:data }, responseCallback)</span>
+}
+<span class="function"><span class="keyword">function</span> <span class="title">_doSend</span><span class="params">(message, responseCallback)</span> {</span>
+    <span class="keyword">if</span> <span class="params">(responseCallback)</span> {                    <span class="comment">//若需要回调，生成callbackId，并将callbackId：responseCallback保存在本地</span>
+        var callbackId = 'cb_'+<span class="params">(uniqueId++)</span>+'_'+new Date<span class="params">()</span>.getTime<span class="params">()</span>       <span class="comment">//双重保险，保证uniqueId的唯一性</span>
+        responseCallbacks[callbackId] = responseCallback
+        message['callbackId'] = callbackId
+    }
+    sendMessageQueue.push<span class="params">(message)</span>
+
+    messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + ':<span class="comment">//' + QUEUE_HAS_MESSAGE</span>
+}
+</code></pre><h3 id="step2:_oc唤起shouldStartLoadWithRequest">step2: oc唤起<code>shouldStartLoadWithRequest</code></h3><p>在此方法中让oc执行h5的WebViewJavascriptBridge._fetchQueue()方法，通过这个方法来获取h5命令字串。见上。</p>
+<h3 id="step3:_调用flushMessageQueue对命令字串做解析，执行。">step3: 调用flushMessageQueue对命令字串做解析，执行。</h3><p><code>- (void)flushMessageQueue:(NSString *)messageQueueString</code><br>message没有对应的object，而是用字典的形式存放。<br>格式：<br>message[@”responseId”]<br>message[@”responseData”]<br>或</p>
+<pre><code>- (<span class="keyword">void</span>)flushMessageQueue:(<span class="built_in">NSString</span> *)messageQueueString{
+    ...
+    <span class="keyword">for</span> (WVJBMessage* message <span class="keyword">in</span> messages) {
+        <span class="built_in">NSString</span>* responseId = message[<span class="string">@"responseId"</span>];
+        <span class="keyword">if</span> (responseId) {
+            WVJBResponseCallback responseCallback = _responseCallbacks[responseId];
+            responseCallback(message[<span class="string">@"responseData"</span>]);
+            [<span class="keyword">self</span><span class="variable">.responseCallbacks</span> removeObjectForKey:responseId];
+        } <span class="keyword">else</span> {
+            WVJBResponseCallback responseCallback = <span class="literal">NULL</span>;
+            <span class="built_in">NSString</span>* callbackId = message[<span class="string">@"callbackId"</span>];
+            <span class="keyword">if</span> (callbackId) {
+                responseCallback = ^(<span class="keyword">id</span> responseData) {
+                    <span class="keyword">if</span> (responseData == <span class="literal">nil</span>) {
+                        responseData = [<span class="built_in">NSNull</span> null];
+                    }
+
+                    WVJBMessage* msg = @{ <span class="string">@"responseId"</span>:callbackId, <span class="string">@"responseData"</span>:responseData };
+                    [<span class="keyword">self</span> _queueMessage:msg];
+                };
+            } <span class="keyword">else</span> {
+                responseCallback = ^(<span class="keyword">id</span> ignoreResponseData) {
+                    <span class="comment">// Do nothing</span>
+                };
+            }
+
+            WVJBHandler handler;
+            <span class="keyword">if</span> (message[<span class="string">@"handlerName"</span>]) {
+                handler = <span class="keyword">self</span><span class="variable">.messageHandlers</span>[message[<span class="string">@"handlerName"</span>]];
+            } <span class="keyword">else</span> {
+                handler = <span class="keyword">self</span><span class="variable">.messageHandler</span>;<span class="comment">//使用默认handler</span>
+            }
+
+            <span class="keyword">if</span> (!handler) {
+                [<span class="built_in">NSException</span> raise:<span class="string">@"WVJBNoHandlerException"</span> format:<span class="string">@"No handler for message from JS: %@"</span>, message];
+            }
+
+            handler(message[<span class="string">@"data"</span>], responseCallback);
+        }
+    }
+}
+</code></pre><hr>
+<h2 id="oc调h5">oc调h5</h2><h3 id="step1:_sendData_:__queueMessage">step1: sendData :  _queueMessage</h3><h3 id="step2:__queueMessage:__dispatchMessage_或_添加进self-startupMessageQueue">step2: _queueMessage: _dispatchMessage 或 添加进self.startupMessageQueue</h3><h3 id="step3:_webViewDidFinishLoad_:_dispatchStartUpMessageQueue">step3: webViewDidFinishLoad : dispatchStartUpMessageQueue</h3><p>oc调h5只能在webViewDidFinishLoad时触发。如果h5静默，则不会调起。</p>
+<h3 id="step4:_dispatchStartUpMessageQueue_：_逐一读取命令，执行_dispatchMessage">step4: dispatchStartUpMessageQueue ： 逐一读取命令，执行_dispatchMessage</h3><h3 id="step5:__dispatchMessage_：格式化命令，并调用h5的函数WebViewJavascriptBridge-_handleMessageFromObjC">step5: _dispatchMessage ：格式化命令，并调用h5的函数WebViewJavascriptBridge._handleMessageFromObjC</h3><h3 id="step6:_h5执行_dispatchMessageFromObjC">step6: h5执行_dispatchMessageFromObjC</h3><pre><code><span class="function"><span class="keyword">function</span> <span class="title">_dispatchMessageFromObjC</span>(<span class="params">messageJSON</span>) </span>{
+    setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">_timeoutDispatchMessageFromObjC</span>(<span class="params"></span>) </span>{
+        <span class="keyword">var</span> message = <span class="built_in">JSON</span>.parse(messageJSON)
+        <span class="keyword">var</span> messageHandler
+        <span class="keyword">var</span> responseCallback
+
+        <span class="keyword">if</span> (message.responseId) {
+            responseCallback = responseCallbacks[message.responseId]
+            <span class="keyword">if</span> (!responseCallback) { <span class="keyword">return</span>; }
+            responseCallback(message.responseData)
+            <span class="keyword">delete</span> responseCallbacks[message.responseId]
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> (message.callbackId) {
+                <span class="keyword">var</span> callbackResponseId = message.callbackId
+                responseCallback = <span class="function"><span class="keyword">function</span>(<span class="params">responseData</span>) </span>{
+                    _doSend({ responseId:callbackResponseId, responseData:responseData })
+                }
+            }
+
+            <span class="keyword">var</span> handler = WebViewJavascriptBridge._messageHandler
+            <span class="keyword">if</span> (message.handlerName) {
+                handler = messageHandlers[message.handlerName]
+            }
+
+            <span class="keyword">try</span> {
+                handler(message.data, responseCallback)
+            } <span class="keyword">catch</span>(exception) {
+                <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">console</span> != <span class="string">'undefined'</span>) {
+                    <span class="built_in">console</span>.log(<span class="string">"WebViewJavascriptBridge: WARNING: javascript handler threw."</span>, message, exception)
+                }
+            }
+        }
+    })
+}
+</code></pre><hr>
+<p>—end wly—</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cig7nygfd000g7qcrbg7c3wyx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CDVViewController" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/07/CDVViewController/" class="article-date">
@@ -89,7 +437,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cifxsyfn9000odccru6qyems9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cig7nygfq000p7qcreskcyoyr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -125,7 +473,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cifxsyfmy000gdccrdwutx2ub" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cig7nygfe000h7qcrm4tlrf0z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -162,7 +510,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cifxsyfn3000kdccrqcvi7la8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cig7nygfj000l7qcr3riwziwk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -205,7 +553,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cifxsyfmf0003dccri8cz9mz1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cig7nygew00047qcrqw8ryjv6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -250,7 +598,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cifxsyfmo0009dccrt8g7lf9h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cig7nygf5000a7qcr6ij73f0f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -338,7 +686,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cifxsyfmv000edccrcuzhvs1z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cig7nygfb000f7qcrko8vegti" class="article-share-link">Share</a>
       
       
     </footer>
@@ -381,7 +729,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cifxsyfmh0004dccrvo8l11sn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cig7nygey00057qcrun91m1pf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -417,7 +765,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cifxsyfmc0001dccrqg66nqap" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cig7nyges00017qcr9xa98e7s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -679,7 +1027,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cifxsyflu0000dccrxvk5hyyy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cig7nyge900007qcru7g5bcmp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -708,7 +1056,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -718,6 +1066,10 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/10/26/去掉默认的Main-storyboard/">去掉默认的Main.storyboard</a>
+          </li>
         
           <li>
             <a href="/2015/10/19/iOS9适配/">iOS9适配</a>
@@ -733,10 +1085,6 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
         
           <li>
             <a href="/2015/10/14/cocoapods/">cocoapods</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/14/图文混编和图文混排/">图文混编和图文混排</a>
           </li>
         
       </ul>

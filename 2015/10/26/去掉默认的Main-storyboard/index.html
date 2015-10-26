@@ -3,18 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ReaciveCocoa学习笔记 | magicya的技术博客</title>
+  <title>去掉默认的Main.storyboard | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="1.Info.plist删除Main storyboard file base name : Main
+2.TAGETS/General/Deployment Info删除Main
+3.- (BOOL)application:(UIApplication )application didFinishLaunchingWithOptions:(NSDictionary )launchOptions">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ReaciveCocoa学习笔记">
-<meta property="og:url" content="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/index.html">
+<meta property="og:title" content="去掉默认的Main.storyboard">
+<meta property="og:url" content="http://yoursite.com/2015/10/26/去掉默认的Main-storyboard/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description">
-<meta property="og:updated_time" content="2015-09-07T09:08:15.000Z">
+<meta property="og:description" content="1.Info.plist删除Main storyboard file base name : Main
+2.TAGETS/General/Deployment Info删除Main
+3.- (BOOL)application:(UIApplication )application didFinishLaunchingWithOptions:(NSDictionary )launchOptions">
+<meta property="og:updated_time" content="2015-10-26T08:07:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ReaciveCocoa学习笔记">
-<meta name="twitter:description">
+<meta name="twitter:title" content="去掉默认的Main.storyboard">
+<meta name="twitter:description" content="1.Info.plist删除Main storyboard file base name : Main
+2.TAGETS/General/Deployment Info删除Main
+3.- (BOOL)application:(UIApplication )application didFinishLaunchingWithOptions:(NSDictionary )launchOptions">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -62,10 +68,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-ReaciveCocoa学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-去掉默认的Main-storyboard" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/07/ReaciveCocoa学习笔记/" class="article-date">
-  <time datetime="2015-09-07T09:07:35.000Z" itemprop="datePublished">2015-09-07</time>
+    <a href="/2015/10/26/去掉默认的Main-storyboard/" class="article-date">
+  <time datetime="2015-10-26T08:05:42.000Z" itemprop="datePublished">2015-10-26</time>
 </a>
     
   </div>
@@ -76,7 +82,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ReaciveCocoa学习笔记
+      去掉默认的Main.storyboard
     </h1>
   
 
@@ -84,11 +90,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>1.Info.plist<br>删除<br>Main storyboard file base name : Main</p>
+<p>2.TAGETS/General/Deployment Info<br>删除Main</p>
+<p>3.- (BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions</p>
+<p>添加<br>self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];<br>self.window.backgroundColor = [UIColor whiteColor];<br>[self.window makeKeyAndVisible];</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cig7nygfe000h7qcrm4tlrf0z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/26/去掉默认的Main-storyboard/" data-id="cig7nygev00037qcrpza9mhu7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -97,19 +107,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/09/07/CDVViewController/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          CDVViewController
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/07/JKTabBarController/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/10/19/iOS9适配/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">JKTabBarController</div>
+      <div class="article-nav-title">iOS9适配</div>
     </a>
   
 </nav>

@@ -63,6 +63,46 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-去掉默认的Main-storyboard" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/10/26/去掉默认的Main-storyboard/" class="article-date">
+  <time datetime="2015-10-26T08:05:42.000Z" itemprop="datePublished">2015-10-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/26/去掉默认的Main-storyboard/">去掉默认的Main.storyboard</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.Info.plist<br>删除<br>Main storyboard file base name : Main</p>
+<p>2.TAGETS/General/Deployment Info<br>删除Main</p>
+<p>3.- (BOOL)application:(UIApplication <em>)application didFinishLaunchingWithOptions:(NSDictionary </em>)launchOptions</p>
+<p>添加<br>self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];<br>self.window.backgroundColor = [UIColor whiteColor];<br>[self.window makeKeyAndVisible];</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/10/26/去掉默认的Main-storyboard/" data-id="cig7nygev00037qcrpza9mhu7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-iOS9适配" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/10/19/iOS9适配/" class="article-date">
@@ -91,7 +131,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/iOS9适配/" data-id="cifxsyfmk0006dccr5d6j5aos" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/19/iOS9适配/" data-id="cig7nygf000077qcr9qye0wys" class="article-share-link">Share</a>
       
       
     </footer>
@@ -129,7 +169,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/Gradle/" data-id="cifxsyfn4000ldccrpog0lj2r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/19/Gradle/" data-id="cig7nygfm000m7qcr9d2mgnas" class="article-share-link">Share</a>
       
       
     </footer>
@@ -175,7 +215,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/hello-world/" data-id="cifxsyfms000bdccrbi2wih0h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/19/hello-world/" data-id="cig7nygf7000c7qcr4veylmdz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -213,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/14/cocoapods/" data-id="cifxsyfmu000ddccre0gl9qrf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/14/cocoapods/" data-id="cig7nygfa000e7qcrza4685sj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -252,7 +292,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/14/图文混编和图文混排/" data-id="cifxsyfme0002dccrc5l5bvfm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/14/图文混编和图文混排/" data-id="cig7nyget00027qcrany57co5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -305,7 +345,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/29/BlocksKit/" data-id="cifxsyfnf000sdccrcqkug3p6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/29/BlocksKit/" data-id="cig7nygfv000t7qcr5yxoh7xj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -341,7 +381,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/NSRunTime/" data-id="cifxsyfn1000idccrcilsb2g5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/NSRunTime/" data-id="cig7nygfh000j7qcr18vl77z2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -377,7 +417,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/NSRunLoop/" data-id="cifxsyfn2000jdccr3o6lbqnz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/NSRunLoop/" data-id="cig7nygfi000k7qcrxuea5ln4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -414,82 +454,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cifxsyfne000rdccr5oyt6kxz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-facebook-pop" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/28/facebook-pop/" class="article-date">
-  <time datetime="2015-09-28T06:58:40.000Z" itemprop="datePublished">2015-09-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/28/facebook-pop/">facebook-pop</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象</p>
-<p>四种类型，spring，decay，basic，custom</p>
-<p>POPDecayAnimation：POPPropertyAnimation  Decay动画</p>
-<ul>
-<li>(void)_initState<br>{<br>_state = new POPDecayAnimationState(self);<br>}<br>velocity 支持的类型 POPValueTypes ：kPOPValuePoint, kPOPValueInteger, kPOPValueFloat, kPOPValueRect, and kPOPValueSize</li>
-</ul>
-<p>POPAnimatableProperty: NSObject <nscopying, nsmutablecopying=""></nscopying,></p>
-<p>pop_animatable_write_block／pop_animatable_read_block</p>
-<p>struct _POPAnimationState  动画结构体<br>struct _POPDecayAnimationState : _POPPropertyAnimationState  Decay动画结构体</p>
-<p>POPPropertyAnimation : POPAnimation 带上属性的动画基类</p>
-<p>CAMediaTimingFunction  定义动画的节奏时间曲线<br>POPAnimation : NSObject  动画基类<br>_state</p>
-<p>POPAnimationDelegate  动画代理</p>
-<p>POPAnimationTracer</p>
-<p>@interface NSObject (POP)   －－ 给所有的NSObject子类都加上了POP方法</p>
-<ul>
-<li>(void)pop_addAnimation:(POPAnimation <em>)anim forKey:(NSString </em>)key;<br>Demo：[v1.layer pop_addAnimation:anim forKey:@”slide”];</li>
-<li>(void)pop_removeAllAnimations;</li>
-<li>(void)pop_removeAnimationForKey:(NSString *)key;</li>
-<li>(NSArray *)pop_animationKeys;</li>
-<li>(id)pop_animationForKey:(NSString *)key;<br>@end</li>
-</ul>
-<p>@interface POPAnimator : NSObject  －－单例<br>@protocol POPAnimatorDelegate <nsobject>   POPAnimator协议<br>class POPAnimatorItem   C++类<br>_dict 保存POPAnimation的key－value对，capacity为5<br>CFRunLoopAddObserver(CFRunLoopGetMain(), _pendingListObserver,  kCFRunLoopCommonModes);</nsobject></p>
-<p>static void applyAnimationToValue(id obj, POPAnimationState <em>state)<br>1.updateAnimatable(obj, ps, true);<br>static void updateAnimatable(id obj, POPPropertyAnimationState </em>anim, bool shouldAvoidExtraneousWrite = false)<br>2.[self _scheduleProcessPendingList];－－&gt; - (void)_processPendingList -&gt; - (void)_renderTime:(CFTimeInterval)time items:(std::list<popanimatoritemref>)items -&gt; - (void)_renderTime:(CFTimeInterval)time item:(POPAnimatorItemRef)item -&gt; virtual void willRun(bool started, id obj) -&gt; POPVector<br>具体每帧的渲染过程有两步：<br>1.renderTime，更新state的状态。<br>2.updateAnimatable，把state的变化更新到obj的具体属性上 </popanimatoritemref></p>
-<p>CADisplayLink<br><a href="http://www.flakor.cn/2015-03-28-876.html?utm_source=tuicool" target="_blank" rel="external">http://www.flakor.cn/2015-03-28-876.html?utm_source=tuicool</a> – NSTimer和CADisplayLink的基本用法<br><a href="http://blog.csdn.net/ch_soft/article/details/9408855" target="_blank" rel="external">http://blog.csdn.net/ch_soft/article/details/9408855</a> – CADisplayLink 及定时器的使用<br><a href="http://www.jianshu.com/p/c35a81c3b9eb" target="_blank" rel="external">http://www.jianshu.com/p/c35a81c3b9eb</a> – CADisplayLink<br>参考：<br><a href="http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎" target="_blank" rel="external">http://www.tuicool.com/articles/uUrQFn－－facebook开源动画引擎</a> pop 源码阅读笔记<br><a href="http://www.cocoachina.com/industry/20140527/8565.html－－Facebook" target="_blank" rel="external">http://www.cocoachina.com/industry/20140527/8565.html－－Facebook</a> Pop 使用指南<br><a href="http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v" target="_blank" rel="external">http://blog.csdn.net/likendsl/article/details/36224045－－Pop上手体验(i-v</a>)<br><a href="http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook" target="_blank" rel="external">http://www.cocoachina.com/design/20140210/7791.html－－23个Facebook</a> Paper中的设计细节<br><a href="http://subjc.com/spark-camera/" target="_blank" rel="external">http://subjc.com/spark-camera/</a><br><a href="https://github.com/facebook/pop" target="_blank" rel="external">https://github.com/facebook/pop</a><br>CADisplayLink不能被继承,以display rate 为单位。<br>要使用CADisplayLink，需要加入QuartzCore.framework及#import <quartzcore cadisplaylink.h=""><br>1.创建一个CADisplayLink，并指定target和selector</quartzcore></p>
-<ul>
-<li>(CADisplayLink *)displayLinkWithTarget:(id)target<pre><code><span class="label">selector:</span>(SEL)sel
-</code></pre></li>
-</ul>
-<ul>
-<li>(void) selector:(CADisplayLink *)<br>sender<br>;<br>2.将display link添加到runloop</li>
-<li>(void)addToRunLoop:(NSRunLoop *)runloop<pre><code><span class="label">forMode:</span>(NSString *)mode
-</code></pre>display link with multiple input modes可以添加到多种runloop模式下。run loop持有display link，通过向display link发送 invalidate消息来移除（同时display link release the target）。<br>3.config<br>duration 屏幕刷新间隔，只读<br>frameInterval CADisplayLink默认每秒运行60次，通过它的frameInterval属性改变每秒运行帧数，如设置为2，意味CADisplayLink每隔一帧运行一次，有效的逻辑每秒运行30次。<br>paused 默认值是NO，如果设为YES，则暂停刷新通知<br>timestamp 只读，上一帧显示的时间。<br>3.invalidate display link<br>4.remove it from run loop<br>5。disassociate it from the target</li>
-</ul>
-<p>topic1<br>大量用到IOS开发之<strong>bridge，</strong>bridge_transfer和__bridge_retained<br>参考：<a href="http://blog.csdn.net/sanpintian/article/details/8139878" target="_blank" rel="external">http://blog.csdn.net/sanpintian/article/details/8139878</a><br>Core Foundation框架 (CoreFoundation.framework) 是一组C语言接口，它们为iOS应用程序提供基本数据管理和服务功能。Core Foundation框架和Foundation框架紧密相关，它们为相同功能提供接口，但Foundation框架提供Objective-C接口。如果您将Foundation对象和Core Foundation类型掺杂使用，则可利用两个框架之间的 “toll-free bridging”<br>Toll-Free bridged<br>在iOS世界，主要有两种对象：Objective-C 对象和 Core Foundation 对象0。Core Foundation 对象主要是有C语言实现的 Core Foundation Framework 的对象，其中也有对象引用计数的概念，只是不是 Cocoa Framework::Foundation Framework 的 retain/release，而是自身的 CFRetain/CFRelease 接口。主要用于ARC。正因为Objective-C是ARC管理的对象，而Core Foundation不是ARC管理的对象，所以才要特意这样转换，这与id类型向void*转换是一个概念。也就是说，当这两种类型（有ARC管理，没有ARC管理）在转换时，需要告诉编译器怎样处理对象的所有权。</p>
-<p>topic2<br>capacity<br>在with capacity的情况下，在初始化的时候分配的内存为n ＊ sizeof(elem)–假设capacity为n。如果在使用的过程中需要加入更多的元素需要给array扩容了，那么必须去找系统再次要求分配内存，而这次要求的内存的大小和扩容因子有关系，如果扩容因子为2，那么扩容之后总共分配的堆内存就成了2n*sizeof(elem)..扩容因子应该自己可以指定吧一般。</p>
-<p>好处是:如果指定capacity,而且元素数量没有超过这个值的话就不需要老是欲求不满找系统要内存，而找系统要内存这个操作会带来一定的系统开销(涉及到系统调用,当然我们使用起来事实上是感受不到这个区别的)。</p>
-<p>缺点是:如果实际元素个数也capacity相差甚远就浪费了内存空间。</p>
-<p>所以这里有个tradeoff,要根据实际情况来操作。</p>
-<p>在without capacity的情况下，事实上应该也是有个默认的capacity的，具体是多少应该和实现有关系，一般来说是10/12大约? </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cifxsyfmt000cdccrlk2srdxi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/CALayer-Core-Animation-UIView/" data-id="cig7nygfu000s7qcr9hp47dog" class="article-share-link">Share</a>
       
       
     </footer>
@@ -518,7 +483,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -528,6 +493,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/10/26/去掉默认的Main-storyboard/">去掉默认的Main.storyboard</a>
+          </li>
         
           <li>
             <a href="/2015/10/19/iOS9适配/">iOS9适配</a>
@@ -543,10 +512,6 @@
         
           <li>
             <a href="/2015/10/14/cocoapods/">cocoapods</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/14/图文混编和图文混排/">图文混编和图文混排</a>
           </li>
         
       </ul>
