@@ -3,21 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Quartz 2D | magicya的技术博客</title>
+  <title>iOS－工程目录模版 | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Transforms1.CTM（current transformation matrix）通过操作CTM来修改user spaceQuartz 2D提供了5个函数来获取和修改CTM。你可以对CTM做旋转/平移/缩放的操作，且可以和affine transformation matrix 级联。
-2.Affine Transforms（仿射变换，与CTM类似，平移/旋转/缩放/串联）ATM并不做用">
+  <meta name="description" content="工程目录–Application    |-AppDelegate.m    |-AppDelegate.h–Vendors     //第三方库  |-xxx  |-xxx–General  |-Category  |-base–Sections    //基础模块  |-network  |-storage  |-xxx–Macro         //基础宏–Classes–Resource">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Quartz 2D">
-<meta property="og:url" content="http://yoursite.com/2015/09/24/Quartz-2D/index.html">
+<meta property="og:title" content="iOS－工程目录模版">
+<meta property="og:url" content="http://yoursite.com/2015/10/26/iOS－工程目录模版/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="Transforms1.CTM（current transformation matrix）通过操作CTM来修改user spaceQuartz 2D提供了5个函数来获取和修改CTM。你可以对CTM做旋转/平移/缩放的操作，且可以和affine transformation matrix 级联。
-2.Affine Transforms（仿射变换，与CTM类似，平移/旋转/缩放/串联）ATM并不做用">
-<meta property="og:updated_time" content="2015-09-24T11:54:55.000Z">
+<meta property="og:description" content="工程目录–Application    |-AppDelegate.m    |-AppDelegate.h–Vendors     //第三方库  |-xxx  |-xxx–General  |-Category  |-base–Sections    //基础模块  |-network  |-storage  |-xxx–Macro         //基础宏–Classes–Resource">
+<meta property="og:updated_time" content="2015-10-26T08:35:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Quartz 2D">
-<meta name="twitter:description" content="Transforms1.CTM（current transformation matrix）通过操作CTM来修改user spaceQuartz 2D提供了5个函数来获取和修改CTM。你可以对CTM做旋转/平移/缩放的操作，且可以和affine transformation matrix 级联。
-2.Affine Transforms（仿射变换，与CTM类似，平移/旋转/缩放/串联）ATM并不做用">
+<meta name="twitter:title" content="iOS－工程目录模版">
+<meta name="twitter:description" content="工程目录–Application    |-AppDelegate.m    |-AppDelegate.h–Vendors     //第三方库  |-xxx  |-xxx–General  |-Category  |-base–Sections    //基础模块  |-network  |-storage  |-xxx–Macro         //基础宏–Classes–Resource">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -65,10 +62,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Quartz-2D" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-iOS－工程目录模版" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/24/Quartz-2D/" class="article-date">
-  <time datetime="2015-09-24T11:01:10.000Z" itemprop="datePublished">2015-09-24</time>
+    <a href="/2015/10/26/iOS－工程目录模版/" class="article-date">
+  <time datetime="2015-10-26T08:35:39.000Z" itemprop="datePublished">2015-10-26</time>
 </a>
     
   </div>
@@ -79,7 +76,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Quartz 2D
+      iOS－工程目录模版
     </h1>
   
 
@@ -87,13 +84,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Transforms<br>1.CTM（current transformation matrix）通过操作CTM来修改user space<br>Quartz 2D提供了5个函数来获取和修改CTM。你可以对CTM做旋转/平移/缩放的操作，且可以和affine transformation matrix 级联。</p>
-<p>2.Affine Transforms（仿射变换，与CTM类似，平移/旋转/缩放/串联）<br>ATM并不做用于user space，直到你决定将这个trnasform提交给CTM。<br>1.创建变换矩阵，CGAffineTransform<br>2.CGContextConcatCTM 提交给CTM<br>使用<br>UIView.transform =<br>3.函数<br>CGAffineTransformMakeScale  xy按倍数缩放/拉伸<br>若有其他的子view add在被拉伸的view上，有的子view不见了，有的字view坐标诡异。。<br>其他view不受影响。<br>3.</p>
+        <h2 id="工程目录">工程目录</h2><p>–Application<br>    |-AppDelegate.m<br>    |-AppDelegate.h<br>–Vendors     //第三方库<br>  |-xxx<br>  |-xxx<br>–General<br>  |-Category<br>  |-base<br>–Sections    //基础模块<br>  |-network<br>  |-storage<br>  |-xxx<br>–Macro         //基础宏<br>–Classes<br>–Resource    //资源<br>  |-1.0<br>  |-文本化配置资源<br>  |-xxx<br>–Plugins     //CDV插件<br>–Others</p>
+<h2 id="流程">流程</h2><h3 id="app启动配置">app启动配置</h3><pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
+</code></pre><p>注册数据库<br>注册IM服务<br>注册听云服务<br>注册统计类服务<br>注册日志类服务<br>注册微信服务<br>网络配置初始化，最大连接数，缓存，接口控制<br>读取默认数据<br>注册网络监测服务<br>注册图片缓存路径<br>注册消息推送<br>更新本地配置数据</p>
+<h3 id="app前端配置">app前端配置</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationDidBecomeActive:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>上传本地日志<br>检查新版本<br>IM配置</p>
+<h3 id="app进入后台">app进入后台</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationDidEnterBackground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>上传本地日志<br>IM配置<br>内存数据实例化</p>
+<h3 id="app终止配置">app终止配置</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationWillTerminate:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>IM配置<br>内存数据实例化</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/24/Quartz-2D/" data-id="cig7owh3u000jhbcr5kry28da" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/26/iOS－工程目录模版/" data-id="cig7owh3d0007hbcr7nr3m4as" class="article-share-link">Share</a>
       
       
     </footer>
@@ -102,19 +106,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/09/25/CloudKit/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          CloudKit
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/15/swift学习/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/10/26/去掉默认的Main-storyboard/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">swift学习</div>
+      <div class="article-nav-title">去掉默认的Main.storyboard</div>
     </a>
   
 </nav>
