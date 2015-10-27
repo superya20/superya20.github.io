@@ -63,6 +63,143 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS-数据存储" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/11/iOS-数据存储/" class="article-date">
+  <time datetime="2015-09-11T07:41:27.000Z" itemprop="datePublished">2015-09-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/11/iOS-数据存储/">iOS 数据存储</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>理想的数据存储方式，支持json转换，支持数据库操作</p>
+<p>iActiveRecord<br>Mantle<br>FMDB<br>JKDBModel – FMDB的封装<br>SQLite3</p>
+<p>JSON和模型之间最快捷方便的转换iOS框架：MJExtension<br><a href="http://www.open-open.com/lib/view/open1426233573592.html#_label1" target="_blank" rel="external">http://www.open-open.com/lib/view/open1426233573592.html#_label1</a></p>
+<p>MJExtension<br>JSONModel<br>Mantle</p>
+<p>iActiveRecord</p>
+<p>地址<br><a href="https://github.com/AlexDenisov/iActiveRecord" target="_blank" rel="external">https://github.com/AlexDenisov/iActiveRecord</a><br>说明文档<br><a href="https://github.com/AlexDenisov/iActiveRecord/wiki/iActiveRecord-description" target="_blank" rel="external">https://github.com/AlexDenisov/iActiveRecord/wiki/iActiveRecord-description</a></p>
+<p>没有CoreData，只有SQLite</p>
+<p>Features</p>
+<pre><code>ARC support
+<span class="keyword">unicode</span> support
+migrations
+validations (<span class="keyword">with</span> <span class="keyword">custom</span> validator support)
+transactions
+support <span class="keyword">for</span> <span class="keyword">custom</span> data types
+relationships (BelongsTo, HasMany, HasManyThrough)
+sorting
+filters (<span class="keyword">where</span> =, !=, <span class="keyword">IN</span>, <span class="keyword">NOT</span> <span class="keyword">IN</span> <span class="keyword">and</span> <span class="keyword">else</span>)
+joins
+CocoaPods support
+no more raw sql!!!
+</code></pre><p>支持单元测试<br>Run tests</p>
+<p>iActiveRecord uses Cedar for UnitTests and CocoaPods for dependency management. Follow this steps to run tests</p>
+<p>[sudo] gem install cocoapods<br>pod setup<br>cd project_dir<br>pod install<br>open iActiveRecord.xcworkspace</p>
+<p>Then build &amp; run UnitTests target.</p>
+<p>使用说明<br>1.当app第一次启动的时候，本框架为所有继承自ActiveRecord的类建立表格<br>声明：</p>
+<p>#import <activerecord activerecord.h=""></activerecord></p>
+<p>@interface User : ActiveRecord</p>
+<p>@property (nonatomic, retain) NSString *name;</p>
+<p>@end<br>使用<br>User *user = [User newRecord];<br>user.name = @”Alex”;<br>[user save];</p>
+<p>NSArray <em>users = [User allRecords];<br>User </em>userForRemove = [users first];<br>[userForRemove dropRecord];</p>
+<p>2.数据类型<br>NSDecimalNumber - real<br>NSNumber - integer<br>NSString - text<br>NSData - blob<br>NSDate - date (real)</p>
+<p>3.自定义数据类型</p>
+<p>All custom property types should implement ARRepresentationProtocol:</p>
+<p>@protocol ARRepresentationProtocol</p>
+<p>@required</p>
+<ul>
+<li>(const char *)sqlType;</li>
+</ul>
+<ul>
+<li>(NSString *)toSql;</li>
+</ul>
+<ul>
+<li>(id)fromSql:(NSString *)sqlData;</li>
+</ul>
+<p>@end</p>
+<p>This is a simple example:</p>
+<p>@implementation NSString (sqlRepresentation)</p>
+<ul>
+<li>(ActiveRecord <em>)fromSql:(NSString </em>)sqlData{<br>  return sqlData;<br>}</li>
+</ul>
+<ul>
+<li>(NSString *)toSql {<br>  return self;<br>}</li>
+</ul>
+<ul>
+<li>(const char *)sqlType {<br>  return “text”;<br>}</li>
+</ul>
+<p>@end</p>
+<p>4.忽略某些字段<br>@implementation User<br>…<br>@synthesize ignoredProperty;<br>…<br>ignore_fields_do(<br>    ignore_field(ignoredProperty)<br>)<br>…<br>@end</p>
+<p>5.验证<br>实现<arvalidatableprotocol>来支持数据校验<br>validation_do(<br>    validate_uniqueness_of(name)<br>    validate_presence_of(name)<br>)<br>目前有两种校验presence and uniqueness。你可以自定义校验。Just describe new class and implement ARValidatorProtocol<br>自定义<br>// ARValidatorProtocol<br>@protocol ARValidatorProtocol <nsobject><br>@optional</nsobject></arvalidatableprotocol></p>
+<ul>
+<li>(NSString *)errorMessage;<br>@required</li>
+<li>(BOOL)validateField:(NSString *)aField ofRecord:(id)aRecord;<br>@end</li>
+</ul>
+<p>//  Custom validator<br>//  PrefixValidator.h<br>@interface PrefixValidator : NSObject<br>    <arvalidatorprotocol><br>@end<br>//  PrefixValidator.m<br>@implementation PrefixValidator</arvalidatorprotocol></p>
+<ul>
+<li>(NSString *)errorMessage {<br>  return @”Invalid prefix”;<br>}</li>
+<li>(BOOL)validateField:(NSString <em>)aField ofRecord:(id)aRecord {<br>  NSString </em>aValue = [aRecord valueForKey:aField];<br>  BOOL valid = [aValue hasPrefix:@”LOL”];<br>  return valid;<br>}<br>@end</li>
+</ul>
+<p>then add validator to your ActiveRecord implementation</p>
+<p>@implementation User<br>@synthesize name;<br>…<br>validation_do(<br>    validate_field_with_validator(name, PrefixValidator)<br>)<br>…<br>@end</p>
+<p>6.移表－支持简单的移表<br>当新增记录或属性时，框架会创建新表或向已存在的表增加记录。<br>如果不需要，在didFinishLaunchingWithOptions中关闭这个功能。<br>[ActiveRecord disableMigrations];</p>
+<p>7.支持简单的事务</p>
+<p>[ActiveRecord transaction:^{<br>    User *alex = [User newRecord];<br>    alex.name = @”Alex”;<br>    [alex save];<br>}];</p>
+<p>[ActiveRecord transaction:^{<br>    User *alex = [User newRecord];<br>    alex.name = @”Alex”;<br>    [alex save];<br>    rollback<br>}];</p>
+<p>8.表关系<br>8.1 HasMany &lt;-&gt; BelongsTo<br>// User.h<br>@interface User : ActiveRecord<br>…<br>@property (nonatomic, retain) NSNumber *groupId;<br>…<br>belongs_to_dec(Group, group, ARDependencyDestroy)<br>…<br>@end<br>// User.m<br>@implementation User<br>…<br>@synthesize groupId;<br>…<br>belongs_to_imp(Group, group, ARDependencyDestroy)<br>…<br>@end</p>
+<p>8.2Describe reverse relationship<br>// Group.h<br>@interface Group : ActiveRecord<br>…<br>has_many_dec(User, users, ARDependencyDestroy)<br>…<br>@end<br>// Group.m<br>@implementation Group<br>…<br>has_many_imp(User, users, ARDependencyDestroy)<br>…<br>@end</p>
+<p>8.3HasManyThrough</p>
+<p>// User.h<br>@interface User : ActiveRecord<br>…<br>has_many_through_dec(Project, UserProjectRelationship, projects, ARDependencyNullify)<br>…<br>@end<br>// User.m<br>@implementation User<br>…<br>has_many_through_imp(Project, UserProjectRelationship, projects, ARDependencyNullify)<br>…<br>@end</p>
+<p>// Project.h<br>@interface Project : ActiveRecord<br>…<br>has_many_through_dec(User, UserProjectRelationship, users, ARDependencyDestroy)<br>…<br>@end<br>// Project.m<br>@implementation Project<br>…<br>has_many_through_imp(User, UserProjectRelationship, users, ARDependencyDestroy)<br>…<br>@end</p>
+<p>9.数据库操作<br>9.1查询<br>NSArray <em>ids = [NSArray arrayWithObjects:<br>               [NSNumber numberWithInt:1],<br>               [NSNumber numberWithInt:15],<br>               nil];<br>NSString </em>username = @”john”;<br>ARLazyFetcher <em>fetcher = [User lazyFetcher];<br>[fetcher where:@”‘user’.’name’ = %@ or ‘user’.’id’ in %@”,<br>               username, ids, nil];<br>[fetcher orderBy:@”id”];<br>NSArray </em>records = [fetcher fetchRecords];</p>
+<p>9.2 查询2</p>
+<ul>
+<li>(ARLazyFetcher <em>)only:(NSString </em>)aFirstParam, …;</li>
+<li>(ARLazyFetcher <em>)except:(NSString </em>)aFirstParam, …;</li>
+</ul>
+<p>ARLazyFetcher <em>fetcher = [[User lazyFetcher] only:@”name”, @”id”, nil];<br>NSArray </em>users = [fetcher fetchRecords];</p>
+<p>9.3排序</p>
+<ul>
+<li>(ARLazyFetcher <em>)orderBy:(NSString </em>)aField ascending:(BOOL)isAscending;</li>
+<li>(ARLazyFetcher <em>)orderBy:(NSString </em>)aField;// ASC by default</li>
+</ul>
+<p>ARLazyFetcher <em>fetcher = [[[User lazyFetcher] offset:2] limit:10];<br>[[fetcher whereField:@”name”<br>       equalToValue:@”Alex”] orderBy:@”name”];<br>NSArray </em>users = [fetcher fetchRecords];</p>
+<p>9.4 连接</p>
+<ul>
+<li>(ARLazyFetcher *)join:(Class)aJoinRecord<pre><code> <span class="attribute">useJoin</span>:(ARJoinType)aJoinType
+ <span class="attribute">onField</span>:(NSString *)aFirstField
+<span class="attribute">andField</span>:(NSString *)aSecondField;
+</code></pre></li>
+</ul>
+<p>10 持久化<br>默认存在CachesDirectory中，名字database。但你可以自己修改。</p>
+<p>11 测试<br>If you want another database for tests you need to add UNIT_TEST=1 to Preprocessor Macros. After that new database will be named with suffix ‘-test’.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cig91dslt000ak2cr04gfov0o" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-iOS-生成-net和APNS通信的证书" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/08/iOS-生成-net和APNS通信的证书/" class="article-date">
@@ -109,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cig7p1kv50009jdcro5c3qmty" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cig91dslr0009k2cru0cic7qe" class="article-share-link">Share</a>
       
       
     </footer>
@@ -165,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cig7p1kva000cjdcrh67hzcnc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cig91dslv000ck2cr2l94rr9u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -513,7 +650,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cig7p1kvk000ijdcru0e6ofbb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cig91dsm6000jk2cro8q3v8fg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -549,7 +686,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cig7p1kwa000rjdcrytnysyqn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cig91dsmj000sk2cruwmjt990" class="article-share-link">Share</a>
       
       
     </footer>
@@ -585,7 +722,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cig7p1kvm000jjdcripl1mzs6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cig91dsm7000kk2crxz5yqwcx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -622,7 +759,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cig7p1kw3000njdcr99r8zv97" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cig91dsmd000ok2crqeg2e8gt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -665,7 +802,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cig7p1kux0004jdcrevwsu162" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cig91dslk0004k2crtcimod4e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -710,7 +847,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cig7p1kv9000bjdcrbr9g7lt6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cig91dslu000bk2crvt2wtxpf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -798,50 +935,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cig7p1kvj000hjdcrcilqrbu5" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-一些博客地址" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/08/28/一些博客地址/" class="article-date">
-  <time datetime="2015-08-28T07:53:54.000Z" itemprop="datePublished">2015-08-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/28/一些博客地址/">一些博客地址</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>论坛：<a href="http://www.v2ex.com/" target="_blank" rel="external">http://www.v2ex.com/</a></p>
-<h2 id="https://www-cocoacontrols-com/"><a href="https://www.cocoacontrols.com/" target="_blank" rel="external">https://www.cocoacontrols.com/</a></h2><h2 id="安卓：http://www-stormzhang-com/">安卓：<a href="http://www.stormzhang.com/" target="_blank" rel="external">http://www.stormzhang.com/</a></h2><h2 id="iOS:">iOS:</h2><p><a href="http://blog.daimajia.com/" target="_blank" rel="external">http://blog.daimajia.com/</a>    –  代码家<br><a href="http://www.trinea.cn/" target="_blank" rel="external">http://www.trinea.cn/</a> －－－ trinea<br><a href="http://www.zhihu.com/question/26417244" target="_blank" rel="external">http://www.zhihu.com/question/26417244</a> －－－ 安卓学习之路<br><a href="http://hukai.me/android-training-course-in-chinese/basics/index.html" target="_blank" rel="external">http://hukai.me/android-training-course-in-chinese/basics/index.html</a> — Android入门基础：从这里开始<br><a href="http://www.jianshu.com/users/eaec1fc422e9/latest_articles" target="_blank" rel="external">http://www.jianshu.com/users/eaec1fc422e9/latest_articles</a><br><a href="http://www.cnblogs.com/mjios/" target="_blank" rel="external">http://www.cnblogs.com/mjios/</a><br><a href="http://www.coderyi.com/archives" target="_blank" rel="external">http://www.coderyi.com/archives</a><br><a href="http://linianjian.cn/" target="_blank" rel="external">http://linianjian.cn/</a><br><a href="https://github.com/lesschat" target="_blank" rel="external">https://github.com/lesschat</a><br><a href="https://github.com/WorktileTech" target="_blank" rel="external">https://github.com/WorktileTech</a><br><a href="http://www.cnblogs.com/taintain1984/" target="_blank" rel="external">http://www.cnblogs.com/taintain1984/</a>  －－－ 沧海一粟<br><a href="http://www.jianshu.com/collection/5be41e88940c－－－寒哥管理的技术专题" target="_blank" rel="external">http://www.jianshu.com/collection/5be41e88940c－－－寒哥管理的技术专题</a></p>
-<p><a href="https://github.com/mobileresearch" target="_blank" rel="external">https://github.com/mobileresearch</a><br><a href="http://longtimenoc.com/" target="_blank" rel="external">http://longtimenoc.com/</a></p>
-<p><a href="https://github.com/ChenYilong?tab=repositories" target="_blank" rel="external">https://github.com/ChenYilong?tab=repositories</a></p>
-<p><a href="http://matthewmorey.com/" target="_blank" rel="external">http://matthewmorey.com/</a></p>
-<p><a href="https://github.com/octo-technology" target="_blank" rel="external">https://github.com/octo-technology</a></p>
-<p><a href="http://www.hrchen.com/" target="_blank" rel="external">http://www.hrchen.com/</a>—hrchen’s blogging<br>OneV‘s Den  –  <a href="http://onevcat.com/" target="_blank" rel="external">http://onevcat.com/</a><br>破船之家 – <a href="http://beyondvincent.com/" target="_blank" rel="external">http://beyondvincent.com/</a><br>NSHipster<br><a href="http://nshipster.cn/" target="_blank" rel="external">http://nshipster.cn/</a><br>Limboy 无网不剩<br><a href="http://limboy.me" target="_blank" rel="external">http://limboy.me</a><br>唐巧的技术博客<br><a href="http://blog.devtang.com/" target="_blank" rel="external">http://blog.devtang.com/</a><br>Lex iOS notes<br><a href="http://ios.lextang.com/" target="_blank" rel="external">http://ios.lextang.com/</a><br>念茜的博客<br><a href="http://nianxi.net/" target="_blank" rel="external">http://nianxi.net/</a><br>Xcode Dev<br><a href="http://blog.xcodev.com/" target="_blank" rel="external">http://blog.xcodev.com/</a><br>Ted‘s Homepage<br><a href="http://wufawei.com/" target="_blank" rel="external">http://wufawei.com/</a><br>txx‘s blog<br><a href="http://blog.t-xx.me/" target="_blank" rel="external">http://blog.t-xx.me/</a><br>KEVIN BLOG<br><a href="http://imkevin.me/" target="_blank" rel="external">http://imkevin.me/</a><br>阿毛的蛋疼地<br><a href="http://www.xiangwangfeng.com/" target="_blank" rel="external">http://www.xiangwangfeng.com/</a><br>亚庆的 Blog<br><a href="http://billwang1990.github.io/" target="_blank" rel="external">http://billwang1990.github.io/</a><br>Nonomori<br><a href="http://nonomori.farbox.com/" target="_blank" rel="external">http://nonomori.farbox.com/</a><br>言无不尽<br><a href="http://tang3w.com/" target="_blank" rel="external">http://tang3w.com/</a><br>Wonderffee‘s Blog<br><a href="http://wonderffee.github.io/" target="_blank" rel="external">http://wonderffee.github.io/</a><br>I‘m TualatriX<br><a href="http://imtx.me/" target="_blank" rel="external">http://imtx.me/</a><br>vclwei<br><a href="http://vclwei.com/" target="_blank" rel="external">http://vclwei.com/</a><br>Cocoabit<br><a href="http://blog.cocoabit.com/" target="_blank" rel="external">http://blog.cocoabit.com/</a><br>nixzhu on scriptogr.am<br><a href="http://nixzhu.me/" target="_blank" rel="external">http://nixzhu.me/</a><br>不会开机的男孩<br><a href="http://studentdeng.github.io/" target="_blank" rel="external">http://studentdeng.github.io/</a><br>Nico<br><a href="http://www.taofengping.com/" target="_blank" rel="external">http://www.taofengping.com/</a><br>阿峰的技术窝窝<br><a href="http://hufeng825.github.io/" target="_blank" rel="external">http://hufeng825.github.io/</a><br>answer_huang<br><a href="http://answerhuang.duapp.com/index.php/" target="_blank" rel="external">http://answerhuang.duapp.com/index.php/</a><br>webfrogs<br><a href="http://webfrogs.me/" target="_blank" rel="external">http://webfrogs.me/</a><br>代码手工艺人<br><a href="http://joeyio.com/" target="_blank" rel="external">http://joeyio.com/</a><br>Lancy‘s Blog<br><a href="http://gracelancy.com/" target="_blank" rel="external">http://gracelancy.com/</a><br>I‘m Allen<br><a href="http://www.imallen.com/" target="_blank" rel="external">http://www.imallen.com/</a><br>Travis‘ Blog<br><a href="http://imi.im/" target="_blank" rel="external">http://imi.im/</a><br>王中周的技术博客<br><a href="http://wangzz.github.io/" target="_blank" rel="external">http://wangzz.github.io/</a><br>会写代码的猪<br><a href="http://gaosboy.com/" target="_blank" rel="external">http://gaosboy.com/</a><br>克伟的博客<br><a href="http://feed.cnblogs.com/blog/u/23857" target="_blank" rel="external">http://feed.cnblogs.com/blog/u/23857</a><br>摇滚诗人<br><a href="http://feed.cnblogs.com/blog/u/35410" target="_blank" rel="external">http://feed.cnblogs.com/blog/u/35410</a><br>Luke‘s Homepage<br><a href="http://geeklu.com/" target="_blank" rel="external">http://geeklu.com/</a><br>萧宸宇<br><a href="http://iiiyu.com/" target="_blank" rel="external">http://iiiyu.com/</a><br>Yuan博客<br><a href="http://www.heyuan110.com/" target="_blank" rel="external">http://www.heyuan110.com/</a><br>Shining IO<br><a href="http://shiningio.com/" target="_blank" rel="external">http://shiningio.com/</a><br>YIFEIYANG–易飞扬的博客<br><a href="http://www.yifeiyang.net/" target="_blank" rel="external">http://www.yifeiyang.net/</a><br>KooFrank‘s Blog<br><a href="http://koofrank.com/" target="_blank" rel="external">http://koofrank.com/</a><br>hello it works<br><a href="http://helloitworks.com/" target="_blank" rel="external">http://helloitworks.com/</a><br>码农人生<br><a href="http://msching.github.io/" target="_blank" rel="external">http://msching.github.io/</a><br>玉令天下的Blog<br><a href="http://yulingtianxia.com/" target="_blank" rel="external">http://yulingtianxia.com/</a><br>不掏蜂窝的熊<br><a href="http://www.hotobear.com/" target="_blank" rel="external">http://www.hotobear.com/</a><br>猫·仁波切<br><a href="https://andelf.github.io/" target="_blank" rel="external">https://andelf.github.io/</a><br>煲仔饭<br><a href="http://ivoryxiong.org/" target="_blank" rel="external">http://ivoryxiong.org/</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cig7p1kuy0005jdcr6dv6v280" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cig91dsm3000ik2crtf5ksccq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -870,7 +964,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -880,6 +974,10 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/10/27/appstore审核/">appstore审核</a>
+          </li>
         
           <li>
             <a href="/2015/10/26/app-工程结构模版/">app 工程结构模版</a>
@@ -895,10 +993,6 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
         
           <li>
             <a href="/2015/10/19/iOS9适配/">iOS9适配</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/19/Gradle/">Gradle</a>
           </li>
         
       </ul>
