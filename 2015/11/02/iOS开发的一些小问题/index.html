@@ -3,21 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>CloudKit | magicya的技术博客</title>
+  <title>iOS开发的一些小问题 | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="iCloud Drive 是可以存储用户数据和文件的地方。CloudKit     数据库、文件存储、用户认证系统的集合服务，提供API访问iCloud服务器。CloudKit JS  在浏览器中使用CloudKit的功能。CloudKit web service 对CloudKit服务端直接进行HTTP请求。移动或桌面平台都可以使用CloudKit。
-收费：免费10G资源，100M数据库存储，2">
+  <meta name="description" content="duplicate symbols for architecture armv7解决办法 (2014-10-03 11:11:47)转载▼标签： duplicate symbols armv7     分类： iOS开发XCODE编译的时候报错：duplicate symbols for architecture armv7
+
+1、首先排查是否有名字重复的文件；
+2、检查是否在#import头文件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CloudKit">
-<meta property="og:url" content="http://yoursite.com/2015/09/25/CloudKit/index.html">
+<meta property="og:title" content="iOS开发的一些小问题">
+<meta property="og:url" content="http://yoursite.com/2015/11/02/iOS开发的一些小问题/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="iCloud Drive 是可以存储用户数据和文件的地方。CloudKit     数据库、文件存储、用户认证系统的集合服务，提供API访问iCloud服务器。CloudKit JS  在浏览器中使用CloudKit的功能。CloudKit web service 对CloudKit服务端直接进行HTTP请求。移动或桌面平台都可以使用CloudKit。
-收费：免费10G资源，100M数据库存储，2">
-<meta property="og:updated_time" content="2015-09-25T11:36:01.000Z">
+<meta property="og:description" content="duplicate symbols for architecture armv7解决办法 (2014-10-03 11:11:47)转载▼标签： duplicate symbols armv7     分类： iOS开发XCODE编译的时候报错：duplicate symbols for architecture armv7
+
+1、首先排查是否有名字重复的文件；
+2、检查是否在#import头文件">
+<meta property="og:updated_time" content="2015-11-11T09:50:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CloudKit">
-<meta name="twitter:description" content="iCloud Drive 是可以存储用户数据和文件的地方。CloudKit     数据库、文件存储、用户认证系统的集合服务，提供API访问iCloud服务器。CloudKit JS  在浏览器中使用CloudKit的功能。CloudKit web service 对CloudKit服务端直接进行HTTP请求。移动或桌面平台都可以使用CloudKit。
-收费：免费10G资源，100M数据库存储，2">
+<meta name="twitter:title" content="iOS开发的一些小问题">
+<meta name="twitter:description" content="duplicate symbols for architecture armv7解决办法 (2014-10-03 11:11:47)转载▼标签： duplicate symbols armv7     分类： iOS开发XCODE编译的时候报错：duplicate symbols for architecture armv7
+
+1、首先排查是否有名字重复的文件；
+2、检查是否在#import头文件">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -65,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-CloudKit" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-iOS开发的一些小问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/25/CloudKit/" class="article-date">
-  <time datetime="2015-09-25T11:26:34.000Z" itemprop="datePublished">2015-09-25</time>
+    <a href="/2015/11/02/iOS开发的一些小问题/" class="article-date">
+  <time datetime="2015-11-02T06:33:08.000Z" itemprop="datePublished">2015-11-02</time>
 </a>
     
   </div>
@@ -79,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      CloudKit
+      iOS开发的一些小问题
     </h1>
   
 
@@ -87,14 +93,31 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>iCloud Drive 是可以存储用户数据和文件的地方。<br>CloudKit     数据库、文件存储、用户认证系统的集合服务，提供API访问iCloud服务器。<br>CloudKit JS  在浏览器中使用CloudKit的功能。<br>CloudKit web service 对CloudKit服务端直接进行HTTP请求。<br>移动或桌面平台都可以使用CloudKit。</p>
-<p>收费：<br>免费<br>10G资源，100M数据库存储，2GB流量/天<br>当用户数增加时，增加到1 PB资源，10TB数据库存储，200TB流量/天<br><a href="https://developer.apple.com/icloud/index.html" target="_blank" rel="external">https://developer.apple.com/icloud/index.html</a></p>
-<p>参考文章：<a href="http://nshipster.cn/reactivecocoa/" target="_blank" rel="external">http://nshipster.cn/reactivecocoa/</a></p>
+        <ol>
+<li>duplicate symbols for architecture armv7解决办法 (2014-10-03 11:11:47)<br>转载<br>▼<br>标签： duplicate symbols armv7     分类： iOS开发<br>XCODE编译的时候报错：duplicate symbols for architecture armv7</li>
+</ol>
+<p>1、首先排查是否有名字重复的文件；</p>
+<p>2、检查是否在#import头文件的时候，不小心把.h写成了.m。</p>
+<p>####UITapGestureRecognizer不响应<br>UITapGestureRecognizer不响应，要先检查一下控件的userInteractionEnabled属性是否设置为YES。UILabel，UIImageView的默认值是NO。</p>
+<p>####获取UIGestureRecognizer的点击坐标<br>-(void)handleSingleTap:(UITapGestureRecognizer *)sender{<br>CGPoint point = [sender locationInView:self.view];<br>NSLog(@”handleSingleTap!pointx:%f,y:%f”,point.x,point.y);<br>} </p>
+<p>####Unsupported compiler<br> Unsupported compiler ‘com.apple.compilers.llvmgcc42’ selected for architecture ‘armv7’</p>
+<p>Xcode更新到Xcode5，一运行报如下错误：</p>
+<p>Unsupported compiler ‘com.apple.compilers.llvmgcc42’ selected for architecture ‘armv7’或’armv7s’</p>
+<p>解决方案：</p>
+<p>Change your compiler for C/C++/ObjectiveC Go to Build Settings-&gt;Build OPtions-&gt;compiler for C/C++/ObjectiveC; select Default(Apple LLVM5.0)</p>
+<p>####谈谈iOS下图像颜色检测、颜色匹配的解决方法<br><a href="http://blog.csdn.net/ssanonymity/article/details/7643236" target="_blank" rel="external">http://blog.csdn.net/ssanonymity/article/details/7643236</a><br><a href="http://www.markj.net/iphone-uiimage-pixel-color/" target="_blank" rel="external">http://www.markj.net/iphone-uiimage-pixel-color/</a></p>
+<p>####EI Capitan下 CocoaPods命令无法使用问题<br><a href="http://blog.csdn.net/pjk1129/article/details/49356847" target="_blank" rel="external">http://blog.csdn.net/pjk1129/article/details/49356847</a></p>
+<p>####mac下安装ngnix<br><a href="http://blog.csdn.net/cssmhyl/article/details/9717189" target="_blank" rel="external">http://blog.csdn.net/cssmhyl/article/details/9717189</a></p>
+<p>####IOS-读写文件大全<br><a href="http://blog.csdn.net/ch_soft/article/details/8001096" target="_blank" rel="external">http://blog.csdn.net/ch_soft/article/details/8001096</a></p>
+<p>####The identity used to sign the executable is no longer valid.Please verify that your device’s clock is properly set, and that your signing certificate is not expired.(0xE8008018).</p>
+<p>If all the above fail after renewing your certificate, as they did for me, browse to the following location;</p>
+<p>~/Library/MobileDevice/Provisioning Profiles</p>
+<p>…and delete your provisioning profiles.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/25/CloudKit/" data-id="cih1kqkcd000veocr7diav1z3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/02/iOS开发的一些小问题/" data-id="cih1kqkbg000aeocr3h2bxhtn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -103,19 +126,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/09/28/facebook-pop/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/11/11/牛蒡茶/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          facebook-pop
+          牛蒡茶
         
       </div>
     </a>
   
   
-    <a href="/2015/09/24/Quartz-2D/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/10/30/AFNetworking/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Quartz 2D</div>
+      <div class="article-nav-title">AFNetworking</div>
     </a>
   
 </nav>

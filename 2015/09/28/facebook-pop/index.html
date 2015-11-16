@@ -5,28 +5,19 @@
   
   <title>facebook-pop | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象
-四种类型，spring，decay，basic，custom
-POPDecayAnimation：POPPropertyAnimation  Decay动画
-
-(void)_initState{_state = new POPDecayAnimationState(self);">
+  <meta name="description" content="无论是POP动画还是CA动画，都是在关键路径给出接口给调用者设置，然后进行插值计算来补间动画。CoreAnimation －－ 基于CAmediaTimingFunction              －－ 只能用于CALayerPOPAnimation  －－可用于NSObject
+区别：1.Pop Animation应用于CALayer时，在动画运行的任何时刻，layer和其presentat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="facebook-pop">
 <meta property="og:url" content="http://yoursite.com/2015/09/28/facebook-pop/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象
-四种类型，spring，decay，basic，custom
-POPDecayAnimation：POPPropertyAnimation  Decay动画
-
-(void)_initState{_state = new POPDecayAnimationState(self);">
-<meta property="og:updated_time" content="2015-10-08T10:44:21.000Z">
+<meta property="og:description" content="无论是POP动画还是CA动画，都是在关键路径给出接口给调用者设置，然后进行插值计算来补间动画。CoreAnimation －－ 基于CAmediaTimingFunction              －－ 只能用于CALayerPOPAnimation  －－可用于NSObject
+区别：1.Pop Animation应用于CALayer时，在动画运行的任何时刻，layer和其presentat">
+<meta property="og:updated_time" content="2015-11-02T08:15:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="facebook-pop">
-<meta name="twitter:description" content="Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象
-四种类型，spring，decay，basic，custom
-POPDecayAnimation：POPPropertyAnimation  Decay动画
-
-(void)_initState{_state = new POPDecayAnimationState(self);">
+<meta name="twitter:description" content="无论是POP动画还是CA动画，都是在关键路径给出接口给调用者设置，然后进行插值计算来补间动画。CoreAnimation －－ 基于CAmediaTimingFunction              －－ 只能用于CALayerPOPAnimation  －－可用于NSObject
+区别：1.Pop Animation应用于CALayer时，在动画运行的任何时刻，layer和其presentat">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -96,8 +87,9 @@ POPDecayAnimation：POPPropertyAnimation  Decay动画
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Core Animation的载体只能是CALayer，而Pop Animation可以是任意基于NSObject的对象</p>
-<p>四种类型，spring，decay，basic，custom</p>
+        <p>无论是POP动画还是CA动画，都是在关键路径给出接口给调用者设置，然后进行插值计算来补间动画。<br>CoreAnimation －－ 基于CAmediaTimingFunction<br>              －－ 只能用于CALayer<br>POPAnimation  －－可用于NSObject</p>
+<p>区别：<br>1.Pop Animation应用于CALayer时，在动画运行的任何时刻，layer和其presentationLayer的相关属性值始终保持一致，而Core Animation做不到。<br>2.Pop Animation可以应用任何NSObject的对象，而Core Aniamtion必须是CALayer。</p>
+<p>POPAnimation分四种类型：<br>POPBasicAnimation 贝塞尔曲线 Bezier<br>POPSpringAnimation 弹簧动画<br>1.springBounciness 弹簧弹力 取值范围为[0, 20]，默认值为4<br>2.springSpeed 弹簧速度，速度越快，动画时间越短 [0, 20]，默认为12，和springBounciness一起决定着弹簧动画的效果<br>3.dynamicsTension 弹簧的张力<br>4.dynamicsFriction 弹簧摩擦<br>5.dynamicsMass 质量 。张力，摩擦，质量这三者可以从更细的粒度上替代springBounciness和springSpeed控制弹簧动画的效果<br>POPDecayAnimation 衰减动画<br>POPCustomAnimation</p>
 <p>POPDecayAnimation：POPPropertyAnimation  Decay动画</p>
 <ul>
 <li>(void)_initState<br>{<br>_state = new POPDecayAnimationState(self);<br>}<br>velocity 支持的类型 POPValueTypes ：kPOPValuePoint, kPOPValueInteger, kPOPValueFloat, kPOPValueRect, and kPOPValueSize</li>
@@ -139,7 +131,7 @@ POPDecayAnimation：POPPropertyAnimation  Decay动画
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cigdk8eo5000fnacrr1qaoii8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/28/facebook-pop/" data-id="cih1kqkbq000heocr7u8eyryh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -182,7 +174,7 @@ POPDecayAnimation：POPPropertyAnimation  Decay动画
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -194,23 +186,23 @@ POPDecayAnimation：POPPropertyAnimation  Decay动画
       <ul>
         
           <li>
+            <a href="/2015/11/13/FPS追踪工具/">FPS追踪工具</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/11/牛蒡茶/">牛蒡茶</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/02/iOS开发的一些小问题/">iOS开发的一些小问题</a>
+          </li>
+        
+          <li>
             <a href="/2015/10/30/AFNetworking/">AFNetworking</a>
           </li>
         
           <li>
             <a href="/2015/10/30/ASI原理解析/">ASI原理解析</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/29/一些常用的宏/">一些常用的宏</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/27/appstore审核/">appstore审核</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/26/app-工程结构模版/">app 工程结构模版</a>
           </li>
         
       </ul>
