@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/11/13/FPS追踪工具/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
 <meta property="og:description" content="1. DXFPSLabel原理：1.在[NSRunLoop currentRunLoop]的UITrackingRunLoopMode中添加事件_scrollingStatusDidChange2.1手势拖动2.2调起_scrollingStatusDidChange2.3初始化_displayLink，添加事件_screenDidUpdateWhileScrolling，添加进[NSRunLoo">
-<meta property="og:updated_time" content="2015-11-13T09:34:25.000Z">
+<meta property="og:updated_time" content="2015-11-16T09:36:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FPS追踪工具">
 <meta name="twitter:description" content="1. DXFPSLabel原理：1.在[NSRunLoop currentRunLoop]的UITrackingRunLoopMode中添加事件_scrollingStatusDidChange2.1手势拖动2.2调起_scrollingStatusDidChange2.3初始化_displayLink，添加事件_screenDidUpdateWhileScrolling，添加进[NSRunLoo">
@@ -86,7 +86,8 @@
       
         <h2 id="1-_DXFPSLabel">1. DXFPSLabel</h2><p>原理：<br>1.在[NSRunLoop currentRunLoop]的UITrackingRunLoopMode中添加事件_scrollingStatusDidChange<br>2.1手势拖动<br>2.2调起_scrollingStatusDidChange<br>2.3初始化_displayLink，添加事件_screenDidUpdateWhileScrolling，添加进[NSRunLoop currentRunLoop]的UITrackingRunLoopMode模式下。<br>2.4初始化<br>_framesInLastInterval/_lastLogTime/_displayLink 启动<br>3.1手势停止<br>3.2调起_scrollingStatusDidChange<br>3.3_displayLink 暂停<br>3.4在[NSRunLoop currentRunLoop]的UITrackingRunLoopMode中添加事件_scrollingStatusDidChange</p>
 <p>问题：<br>1.[NSRunLoop currentRunLoop]<br>在[NSRunLoop currentRunLoop]中添加事件，能够监听所有页面的事件。</p>
-<p>2.CADisplayLink</p>
+<p>2.CADisplayLink<br>CADisplayLink是一个定时器对象，用来同步页面的刷新。创建一个display link，提供target和selector，用来在屏幕刷新时调用。然后将这个display link添加到一个run loop。这些设置完成后，屏幕的内容需要刷新的时候会调用selector。target可以读取display link的时间戳timestamp属性来取回前一帧的时间。举例，用来播放电影的app可以用时间戳来计算接下来播放哪一帧。app可以根据时间戳来判断当前动画对象在下一帧如何展示。duration给出两个frames之间的时间。你可以根据这个值来计算帧率，下一帧的合适时间，调整绘制动作让下一帧在合适的时间出现。<br>app可以设置paused属性为YES来停止通知。当app无法在下一个时间点提供合适的帧时，可以降低帧率。提供缓慢但连续的帧率会比跳帧有更高的界面平滑度。你可以修改frameInterval属性来提高两帧之间的时间（降低帧率）。<br>当app停止使用display link时，可以调用invalidate来将其在run loops中移除，且接触其与target之间的关联。<br>CADisplayLink无法被继承。<br>iOS 3.1 and later</p>
+<p>3.CFAbsoluteTime<br>单位：秒</p>
 
       
     </div>
