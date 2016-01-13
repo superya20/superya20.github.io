@@ -63,6 +63,166 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Transitioning-to-ARC-Release-Notes－翻译" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/" class="article-date">
+  <time datetime="2016-01-13T09:59:13.000Z" itemprop="datePublished">2016-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/">Transitioning to ARC Release Notes－翻译</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ARC Rules<br>1.不能显示调用dealloc，retain，release，retainCount，autorelease。延伸的，不能调用@selector(retain),@selector(release)等等。<br>因为你不能去主动的释放实例。<br>在ARC中dealloc方法不需要调用［super dealloc］,这个调用是compiler自动调用的。<br>可以继续使用CFRetain，CFRelease和其他相关的Core Foundation－style 对象。</p>
+<p>2.不能使用NSAllocateObject或者NSDeallocateObject<br>你应该使用alloc来创造对象，而deallocate由runtime来处理。</p>
+<p>3.不能在C structures里使用对象指针<br>尽量使用Objective-C对象</p>
+<p>4.不支持id和void<em>之间的自动转换<br>当需要id和void</em>之间转换时（Objective-C对象和Core Foundation类型），你需要明确的声明。详情见Managing Toll-Free Bridging</p>
+<p>5.不能使用NSAutoreleasePool对象<br>用@autoreleasepool block代替，比NSAutoreleasePool效率更高</p>
+<p>6.不能使用NSZone<br>NSZone已经被新的Objective－C runtime自动忽略</p>
+<p>7.不能用new开头来声明属性<br><a href="http://blog.csdn.net/meegomeego/article/details/17632515" target="_blank" rel="external">http://blog.csdn.net/meegomeego/article/details/17632515</a><br>若是用new开头，那么编译器认为gettre方法是生成一个新的对象<br>// Won’t work:<br>@property NSString *newTitle;</p>
+<p>// Works:<br>@property (getter=theNewTitle) NSString *newTitle;</p>
+<p>Property Attributes<br>strong 相当于 retain<br>weak 相当于assign，当实例被释放后，会自动赋nil（而不再是野指针）<br>在ARC下，默认strong</p>
+<p>Variable Qualifiers<br><strong>strong                  默认，保证对象是alive的
+</strong>weak                   引用，并不保证对象alive，当没有strong的引用时，会自动设nil<br><strong>unsafe_unretained    同</strong>weak，不同的是，当没有strong引用时，不会设nil，而是悬空指针<br>__autoreleasing        用在函数传参，且这个参数在函数返回之后会释放时。<a href="http://blog.txx.im/blog/2013/12/04/about-autoreleasing/" target="_blank" rel="external">http://blog.txx.im/blog/2013/12/04/about-autoreleasing/</a></p>
+<p>正确的写法<br>MyClass * __weak myWeakReference;</p>
+<p>使用<strong>weak的时候需要注意。<br>1.这种情况下，声明之后就立即被释放了<br>NSString * </strong>weak string = [[NSString alloc] initWithFormat:@”First name: %@”,[self firstName]];<br>NSLog(@”string: %@”,string);<br>打印结果        string: (null)</p>
+<p>2.当你将一个strong变量做为函数<strong>autoreleasing参数传递时，编译器会自动生成一个临时变量。解决方法是，将变量声明为</strong>autoreleasing；或将函数参数定义为id <strong>strong<br>-(BOOL)performOperationWithError:(NSError * </strong>autoreleasing <em>)error;<br>/////////////////////<br>NSError </em>error;<br>BOOL OK = [myObject performOperationWithError:&amp;error];<br>if (!OK) {<br>    // Report the error.<br>    // …<br>/////////////////////</p>
+<p>转译为</p>
+<p>//////////////////////<br>NSError <em> __strong error;<br>NSError </em> __autoreleasing tmp = error;<br>BOOL OK = [myObject performOperationWithError:&amp;tmp];<br>error = tmp;<br>if (!OK) {<br>    // Report the error.<br>    // …<br>//////////////////////</p>
+<p>Use Lifetime Qualifiers to Avoid Strong Reference Cycles<br>在MRC中 <strong>block id x; 不持有x<br>而在ARC中，</strong>block id x; 默认持有x。 若需要有MRC的效果需这样声明<strong>unsafe_unretained </strong>block id x;更好的方法是使用__weak或置nil来打破循环引用。</p>
+<p>ARC Uses a New Statement to Manage Autorelease Pools<br>在ARC中，应当这样写<br>@autoreleasepool {</p>
+<pre><code>// Code, such <span class="keyword">as</span> <span class="operator">a</span> loop that creates <span class="operator">a</span> large <span class="built_in">number</span> <span class="operator">of</span> temporary objects.
+</code></pre><p>}<br>在入口处建立一个自动释放池，并入栈。<br>在出口处（break,return,goto,fall-through,等等）自动释放池出栈<br>当出现异常退出时，自动释放池不会出栈。<br>@autoreleasepool 的效率比NSAutoreleasePool高6倍</p>
+<p>Patterns for Managing Outlets Become Consistent Across Platforms<br>outlets should be weak, except for those from File’s Owner to top-level objects in a nib file (or a storyboard scene) which should be strong.</p>
+<p>Stack Variables Are Initialized with nil<br>在ARC中，strong，weak，autoreleasing 堆变量会被自动初始化为nil</p>
+<p>Use Compiler Flags to Enable and Disable ARC<br>-fobjc-arc<br>-fno-objc-arc</p>
+<p>Managing Toll-Free Bridging<br>用的很少，忽略</p>
+<p>Common Issues While Converting a Project</p>
+<p>。。ARC要求init这样写<br>self = [super init];<br>if (self) {<br>   …</p>
+<p>。。</p>
+<ul>
+<li>assign implies __unsafe_unretained ownership.</li>
+<li>copy implies __strong ownership, as well as the usual behavior of copy semantics on the setter.</li>
+<li>retain implies __strong ownership.</li>
+<li>strong implies __strong ownership.</li>
+<li>unsafe_unretained implies __unsafe_unretained ownership.</li>
+<li>weak implies __weak ownership.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/" data-id="cijcnot4y000r67crbt9xspfh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-容器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/08/容器/" class="article-date">
+  <time datetime="2016-01-08T06:01:09.000Z" itemprop="datePublished">2016-01-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/08/容器/">容器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考文章<br>1.《容器详解：你不可不知的九个基本事实》<br><a href="http://tech.idcquan.com/XuNi/74658.shtml" target="_blank" rel="external">http://tech.idcquan.com/XuNi/74658.shtml</a></p>
+<p>2.《容器技术落地的两大组件和三大要素》<br><a href="http://server.yesky.com/virtualization/202/69885202.shtml" target="_blank" rel="external">http://server.yesky.com/virtualization/202/69885202.shtml</a></p>
+<p>3.《史上最全容器技术大盘点，没有之一》<br><a href="http://www.csdn.net/article/2015-07-17/2825242" target="_blank" rel="external">http://www.csdn.net/article/2015-07-17/2825242</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/08/容器/" data-id="cijcnot41000367crdmn9kwqo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Oracle-RAC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/08/Oracle-RAC/" class="article-date">
+  <time datetime="2016-01-08T03:54:19.000Z" itemprop="datePublished">2016-01-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/08/Oracle-RAC/">Oracle RAC</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>RAC五大特点</p>
+<ol>
+<li>双机并行<br> 双机热备环境中，始终有一台机器作为备用机，只有当主节点出问题的时候才会切换到备用机上；如果主机一直没有问题，备用机始终处于空闲状态。同时，主机切到备机需要消耗时间。<br> RAC环境中，两个节点的集群节点间是一种并行运行的关系，充分利用服务器资源。机器间切换快速，针对存在的绘画之需要数十秒的时间就可以完成失败切换过程，对新回话的创建没有影响。</li>
+<li>高可用性<br> 高可用性包括两个部分：确保数据不丢失；确保不停机。<br> RAC中包含了非常多的高可用特性，主要包含如下几点：<br>　　·实现节点间的负载均衡。<br>　　·实现失败切换的功能。<br>　　·通过Service组件来控制客户端的访问路径。<br>　　·集群软件能够自动化管理各个资源，并且有定时的节点状态检测机制，能自动对一些失败的进程以及心跳检测失败的节点进行重启，使其重新恢复到正常的运行状态。</li>
+<li>易伸缩性<br> 当系统需要更多的处理能力或者需要增加存储时，通过添加另一台服务器或存储设备到集群中，能够在不停机的情况下获得水平的扩展。<br> 在一个集群中， Clusterware和RAC支持多达100个集群节点。<br> 11gR2版本中推出了网格即插即用(Grid Plug and Play，GPnP)，可以实现节点的快速添加。</li>
+<li>低成本<br> 通过多台普通的PC服务器组成一个集群，可以提高集群的处理能力，这样要比采用一台高性能的服务器的成本低很多。</li>
+<li>高吞吐量<br> 在RAC的架构中，多个实例分布在多个服务器上，能同时打开同一个数据库，而每个实例能够接收相等数量的客户端请求，这样，随着服务器的增加，吞吐量也在不断地增加。</li>
+</ol>
+<p>RAC存在的问题：</p>
+<ol>
+<li>稳定性</li>
+<li>高性能<br> 在目前普遍使用千兆网络的硬件环境中，很多时候系统的数据库从原来的单机迁移至RAC环境，系统的性能反而下降。在这种情况下，数据库管理员应该根据RAC的特点对系统调整提出合理的建议，经过合理的设计、开发，使用RAC是能够提高系统的处理性能的。</li>
+</ol>
+<p>参考文章：<br>1.《详述Oracle RAC的五大优势及其劣势》<br><a href="http://tech.it168.com/a2012/0814/1384/000001384756_all.shtml" target="_blank" rel="external">http://tech.it168.com/a2012/0814/1384/000001384756_all.shtml</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/08/Oracle-RAC/" data-id="cijcnot53000v67cr07z78gmj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-objc-swift" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/01/04/objc-swift/" class="article-date">
@@ -85,7 +245,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>打印<br>objc : NSLog()<br>swift: print(“button has been clicked”)</p>
+        <p>常量&amp;变量<br>objc<br>swift： let－常量， var－变量<br>打印<br>objc : NSLog()<br>swift: print(“button has been clicked”)</p>
+<p>构造器<br>objc：返回id类型<br>swift：不需要返回值</p>
 <p>设置frame<br>objc: CGRectMake(0,0,100,100)<br>swift:frame: CGRect(x:0, y:0,width:100, height:50)</p>
 <p>设置背景色<br>objc:btn.backgroudColor = [UIColor RedColor];<br>swift:btn.backgroundColor = UIColor.redColor()</p>
 <p>import<br>objc:import “xx.h”<br>swift:不需要import，可以直接使用。在swift的规则里，是不允许出现相同类名的。用内嵌类实现命名空间的功能 。</p>
@@ -95,7 +256,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/04/objc-swift/" data-id="ciizrx2dj0009zfcr2qnizjlz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/04/objc-swift/" data-id="cijcnot4b000a67cr10pb9hyu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -132,7 +293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/18/SFSafariViewController/" data-id="ciizrx2eb000qzfcr9k0qvgg1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/18/SFSafariViewController/" data-id="cijcnot4z000s67cr7n2wjoog" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,7 +335,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/11/didFinishLaunchingWithOptions/" data-id="ciizrx2e0000kzfcryt1z82tc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/11/didFinishLaunchingWithOptions/" data-id="cijcnot4o000l67cr340dvvs2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -210,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/11/hexo-new-牛蒡茶/" data-id="ciizrx2dv000hzfcrxh9hwuzo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/11/hexo-new-牛蒡茶/" data-id="cijcnot4k000i67crosxcd8q5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -250,7 +411,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/13/FPS追踪工具/" data-id="ciizrx2em000xzfcruqcrax82" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/13/FPS追踪工具/" data-id="cijcnot5a001067cr1l5dhogt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -296,7 +457,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/11/牛蒡茶/" data-id="ciizrx2d60001zfcrglurnhxo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/11/牛蒡茶/" data-id="cijcnot3s000167cruyscdvc0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -352,120 +513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/02/iOS开发的一些小问题/" data-id="ciizrx2dm000bzfcrkhc5bone" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-AFNetworking" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/30/AFNetworking/" class="article-date">
-  <time datetime="2015-10-30T10:28:31.000Z" itemprop="datePublished">2015-10-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/30/AFNetworking/">AFNetworking</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>test1<br>step1 打开工具 Network Link Conditioner<br>step2 并发发起200个GET请求<br>step3 在mac上，同时发起的请求为4个。因为网络环境差，这四个请求都在等待。当四个请求的response回来后，又发起了4个请求。由此可以判断，在模拟机上，并行支持的get请求数为4.真机上待验证。<br>step4 真机同模拟器一样，也是4个请求一组的发送</p>
-<p>结论：真机在wifi情况下，同时能处理的请求为4个NSURLConnection。<br>问题1:此次实验用的是AFNetworking，下次直接用NSURLConnection。<br>问题2:上一组请求完毕之后，要等一段时间才看到下一组请求，这是为什么？间隔期间做了什么？长达8s。是AFNetworking的漏洞吗？</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/AFNetworking/" data-id="ciizrx2ex0016zfcr6s2rjqrr" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ASI原理解析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/30/ASI原理解析/" class="article-date">
-  <time datetime="2015-10-30T08:25:25.000Z" itemprop="datePublished">2015-10-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/30/ASI原理解析/">ASI原理解析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ASI长链接原理 －－ 复用 NSInputStream</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/ASI原理解析/" data-id="ciizrx2ew0015zfcr2ch306yh" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-一些常用的宏" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/29/一些常用的宏/" class="article-date">
-  <time datetime="2015-10-29T03:08:42.000Z" itemprop="datePublished">2015-10-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/29/一些常用的宏/">一些常用的宏</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#if TARGET_OS_IPHONE &amp;&amp; <strong>IPHONE_OS_VERSION_MAX_ALLOWED &gt;= </strong>IPHONE_4_0<br>@property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;</p>
-<p>#endif</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/29/一些常用的宏/" data-id="ciizrx2de0006zfcrftbx51mh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/02/iOS开发的一些小问题/" data-id="cijcnot4d000c67cr4djjahzw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -494,7 +542,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -506,23 +554,23 @@
       <ul>
         
           <li>
+            <a href="/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/">Transitioning to ARC Release Notes－翻译</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/08/容器/">容器</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/08/Oracle-RAC/">Oracle RAC</a>
+          </li>
+        
+          <li>
             <a href="/2016/01/04/objc-swift/">objc &amp; swift</a>
           </li>
         
           <li>
             <a href="/2015/12/18/SFSafariViewController/">SFSafariViewController</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/11/didFinishLaunchingWithOptions/">didFinishLaunchingWithOptions</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/11/hexo-new-牛蒡茶/">hexo new 牛蒡茶</a>
-          </li>
-        
-          <li>
-            <a href="/2015/11/13/FPS追踪工具/">FPS追踪工具</a>
           </li>
         
       </ul>

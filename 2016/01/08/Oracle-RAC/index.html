@@ -3,21 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>一些常用的宏 | magicya的技术博客</title>
+  <title>Oracle RAC | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#if TARGET_OS_IPHONE &amp;amp;&amp;amp; IPHONE_OS_VERSION_MAX_ALLOWED &amp;gt;= IPHONE_4_0@property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
-#endif">
+  <meta name="description" content="RAC五大特点
+
+双机并行 双机热备环境中，始终有一台机器作为备用机，只有当主节点出问题的时候才会切换到备用机上；如果主机一直没有问题，备用机始终处于空闲状态。同时，主机切到备机需要消耗时间。 RAC环境中，两个节点的集群节点间是一种并行运行的关系，充分利用服务器资源。机器间切换快速，针对存在的绘画之需要数十秒的时间就可以完成失败切换过程，对新回话的创建没有影响。
+高可用性 高可用性包括两个部分：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一些常用的宏">
-<meta property="og:url" content="http://yoursite.com/2015/10/29/一些常用的宏/index.html">
+<meta property="og:title" content="Oracle RAC">
+<meta property="og:url" content="http://yoursite.com/2016/01/08/Oracle-RAC/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description" content="#if TARGET_OS_IPHONE &amp;amp;&amp;amp; IPHONE_OS_VERSION_MAX_ALLOWED &amp;gt;= IPHONE_4_0@property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
-#endif">
-<meta property="og:updated_time" content="2015-10-29T03:08:50.000Z">
+<meta property="og:description" content="RAC五大特点
+
+双机并行 双机热备环境中，始终有一台机器作为备用机，只有当主节点出问题的时候才会切换到备用机上；如果主机一直没有问题，备用机始终处于空闲状态。同时，主机切到备机需要消耗时间。 RAC环境中，两个节点的集群节点间是一种并行运行的关系，充分利用服务器资源。机器间切换快速，针对存在的绘画之需要数十秒的时间就可以完成失败切换过程，对新回话的创建没有影响。
+高可用性 高可用性包括两个部分：">
+<meta property="og:updated_time" content="2016-01-08T05:59:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一些常用的宏">
-<meta name="twitter:description" content="#if TARGET_OS_IPHONE &amp;amp;&amp;amp; IPHONE_OS_VERSION_MAX_ALLOWED &amp;gt;= IPHONE_4_0@property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
-#endif">
+<meta name="twitter:title" content="Oracle RAC">
+<meta name="twitter:description" content="RAC五大特点
+
+双机并行 双机热备环境中，始终有一台机器作为备用机，只有当主节点出问题的时候才会切换到备用机上；如果主机一直没有问题，备用机始终处于空闲状态。同时，主机切到备机需要消耗时间。 RAC环境中，两个节点的集群节点间是一种并行运行的关系，充分利用服务器资源。机器间切换快速，针对存在的绘画之需要数十秒的时间就可以完成失败切换过程，对新回话的创建没有影响。
+高可用性 高可用性包括两个部分：">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -65,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-一些常用的宏" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Oracle-RAC" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/10/29/一些常用的宏/" class="article-date">
-  <time datetime="2015-10-29T03:08:42.000Z" itemprop="datePublished">2015-10-29</time>
+    <a href="/2016/01/08/Oracle-RAC/" class="article-date">
+  <time datetime="2016-01-08T03:54:19.000Z" itemprop="datePublished">2016-01-08</time>
 </a>
     
   </div>
@@ -79,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      一些常用的宏
+      Oracle RAC
     </h1>
   
 
@@ -87,13 +93,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#if TARGET_OS_IPHONE &amp;&amp; <strong>IPHONE_OS_VERSION_MAX_ALLOWED &gt;= </strong>IPHONE_4_0<br>@property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;</p>
-<p>#endif</p>
+        <p>RAC五大特点</p>
+<ol>
+<li>双机并行<br> 双机热备环境中，始终有一台机器作为备用机，只有当主节点出问题的时候才会切换到备用机上；如果主机一直没有问题，备用机始终处于空闲状态。同时，主机切到备机需要消耗时间。<br> RAC环境中，两个节点的集群节点间是一种并行运行的关系，充分利用服务器资源。机器间切换快速，针对存在的绘画之需要数十秒的时间就可以完成失败切换过程，对新回话的创建没有影响。</li>
+<li>高可用性<br> 高可用性包括两个部分：确保数据不丢失；确保不停机。<br> RAC中包含了非常多的高可用特性，主要包含如下几点：<br>　　·实现节点间的负载均衡。<br>　　·实现失败切换的功能。<br>　　·通过Service组件来控制客户端的访问路径。<br>　　·集群软件能够自动化管理各个资源，并且有定时的节点状态检测机制，能自动对一些失败的进程以及心跳检测失败的节点进行重启，使其重新恢复到正常的运行状态。</li>
+<li>易伸缩性<br> 当系统需要更多的处理能力或者需要增加存储时，通过添加另一台服务器或存储设备到集群中，能够在不停机的情况下获得水平的扩展。<br> 在一个集群中， Clusterware和RAC支持多达100个集群节点。<br> 11gR2版本中推出了网格即插即用(Grid Plug and Play，GPnP)，可以实现节点的快速添加。</li>
+<li>低成本<br> 通过多台普通的PC服务器组成一个集群，可以提高集群的处理能力，这样要比采用一台高性能的服务器的成本低很多。</li>
+<li>高吞吐量<br> 在RAC的架构中，多个实例分布在多个服务器上，能同时打开同一个数据库，而每个实例能够接收相等数量的客户端请求，这样，随着服务器的增加，吞吐量也在不断地增加。</li>
+</ol>
+<p>RAC存在的问题：</p>
+<ol>
+<li>稳定性</li>
+<li>高性能<br> 在目前普遍使用千兆网络的硬件环境中，很多时候系统的数据库从原来的单机迁移至RAC环境，系统的性能反而下降。在这种情况下，数据库管理员应该根据RAC的特点对系统调整提出合理的建议，经过合理的设计、开发，使用RAC是能够提高系统的处理性能的。</li>
+</ol>
+<p>参考文章：<br>1.《详述Oracle RAC的五大优势及其劣势》<br><a href="http://tech.it168.com/a2012/0814/1384/000001384756_all.shtml" target="_blank" rel="external">http://tech.it168.com/a2012/0814/1384/000001384756_all.shtml</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/29/一些常用的宏/" data-id="cijcnot46000767cr1s88iwql" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/08/Oracle-RAC/" data-id="cijcnot53000v67cr07z78gmj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -102,19 +120,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/10/30/ASI原理解析/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/01/08/容器/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          ASI原理解析
+          容器
         
       </div>
     </a>
   
   
-    <a href="/2015/10/27/appstore审核/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/01/04/objc-swift/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">appstore审核</div>
+      <div class="article-nav-title">objc &amp; swift</div>
     </a>
   
 </nav>

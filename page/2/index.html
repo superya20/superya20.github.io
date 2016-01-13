@@ -63,6 +63,119 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-AFNetworking" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/10/30/AFNetworking/" class="article-date">
+  <time datetime="2015-10-30T10:28:31.000Z" itemprop="datePublished">2015-10-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/30/AFNetworking/">AFNetworking</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>test1<br>step1 打开工具 Network Link Conditioner<br>step2 并发发起200个GET请求<br>step3 在mac上，同时发起的请求为4个。因为网络环境差，这四个请求都在等待。当四个请求的response回来后，又发起了4个请求。由此可以判断，在模拟机上，并行支持的get请求数为4.真机上待验证。<br>step4 真机同模拟器一样，也是4个请求一组的发送</p>
+<p>结论：真机在wifi情况下，同时能处理的请求为4个NSURLConnection。<br>问题1:此次实验用的是AFNetworking，下次直接用NSURLConnection。<br>问题2:上一组请求完毕之后，要等一段时间才看到下一组请求，这是为什么？间隔期间做了什么？长达8s。是AFNetworking的漏洞吗？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/10/30/AFNetworking/" data-id="cijcnot5j001967cryc9a3v5g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ASI原理解析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/10/30/ASI原理解析/" class="article-date">
+  <time datetime="2015-10-30T08:25:25.000Z" itemprop="datePublished">2015-10-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/30/ASI原理解析/">ASI原理解析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ASI长链接原理 －－ 复用 NSInputStream</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/10/30/ASI原理解析/" data-id="cijcnot5i001867crvblw2o7i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-一些常用的宏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/10/29/一些常用的宏/" class="article-date">
+  <time datetime="2015-10-29T03:08:42.000Z" itemprop="datePublished">2015-10-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/29/一些常用的宏/">一些常用的宏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#if TARGET_OS_IPHONE &amp;&amp; <strong>IPHONE_OS_VERSION_MAX_ALLOWED &gt;= </strong>IPHONE_4_0<br>@property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;</p>
+<p>#endif</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/10/29/一些常用的宏/" data-id="cijcnot46000767cr1s88iwql" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-appstore审核" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/10/27/appstore审核/" class="article-date">
@@ -90,7 +203,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/27/appstore审核/" data-id="ciizrx2e2000mzfcr8yulz3qy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/27/appstore审核/" data-id="cijcnot4t000n67crqrk1p2v5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -135,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/26/app-工程结构模版/" data-id="ciizrx2e6000nzfcr005dnz6g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/26/app-工程结构模版/" data-id="cijcnot4u000o67crknqcq4o4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -180,7 +293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/26/iOS－工程目录模版/" data-id="ciizrx2dl000azfcrkgxtb5dv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/26/iOS－工程目录模版/" data-id="cijcnot4c000b67crcd7e5cg2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -220,7 +333,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/26/去掉默认的Main-storyboard/" data-id="ciizrx2db0004zfcrs5qadnkj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/26/去掉默认的Main-storyboard/" data-id="cijcnot44000567crjarerx2n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -258,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/iOS9适配/" data-id="ciizrx2dn000czfcrmqccri1c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/19/iOS9适配/" data-id="cijcnot4e000d67crixp37yss" class="article-share-link">Share</a>
       
       
     </footer>
@@ -296,7 +409,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/Gradle/" data-id="ciizrx2ej000wzfcr23enwnu8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/19/Gradle/" data-id="cijcnot59000z67cr0834dzvj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -342,137 +455,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/hello-world/" data-id="ciizrx2dx000izfcrm25y9w93" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-cocoapods" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/14/cocoapods/" class="article-date">
-  <time datetime="2015-10-14T10:17:50.000Z" itemprop="datePublished">2015-10-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/14/cocoapods/">cocoapods</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>pod install –verbose –no-repo-update<br>pod update –verbose –no-repo-update</p>
-<p><a href="http://blog.csdn.net/ralbatr/article/details/39082937" target="_blank" rel="external">http://blog.csdn.net/ralbatr/article/details/39082937</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/14/cocoapods/" data-id="ciizrx2e1000lzfcrbu47skm9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-图文混编和图文混排" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/14/图文混编和图文混排/" class="article-date">
-  <time datetime="2015-10-14T07:13:54.000Z" itemprop="datePublished">2015-10-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/14/图文混编和图文混排/">图文混编和图文混排</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.NSAtrributedString<br>图文混编和图文混排。<br>步骤<br>1.实例化NSTextAttatchment类<br>2.将UIImage实例赋值给NSTextAttachment的image属性<br>3.生成NSAttrbutedString<br>4.插入textview.textStorage.<br><a href="http://blog.csdn.net/pjk1129/article/details/45559647" target="_blank" rel="external">http://blog.csdn.net/pjk1129/article/details/45559647</a></p>
-<p>2.Core Text<br>文字环绕。<br><a href="http://blog.devtang.com/blog/2015/06/27/using-coretext-1/?utm_source=tuicool" target="_blank" rel="external">http://blog.devtang.com/blog/2015/06/27/using-coretext-1/?utm_source=tuicool</a></p>
-<p>3.WebView<br>展示富文本。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/14/图文混编和图文混排/" data-id="ciizrx2da0003zfcrlmzr4r9q" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-BlocksKit" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/29/BlocksKit/" class="article-date">
-  <time datetime="2015-09-29T08:31:43.000Z" itemprop="datePublished">2015-09-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/29/BlocksKit/">BlocksKit</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>UIView+BLocksKit<br>方法：<br>@interface UIView (BlocksKit)</p>
-<ul>
-<li>(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block;</li>
-<li>(void)bk_whenTapped:(void (^)(void))block;</li>
-<li>(void)bk_whenDoubleTapped:(void (^)(void))block;</li>
-<li>(void)bk_eachSubview:(void (^)(UIView *subview))block;//遍历subview，给每个subview添加事件</li>
-</ul>
-<p>原理：</p>
-<ul>
-<li>(void)bk_whenTouches:(NSUInteger)numberOfTouches tapped:(NSUInteger)numberOfTaps handler:(void (^)(void))block<br>UIGestureRecognizer+BlocksKit<br>self.bk_handler<br>self.bk_handlerDelay</li>
-</ul>
-<ul>
-<li>(id)bk_recognizerWithHandler:(void (^)(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location))block</li>
-</ul>
-<ul>
-<li>(void)bk_handleAction:(UIGestureRecognizer *)recognizer<br>{     dispatch_after(popTime, dispatch_get_main_queue(), block);}</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/29/BlocksKit/" data-id="ciizrx2eu0014zfcr28z3j6xm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/19/hello-world/" data-id="cijcnot4m000j67crd3cvosqe" class="article-share-link">Share</a>
       
       
     </footer>
@@ -501,7 +484,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -513,23 +496,23 @@
       <ul>
         
           <li>
+            <a href="/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/">Transitioning to ARC Release Notes－翻译</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/08/容器/">容器</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/08/Oracle-RAC/">Oracle RAC</a>
+          </li>
+        
+          <li>
             <a href="/2016/01/04/objc-swift/">objc &amp; swift</a>
           </li>
         
           <li>
             <a href="/2015/12/18/SFSafariViewController/">SFSafariViewController</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/11/didFinishLaunchingWithOptions/">didFinishLaunchingWithOptions</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/11/hexo-new-牛蒡茶/">hexo new 牛蒡茶</a>
-          </li>
-        
-          <li>
-            <a href="/2015/11/13/FPS追踪工具/">FPS追踪工具</a>
           </li>
         
       </ul>

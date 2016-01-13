@@ -63,6 +63,182 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-从项目中移除storyboards" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/07/从项目中移除storyboards/" class="article-date">
+  <time datetime="2015-09-07T06:08:57.000Z" itemprop="datePublished">2015-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/07/从项目中移除storyboards/">从项目中移除storyboards</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在xcode6的新建工程中移除storyboards步骤<br>1.删除:<br>    .plist中Main storyboard file base name<br>    Main.storyboard<br>    LaunchScreen.xib<br>2.置空:<br>    Main Interface<br>    Launch Screen File<br>3.添加:<br>    在</p>
+<pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
+</code></pre><p>中添加</p>
+<pre><code>self.window = <span class="comment">[<span class="comment">[UIWindow alloc]</span> initWithFrame:<span class="comment">[<span class="comment">[UIScreen mainScreen]</span> bounds]</span>]</span>;
+ self.window.backgroundColor = <span class="comment">[UIColor whiteColor]</span>;
+<span class="comment">[self.window makeKeyAndVisible]</span>;
+</code></pre><p>4.设置LaunchScreenFile</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/07/从项目中移除storyboards/" data-id="cijcnot45000667crd7qm2nw5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-iOS-app-工程目录模版" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/07/iOS-app-工程目录模版/" class="article-date">
+  <time datetime="2015-09-07T04:10:47.000Z" itemprop="datePublished">2015-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/07/iOS-app-工程目录模版/">iOS app 工程目录模版</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="工程目录">工程目录</h2><p>–Application<br>    |-AppDelegate.m<br>    |-AppDelegate.h<br>–Vendors     //第三方库<br>  |-xxx<br>  |-xxx<br>–General<br>  |-Category<br>  |-base<br>–Sections    //基础模块<br>  |-network<br>  |-storage<br>  |-xxx<br>–Macro         //基础宏<br>–Classes<br>–Resource    //资源<br>  |-1.0<br>  |-文本化配置资源<br>  |-xxx<br>–Plugins     //CDV插件<br>–Others</p>
+<h2 id="流程">流程</h2><h3 id="app启动配置">app启动配置</h3><pre><code><span class="pp">- <span class="params">(<span class="variable">BOOL</span>)</span>application:<span class="params">(<span class="variable">UIApplication</span> *)</span>application didFinishLaunchingWithOptions:<span class="params">(<span class="variable">NSDictionary</span> *)</span>launchOptions</span>
+</code></pre><p>注册数据库<br>注册IM服务<br>注册听云服务<br>注册统计类服务<br>注册日志类服务<br>注册微信服务<br>网络配置初始化，最大连接数，缓存，接口控制<br>读取默认数据<br>注册网络监测服务<br>注册图片缓存路径<br>注册消息推送<br>更新本地配置数据</p>
+<h3 id="app前端配置">app前端配置</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationDidBecomeActive:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>上传本地日志<br>检查新版本<br>IM配置</p>
+<h3 id="app进入后台">app进入后台</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationDidEnterBackground:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>上传本地日志<br>IM配置<br>内存数据实例化</p>
+<h3 id="app终止配置">app终止配置</h3><pre><code><span class="pp">- <span class="params">(void)</span>applicationWillTerminate:<span class="params">(<span class="variable">UIApplication</span> *)</span>application</span>
+</code></pre><p>IM配置<br>内存数据实例化</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/07/iOS-app-工程目录模版/" data-id="cijcnot4i000g67cr3vqdcwvb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-WebViewProxy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/01/WebViewProxy/" class="article-date">
+  <time datetime="2015-09-01T08:26:55.000Z" itemprop="datePublished">2015-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/01/WebViewProxy/">WebViewProxy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="原理">原理</h2><p><code>NSURLProtocol也是苹果众多黑魔法中的一种，使用它可以轻松地重定义整个URL Loading System。当你注册自定义NSURLProtocol后，就有机会对所有的请求进行统一的处理，基于这一点它可以让你</code><br>·自定义请求和响应<br>·提供自定义的全局缓存支持<br>·重定向网络请求<br>·提供HTTP Mocking (方便前期测试)<br>·其他一些全局的网络请求修改需求</p>
+<hr>
+<h3 id="NSURLProtocol使用方法">NSURLProtocol使用方法</h3><p><code>继承NSURLPorotocl，并注册你的NSURLProtocol.当NSURLConnection准备发起请求时，它会遍历所有已注册的NSURLProtocol，询问它们能否处理当前请求。所以你需要尽早注册这个Protocol。</code></p>
+<pre><code><span class="collection">[NSURLProtocol registerClass:<span class="collection">[YXURLProtocol class]</span>]</span><span class="comment">;</span>
+</code></pre><p><code>实现NSURLProtocol的相关方法.当遍历到我们自定义的NSURLProtocol时，系统先会调用canInitWithRequest:这个方法。顾名思义，这是整个流程的入口，只有这个方法返回YES我们才能够继续后续的处理。我们可以在这个方法的实现里面进行请求的过滤，筛选出需要进行处理的请求。</code></p>
+<pre><code>+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request
++ (<span class="built_in">NSURLRequest</span> *)canonicalRequestForRequest:(<span class="built_in">NSURLRequest</span> *)request
++ (<span class="built_in">BOOL</span>)requestIsCacheEquivalent:(<span class="built_in">NSURLRequest</span> *)a
+                   toRequest:(<span class="built_in">NSURLRequest</span> *)b
+- (<span class="keyword">void</span>)startLoading
+</code></pre><hr>
+<h2 id="WebViewProxy使用方法：在需要使用的viewcontroller调用">WebViewProxy使用方法：在需要使用的viewcontroller调用</h2><pre><code>[WebViewProxy <span class="string">handleRequestsWithHost:</span>@<span class="string">"www.google.com"</span> <span class="string">path:</span>@<span class="string">"/images/srpr/logo3w.png"</span> <span class="string">handler:</span>^(NSURLRequest* req, WVPResponse *res)
+</code></pre><hr>
+<h3 id="WebViewProxy流程">WebViewProxy流程</h3><h4 id="0-配置－－全局静态变量">0.配置－－全局静态变量</h4><pre><code><span class="keyword">static</span> <span class="built_in">NSMutableArray</span>* requestMatchers;
+<span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewUserAgentTest;
+<span class="keyword">static</span> <span class="built_in">NSPredicate</span>* webViewProxyLoopDetection;
+</code></pre><h5 id="1-WebViewProxy:NSObject_，编译的时候，做些初始化操作，并向NSURLProtocol注册WebViewProxyURLProtocol">1.WebViewProxy:NSObject ，编译的时候，做些初始化操作，并向NSURLProtocol注册WebViewProxyURLProtocol</h5><pre><code>+ (void)initialize {
+    [WebViewProxy removeAllHandlers];
+    webViewUserAgentTest = [NSPredicate predicateWithFormat:@"self MATCHES '^Mozilla.*Mac OS X.*'"];
+    webViewProxyLoopDetection = [NSPredicate predicateWithFormat:@"self.fragment MATCHES '__webviewproxyreq__'"];
+    // e.g. "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Mobile/10A403"
+    [NSURLProtocol registerClass:[WebViewProxyURLProtocol class]];
+}
+
++ (void)handleRequestsWithHost:(NSString *)host path:(NSString *)path <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+    [<span class="keyword">self</span> handleRequestsMatching:predicate <span class="keyword">handler</span>:<span class="keyword">handler</span>];</span>
+}
+
+
++ (void)handleRequestsMatching:(NSPredicate*)predicate <span class="operator"><span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+// <span class="keyword">Match</span> <span class="keyword">on</span> <span class="keyword">any</span> property <span class="keyword">of</span> NSURL, <span class="keyword">e</span>.<span class="keyword">g</span>. <span class="string">"scheme MATCHES 'http' AND host MATCHES 'www.google.com'"</span>
+    [requestMatchers addObject:[WVPRequestMatcher matchWithPredicate:predicate <span class="keyword">handler</span>:<span class="keyword">handler</span>]];</span>
+} 
+</code></pre><h5 id="2-WebViewProxyURLProtocol">2.WebViewProxyURLProtocol</h5><pre><code><span class="comment">//canInitWithRequest －－ 过滤可处理的请求</span>
++ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request {
+    <span class="built_in">NSString</span>* userAgent = request<span class="variable">.allHTTPHeaderFields</span>[<span class="string">@"User-Agent"</span>];
+    <span class="keyword">if</span> (userAgent &amp;&amp; ![webViewUserAgentTest evaluateWithObject:userAgent]) { <span class="keyword">return</span> <span class="literal">NO</span>; }
+    <span class="keyword">if</span> ([webViewProxyLoopDetection evaluateWithObject:request<span class="variable">.URL</span>]) { <span class="keyword">return</span> <span class="literal">NO</span>; }
+    <span class="keyword">return</span> ([<span class="keyword">self</span> findRequestMatcher:request<span class="variable">.URL</span>] != <span class="literal">nil</span>);
+}
+<span class="comment">//startLoading -- 执行注册的handler</span>
+- (<span class="keyword">void</span>)startLoading {
+    <span class="keyword">self</span><span class="variable">.requestMatcher</span><span class="variable">.handler</span>(_correctedRequest, <span class="keyword">self</span><span class="variable">.proxyResponse</span>);
+}
+</code></pre><h5 id="3-WVPRequestMatcher:NSObject">3.WVPRequestMatcher:NSObject</h5><pre><code>+ (WVPRequestMatcher*)matchWithPredicate:(NSPredicate *)predicate <span class="keyword">handler</span>:(WVPHandler)<span class="keyword">handler</span> {
+    WVPRequestMatcher* matcher = [[WVPRequestMatcher alloc] init];
+    matcher.<span class="keyword">handler</span> = <span class="keyword">handler</span>;
+    matcher.predicate = predicate;
+    <span class="keyword">return</span> matcher;
+}
+</code></pre><p>参考文章：<br><a href="http://www.cocoachina.com/ios/20141225/10765.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20141225/10765.html</a><br><a href="https://github.com/marcuswestin/WebViewProxy" target="_blank" rel="external">https://github.com/marcuswestin/WebViewProxy</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/09/01/WebViewProxy/" data-id="cijcnot4v000p67crwzv159vb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-一些博客地址" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/08/28/一些博客地址/" class="article-date">
@@ -96,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="ciizrx2df0007zfcrv4w1ocrr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/28/一些博客地址/" data-id="cijcnot47000867crmpju82yq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -132,7 +308,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="ciizrx2d90002zfcrbhb9539a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/爱上写博客/" data-id="cijcnot3z000267cr8vh8i8r9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -394,7 +570,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="ciizrx2cl0000zfcrca84gfwx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/08/27/116/" data-id="cijcnot3b000067crqh23wnjn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -423,7 +599,7 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -435,23 +611,23 @@ myOperation *ope = <span class="comment">[<span class="comment">[myOperation all
       <ul>
         
           <li>
+            <a href="/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/">Transitioning to ARC Release Notes－翻译</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/08/容器/">容器</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/08/Oracle-RAC/">Oracle RAC</a>
+          </li>
+        
+          <li>
             <a href="/2016/01/04/objc-swift/">objc &amp; swift</a>
           </li>
         
           <li>
             <a href="/2015/12/18/SFSafariViewController/">SFSafariViewController</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/11/didFinishLaunchingWithOptions/">didFinishLaunchingWithOptions</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/11/hexo-new-牛蒡茶/">hexo new 牛蒡茶</a>
-          </li>
-        
-          <li>
-            <a href="/2015/11/13/FPS追踪工具/">FPS追踪工具</a>
           </li>
         
       </ul>
