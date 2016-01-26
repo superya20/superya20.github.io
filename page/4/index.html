@@ -89,7 +89,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cijv2xo33001441cr58jlfxr3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cijv376e9001469cr7jhh1r1u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -428,7 +428,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cijv2xo34001541crthikvcy9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cijv376ea001569crt516w5ew" class="article-share-link">Share</a>
       
       
     </footer>
@@ -483,47 +483,49 @@
 <p>JKDBModel</p>
 <p>JKDBModel</p>
 <ul>
-<li><p>(BOOL)createTable ，创建表格。升级表格，若表格已经存在，则增加新增的表字段。若有属性被删除，则不管。</p>
-<ul>
-<li><p>(BOOL)createTable<br>{<br>  __block BOOL res = YES;<br>  JKDBHelper <em>jkDB = [JKDBHelper shareInstance];<br>  [jkDB.dbQueue inTransaction:^(FMDatabase </em>db, BOOL *rollback) {</p>
-<pre><code><span class="built_in">NSString</span> *tableName = <span class="built_in">NSStringFromClass</span>(<span class="keyword">self</span><span class="variable">.class</span>);  <span class="comment">//用类名称做表名</span>
-<span class="built_in">NSString</span> *columeAndType = [<span class="keyword">self</span><span class="variable">.class</span> getColumeAndTypeString];
-<span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"CREATE TABLE IF NOT EXISTS %@(%@);"</span>,tableName,columeAndType];
-<span class="keyword">if</span> (![db executeUpdate:sql]) {
-    res = <span class="literal">NO</span>;
-    *rollback = <span class="literal">YES</span>;
-    <span class="keyword">return</span>;
-};
+<li>(BOOL)createTable ，创建表格。升级表格，若表格已经存在，则增加新增的表字段。若有属性被删除，则不管。</li>
+</ul>
+<pre><code>+ (<span class="built_in">BOOL</span>)createTable
+{
+    __block <span class="built_in">BOOL</span> res = <span class="literal">YES</span>;
+    JKDBHelper *jkDB = [JKDBHelper shareInstance];
+    [jkDB<span class="variable">.dbQueue</span> inTransaction:^(FMDatabase *db, <span class="built_in">BOOL</span> *rollback) {
+        <span class="built_in">NSString</span> *tableName = <span class="built_in">NSStringFromClass</span>(<span class="keyword">self</span><span class="variable">.class</span>);  <span class="comment">//用类名称做表名</span>
+        <span class="built_in">NSString</span> *columeAndType = [<span class="keyword">self</span><span class="variable">.class</span> getColumeAndTypeString];
+        <span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"CREATE TABLE IF NOT EXISTS %@(%@);"</span>,tableName,columeAndType];
+        <span class="keyword">if</span> (![db executeUpdate:sql]) {
+            res = <span class="literal">NO</span>;
+            *rollback = <span class="literal">YES</span>;
+            <span class="keyword">return</span>;
+        };
 
-<span class="built_in">NSMutableArray</span> *columns = [<span class="built_in">NSMutableArray</span> array];
-FMResultSet *resultSet = [db getTableSchema:tableName];
-<span class="keyword">while</span> ([resultSet next]) {
-    <span class="built_in">NSString</span> *column = [resultSet stringForColumn:<span class="string">@"name"</span>];
-    [columns addObject:column];
+        <span class="built_in">NSMutableArray</span> *columns = [<span class="built_in">NSMutableArray</span> array];
+        FMResultSet *resultSet = [db getTableSchema:tableName];
+        <span class="keyword">while</span> ([resultSet next]) {
+            <span class="built_in">NSString</span> *column = [resultSet stringForColumn:<span class="string">@"name"</span>];
+            [columns addObject:column];
+        }
+        <span class="built_in">NSDictionary</span> *dict = [<span class="keyword">self</span><span class="variable">.class</span> getAllProperties];
+        <span class="built_in">NSArray</span> *properties = [dict objectForKey:<span class="string">@"name"</span>];
+        <span class="built_in">NSPredicate</span> *filterPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"NOT (SELF IN %@)"</span>,columns];
+        <span class="comment">//过滤数组</span>
+        <span class="built_in">NSArray</span> *resultArray = [properties filteredArrayUsingPredicate:filterPredicate];
+        <span class="keyword">for</span> (<span class="built_in">NSString</span> *column <span class="keyword">in</span> resultArray) {
+            <span class="built_in">NSUInteger</span> index = [properties indexOfObject:column];
+            <span class="built_in">NSString</span> *proType = [[dict objectForKey:<span class="string">@"type"</span>] objectAtIndex:index];
+            <span class="built_in">NSString</span> *fieldSql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@ %@"</span>,column,proType];
+            <span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"ALTER TABLE %@ ADD COLUMN %@ "</span>,<span class="built_in">NSStringFromClass</span>(<span class="keyword">self</span><span class="variable">.class</span>),fieldSql];
+            <span class="keyword">if</span> (![db executeUpdate:sql]) {
+                res = <span class="literal">NO</span>;
+                *rollback = <span class="literal">YES</span>;
+                <span class="keyword">return</span> ;
+            }
+        }
+    }];
+
+    <span class="keyword">return</span> res;
 }
-<span class="built_in">NSDictionary</span> *dict = [<span class="keyword">self</span><span class="variable">.class</span> getAllProperties];
-<span class="built_in">NSArray</span> *properties = [dict objectForKey:<span class="string">@"name"</span>];
-<span class="built_in">NSPredicate</span> *filterPredicate = [<span class="built_in">NSPredicate</span> predicateWithFormat:<span class="string">@"NOT (SELF IN %@)"</span>,columns];
-<span class="comment">//过滤数组</span>
-<span class="built_in">NSArray</span> *resultArray = [properties filteredArrayUsingPredicate:filterPredicate];
-<span class="keyword">for</span> (<span class="built_in">NSString</span> *column <span class="keyword">in</span> resultArray) {
-    <span class="built_in">NSUInteger</span> index = [properties indexOfObject:column];
-    <span class="built_in">NSString</span> *proType = [[dict objectForKey:<span class="string">@"type"</span>] objectAtIndex:index];
-    <span class="built_in">NSString</span> *fieldSql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@ %@"</span>,column,proType];
-    <span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"ALTER TABLE %@ ADD COLUMN %@ "</span>,<span class="built_in">NSStringFromClass</span>(<span class="keyword">self</span><span class="variable">.class</span>),fieldSql];
-    <span class="keyword">if</span> (![db executeUpdate:sql]) {
-        res = <span class="literal">NO</span>;
-        *rollback = <span class="literal">YES</span>;
-        <span class="keyword">return</span> ;
-    }
-}
-</code></pre><p>  }];</p>
-<p>  return res;<br>}</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>备注：<br>1.NSStringFromClass<br>2.getColumeAndTypeString<br>3.@”CREATE TABLE IF NOT EXISTS %@(%@);”,tableName,columeAndType<br>4.getTableSchema<br>5.getAllProperties<br>6.@”ALTER TABLE %@ ADD COLUMN %@ “,NSStringFromClass(self.class),fieldSql</p>
+</code></pre><p>备注：<br>1.NSStringFromClass<br>2.getColumeAndTypeString<br>3.@”CREATE TABLE IF NOT EXISTS %@(%@);”,tableName,columeAndType<br>4.getTableSchema<br>5.getAllProperties<br>6.@”ALTER TABLE %@ ADD COLUMN %@ “,NSStringFromClass(self.class),fieldSql</p>
 <hr>
 <ul>
 <li><p>(NSArray *)transients   <code>如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写</code></p>
@@ -582,7 +584,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cijv2xo24001141crkoe88m9o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cijv376dx001169crud6nd8jd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -719,7 +721,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cijv2xo1b000f41cr1r75udnh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cijv376cy000f69crhyhbwc2r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -775,7 +777,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cijv2xo19000e41crogvz97mn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cijv376cw000e69cryvy2c2px" class="article-share-link">Share</a>
       
       
     </footer>
@@ -831,7 +833,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cijv2xo1e000h41crfbngymnn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cijv376d1000h69cr434n3g2m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1179,7 +1181,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cijv2xo1r000q41cr4e6vl9to" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cijv376dg000q69cr6ho3ku2d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1215,7 +1217,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cijv2xo26001341crfl9ihkhq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cijv376dz001369cr5na76p0r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1251,7 +1253,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cijv2xo1u000t41cr69ns0o3r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cijv376dl000t69crngdxdy5q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1288,7 +1290,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cijv2xo22000y41crcbty0j4m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cijv376du000y69crnak5lc40" class="article-share-link">Share</a>
       
       
     </footer>
