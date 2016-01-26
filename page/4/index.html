@@ -89,7 +89,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cijcnot5d001467cri9faw30y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-2/" data-id="cijv2xo33001441cr58jlfxr3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -428,7 +428,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cijcnot5e001567cryj3xj243" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/CDVViewController-1/" data-id="cijv2xo34001541crthikvcy9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -461,8 +461,16 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">https://github.com/ccgus/fmdb</a><br><a href="https://github.com/Joker-King/JKDBModel" target="_blank" rel="external">https://github.com/Joker-King/JKDBModel</a><br><a href="http://www.mobile-open.com/2014/3449.html" target="_blank" rel="external">http://www.mobile-open.com/2014/3449.html</a></p>
-<p>FMDB是对SQLite的封装。<br>1.FMDatabase  －－ 数据库<br>2.FMResultSet  －－ 查询结果类<br>3.FMDatabaseQueue －－ 如果你需要同时执行多个数据库操作，需要使用这个类。且这个类是线程安全的。</p>
-<p>FMDB数据库的几种创建路径<br>1.A file system path。这种方式下的文件，如果不存在，会自动创建。<br>2.”” 路径为空。该数据库被创建在临时的位置，当FMDatabase链接关闭时清除。<br>3.NULL 数据库被存在内存中，当FMDatabase链接关闭时清除。</p>
+<p>FMDB是对SQLite的封装。</p>
+<p>1.FMDatabase  －－ 数据库</p>
+<p>2.FMResultSet  －－ 查询结果类</p>
+<p>3.FMDatabaseQueue －－ 如果你需要同时执行多个数据库操作，需要使用这个类。且这个类是线程安全的。</p>
+<hr>
+<p>FMDB数据库的几种创建路径</p>
+<p>1.A file system path。这种方式下的文件，如果不存在，会自动创建。</p>
+<p>2.”” 路径为空。该数据库被创建在临时的位置，当FMDatabase链接关闭时清除。</p>
+<p>3.NULL 数据库被存在内存中，当FMDatabase链接关闭时清除。</p>
+<hr>
 <p>1.创建数据库</p>
 <pre><code>FMDatabase <span class="keyword">*</span>db = [FMDatabase databaseWithPath:<span class="comment">@"/tmp/tmp.db"];</span>
 </code></pre><p>2.Open<br>    当空间不足，或访问被限制时，会打开失败。</p>
@@ -516,6 +524,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
 </li>
 </ul>
 <p>备注：<br>1.NSStringFromClass<br>2.getColumeAndTypeString<br>3.@”CREATE TABLE IF NOT EXISTS %@(%@);”,tableName,columeAndType<br>4.getTableSchema<br>5.getAllProperties<br>6.@”ALTER TABLE %@ ADD COLUMN %@ “,NSStringFromClass(self.class),fieldSql</p>
+<hr>
 <ul>
 <li><p>(NSArray *)transients   <code>如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写</code></p>
 <p>  /<em>* 如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写
@@ -554,7 +563,8 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
 
     <span class="keyword">return</span> [NSDictionary <span class="string">dictionaryWithObjectsAndKeys:</span>proNames,@<span class="string">"name"</span>,proTypes,@<span class="string">"type"</span>,nil];
 }
-</code></pre><p>1.class_copyPropertyList   取属性数组<br>2.property_getName(property)／property_getAttributes(property) 取属性名和属性类型<br>3./<em>* SQLite五种数据类型 </em>/</p>
+</code></pre><hr>
+<p>1.class_copyPropertyList   取属性数组<br>2.property_getName(property)／property_getAttributes(property) 取属性名和属性类型<br>3./<em>* SQLite五种数据类型 </em>/</p>
 <p>#define SQLTEXT     @”TEXT”</p>
 <p>#define SQLINTEGER  @”INTEGER”</p>
 <p>#define SQLREAL     @”REAL”</p>
@@ -572,7 +582,7 @@ FMResultSet *resultSet = [db getTableSchema:tableName];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cijcnot5b001167crmz8mroll" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/FMDB/" data-id="cijv2xo24001141crkoe88m9o" class="article-share-link">Share</a>
       
       
     </footer>
@@ -709,7 +719,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cijcnot4h000f67crt6zolbve" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/11/iOS-数据存储/" data-id="cijv2xo1b000f41cr1r75udnh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -765,7 +775,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cijcnot4f000e67crauwqe4oj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/08/iOS-生成-net和APNS通信的证书/" data-id="cijv2xo19000e41crogvz97mn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -821,7 +831,7 @@ no more raw sql!!!
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cijcnot4j000h67crj8zn58i5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/html基础知识/" data-id="cijv2xo1e000h41crfbngymnn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1169,7 +1179,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cijcnot4w000q67croopyjb04" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/WebViewJavascriptBridge/" data-id="cijv2xo1r000q41cr4e6vl9to" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1205,7 +1215,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cijcnot5d001367cra8jwm30u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/CDVViewController/" data-id="cijv2xo26001341crfl9ihkhq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1241,7 +1251,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cijcnot50000t67crf5off3ik" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/ReaciveCocoa学习笔记/" data-id="cijv2xo1u000t41cr69ns0o3r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1278,7 +1288,7 @@ bridge.registerHandler(<span class="string">"getCurrentPageUrl"</span>, <span cl
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cijcnot59000y67crtfiff20x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/07/JKTabBarController/" data-id="cijv2xo22000y41crcbty0j4m" class="article-share-link">Share</a>
       
       
     </footer>
