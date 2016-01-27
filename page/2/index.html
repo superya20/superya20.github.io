@@ -63,6 +63,62 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS开发的一些小问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/02/iOS开发的一些小问题/" class="article-date">
+  <time datetime="2015-11-02T06:33:08.000Z" itemprop="datePublished">2015-11-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/02/iOS开发的一些小问题/">iOS开发的一些小问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>duplicate symbols for architecture armv7解决办法 (2014-10-03 11:11:47)<br>转载<br>▼<br>标签： duplicate symbols armv7     分类： iOS开发<br>XCODE编译的时候报错：duplicate symbols for architecture armv7</li>
+</ol>
+<p>1、首先排查是否有名字重复的文件；</p>
+<p>2、检查是否在#import头文件的时候，不小心把.h写成了.m。</p>
+<p>####UITapGestureRecognizer不响应<br>UITapGestureRecognizer不响应，要先检查一下控件的userInteractionEnabled属性是否设置为YES。UILabel，UIImageView的默认值是NO。</p>
+<p>####获取UIGestureRecognizer的点击坐标<br>-(void)handleSingleTap:(UITapGestureRecognizer *)sender{<br>CGPoint point = [sender locationInView:self.view];<br>NSLog(@”handleSingleTap!pointx:%f,y:%f”,point.x,point.y);<br>} </p>
+<p>####Unsupported compiler<br> Unsupported compiler ‘com.apple.compilers.llvmgcc42’ selected for architecture ‘armv7’</p>
+<p>Xcode更新到Xcode5，一运行报如下错误：</p>
+<p>Unsupported compiler ‘com.apple.compilers.llvmgcc42’ selected for architecture ‘armv7’或’armv7s’</p>
+<p>解决方案：</p>
+<p>Change your compiler for C/C++/ObjectiveC Go to Build Settings-&gt;Build OPtions-&gt;compiler for C/C++/ObjectiveC; select Default(Apple LLVM5.0)</p>
+<p>####谈谈iOS下图像颜色检测、颜色匹配的解决方法<br><a href="http://blog.csdn.net/ssanonymity/article/details/7643236" target="_blank" rel="external">http://blog.csdn.net/ssanonymity/article/details/7643236</a><br><a href="http://www.markj.net/iphone-uiimage-pixel-color/" target="_blank" rel="external">http://www.markj.net/iphone-uiimage-pixel-color/</a></p>
+<p>####EI Capitan下 CocoaPods命令无法使用问题<br><a href="http://blog.csdn.net/pjk1129/article/details/49356847" target="_blank" rel="external">http://blog.csdn.net/pjk1129/article/details/49356847</a></p>
+<p>####mac下安装ngnix<br><a href="http://blog.csdn.net/cssmhyl/article/details/9717189" target="_blank" rel="external">http://blog.csdn.net/cssmhyl/article/details/9717189</a></p>
+<p>####IOS-读写文件大全<br><a href="http://blog.csdn.net/ch_soft/article/details/8001096" target="_blank" rel="external">http://blog.csdn.net/ch_soft/article/details/8001096</a></p>
+<p>####The identity used to sign the executable is no longer valid.Please verify that your device’s clock is properly set, and that your signing certificate is not expired.(0xE8008018).</p>
+<p>If all the above fail after renewing your certificate, as they did for me, browse to the following location;</p>
+<p>~/Library/MobileDevice/Provisioning Profiles</p>
+<p>…and delete your provisioning profiles.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/11/02/iOS开发的一些小问题/" data-id="cijwgrhzl000doucrusd7298c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-AFNetworking" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/10/30/AFNetworking/" class="article-date">
@@ -91,7 +147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/AFNetworking/" data-id="cijv376eg001969cr6y40ionf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/30/AFNetworking/" data-id="cijwgri0z001aoucrztxeup4k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -128,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/ASI原理解析/" data-id="cijv376ee001869crgjx802bh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/30/ASI原理解析/" data-id="cijwgri0y0019oucr1llq4x7d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -166,7 +222,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/29/一些常用的宏/" data-id="cijv376cl000769crphbhkfzp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/29/一些常用的宏/" data-id="cijwgrhzd0008oucr2yauqnc1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -203,7 +259,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/27/appstore审核/" data-id="cijv376dc000n69crezd447hf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/27/appstore审核/" data-id="cijwgri04000ooucrdita6asy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -248,7 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/26/app-工程结构模版/" data-id="cijv376dd000o69cr2j3p33o3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/26/app-工程结构模版/" data-id="cijwgri06000poucr8l29vpbv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -293,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/26/iOS－工程目录模版/" data-id="cijv376cr000b69crpuq3aq2p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/26/iOS－工程目录模版/" data-id="cijwgrhzj000coucrxgm5yrdk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -333,7 +389,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/26/去掉默认的Main-storyboard/" data-id="cijv376ci000569crbo1g37we" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/26/去掉默认的Main-storyboard/" data-id="cijwgrhza0006oucrntitnbui" class="article-share-link">Share</a>
       
       
     </footer>
@@ -371,7 +427,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/iOS9适配/" data-id="cijv376cu000d69cr7gijoqrt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/19/iOS9适配/" data-id="cijwgrhzm000eoucrbluzbcvi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -409,53 +465,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/Gradle/" data-id="cijv376dv000z69crzmr4f24r" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/19/hello-world/" class="article-date">
-  <time datetime="2015-10-19T02:21:41.000Z" itemprop="datePublished">2015-10-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/19/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-<p>hexo d -g</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/19/hello-world/" data-id="cijv376d4000j69crtqyv6zvx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/19/Gradle/" data-id="cijwgri0n0010oucrnq78zusl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -484,7 +494,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -494,6 +504,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/01/27/开发一个iOS-APP需要准备的东西/">开发一个iOS APP需要准备的东西</a>
+          </li>
         
           <li>
             <a href="/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/">Transitioning to ARC Release Notes－翻译</a>
@@ -509,10 +523,6 @@
         
           <li>
             <a href="/2016/01/04/objc-swift/">objc &amp; swift</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/18/SFSafariViewController/">SFSafariViewController</a>
           </li>
         
       </ul>
