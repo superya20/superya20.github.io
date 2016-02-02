@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/9 | magicya的技术博客</title>
+  <title>iOS Block | magicya的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="magicya的技术博客">
-<meta property="og:url" content="http://yoursite.com/archives/2015/09/page/3/index.html">
+  <meta name="description" content="Block分三类NSGlobalBlock －－－ 一个没有对周围变量没有引用的BlockNSMallocBlockNSStackBlock
+对于Global的Block，我们无需多处理，不需retain和copy，因为即使你这样做了，似乎也不会有什么两样。对于Stack的Block，如果不做任何操作，就会向上面所说，随栈帧自生自灭。而如果想让它获得比stack frame更久，那就调用Block">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Block">
+<meta property="og:url" content="http://yoursite.com/2016/02/01/iOS-Block/index.html">
 <meta property="og:site_name" content="magicya的技术博客">
-<meta property="og:description">
+<meta property="og:description" content="Block分三类NSGlobalBlock －－－ 一个没有对周围变量没有引用的BlockNSMallocBlockNSStackBlock
+对于Global的Block，我们无需多处理，不需retain和copy，因为即使你这样做了，似乎也不会有什么两样。对于Stack的Block，如果不做任何操作，就会向上面所说，随栈帧自生自灭。而如果想让它获得比stack frame更久，那就调用Block">
+<meta property="og:updated_time" content="2016-02-01T07:37:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="magicya的技术博客">
-<meta name="twitter:description">
+<meta name="twitter:title" content="iOS Block">
+<meta name="twitter:description" content="Block分三类NSGlobalBlock －－－ 一个没有对周围变量没有引用的BlockNSMallocBlockNSStackBlock
+对于Global的Block，我们无需多处理，不需retain和copy，因为即使你这样做了，似乎也不会有什么两样。对于Stack的Block，如果不做任何操作，就会向上面所说，随栈帧自生自灭。而如果想让它获得比stack frame更久，那就调用Block">
   
     <link rel="alternative" href="/atom.xml" title="magicya的技术博客" type="application/atom+xml">
   
@@ -61,39 +65,58 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/01/WebViewProxy/" class="archive-article-date">
-  <time datetime="2015-09-01T08:26:55.000Z" itemprop="datePublished">Sep 1</time>
+        <section id="main"><article id="post-iOS-Block" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/01/iOS-Block/" class="article-date">
+  <time datetime="2016-02-01T07:00:32.000Z" itemprop="datePublished">2016-02-01</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/01/WebViewProxy/">WebViewProxy</a>
+    <h1 class="article-title" itemprop="name">
+      iOS Block
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Block分三类<br>NSGlobalBlock －－－ 一个没有对周围变量没有引用的Block<br>NSMallocBlock<br>NSStackBlock</p>
+<p>对于Global的Block，我们无需多处理，不需retain和copy，因为即使你这样做了，似乎也不会有什么两样。对于Stack的Block，如果不做任何操作，就会向上面所说，随栈帧自生自灭。而如果想让它获得比stack frame更久，那就调用Block_copy()，让它搬家到堆内存上。而对于已经在堆上的block，也不要指望通过copy进行“真正的copy”，因为其引用到的变量仍然会是同一份，在这个意义上看，这里的copy和retain的作用已经非常类似。</p>
+<p>copyBlock ＝ ^{ var0,var1,_var2};<br>weakBlock ＝ ^{ var0,var1,_var2};<br>blockRight默认创建在栈上，离开方法作用域后，block本身会被抛弃。所以copyBlock会被复制到堆上（NSMallocBlock），weakBlock仍然在栈上（NSStackBlokc）<br>NSMallocBlock －－ 堆上，离开方法作用域后，仍然存在。<br>NSStackBlock  －－ 栈上，离开方法作用域后，不存在。引用会报错。</p>
+<p>临时变量：var0 – copy，备份，互不相关<br>带blokc前缀的临时变量：__block var1 – 引用，相互关联<br>属性变量：var2 – 引用，相互关联。不用带上block</p>
+<p>_returnBlock = [self createWeakBlock];//离开方法作用域后，_returnBlock会被释放，_returnBlock == nil</p>
+<p>TestBlock1 copyCopyBlock = [_copyBlock copy]; //copyCopyBlock 与 _copyBlock是同一份，指向同一个地址</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/02/01/iOS-Block/" data-id="cik557x56000iw9cr5em86anj" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/01/27/开发一个iOS-APP需要准备的东西/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">开发一个iOS APP需要准备的东西</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
 </section>
         
           <aside id="sidebar">

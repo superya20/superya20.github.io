@@ -63,6 +63,48 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS-Block" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/01/iOS-Block/" class="article-date">
+  <time datetime="2016-02-01T07:00:32.000Z" itemprop="datePublished">2016-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/01/iOS-Block/">iOS Block</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Block分三类<br>NSGlobalBlock －－－ 一个没有对周围变量没有引用的Block<br>NSMallocBlock<br>NSStackBlock</p>
+<p>对于Global的Block，我们无需多处理，不需retain和copy，因为即使你这样做了，似乎也不会有什么两样。对于Stack的Block，如果不做任何操作，就会向上面所说，随栈帧自生自灭。而如果想让它获得比stack frame更久，那就调用Block_copy()，让它搬家到堆内存上。而对于已经在堆上的block，也不要指望通过copy进行“真正的copy”，因为其引用到的变量仍然会是同一份，在这个意义上看，这里的copy和retain的作用已经非常类似。</p>
+<p>copyBlock ＝ ^{ var0,var1,_var2};<br>weakBlock ＝ ^{ var0,var1,_var2};<br>blockRight默认创建在栈上，离开方法作用域后，block本身会被抛弃。所以copyBlock会被复制到堆上（NSMallocBlock），weakBlock仍然在栈上（NSStackBlokc）<br>NSMallocBlock －－ 堆上，离开方法作用域后，仍然存在。<br>NSStackBlock  －－ 栈上，离开方法作用域后，不存在。引用会报错。</p>
+<p>临时变量：var0 – copy，备份，互不相关<br>带blokc前缀的临时变量：__block var1 – 引用，相互关联<br>属性变量：var2 – 引用，相互关联。不用带上block</p>
+<p>_returnBlock = [self createWeakBlock];//离开方法作用域后，_returnBlock会被释放，_returnBlock == nil</p>
+<p>TestBlock1 copyCopyBlock = [_copyBlock copy]; //copyCopyBlock 与 _copyBlock是同一份，指向同一个地址</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/02/01/iOS-Block/" data-id="cik557x56000iw9cr5em86anj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-开发一个iOS-APP需要准备的东西" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/01/27/开发一个iOS-APP需要准备的东西/" class="article-date">
@@ -92,6 +134,8 @@
 <p>SCXcodeMiniMap-master －－ 代码地图</p>
 <p>VVDocument －－ 自动文档生成器</p>
 <p>2.xcode 配色</p>
+<p>3.DiffMerge 代码比较</p>
+<p>4.原型设计</p>
 <h3 id="开发过程">开发过程</h3><p>1.产品需求原型</p>
 <p>2.UI设计稿</p>
 <p>3.产品需求文档</p>
@@ -116,7 +160,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/27/开发一个iOS-APP需要准备的东西/" data-id="cijwgrhz60003oucr0itlrdpi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/27/开发一个iOS-APP需要准备的东西/" data-id="cik557x4j0003w9crk1z55v93" class="article-share-link">Share</a>
       
       
     </footer>
@@ -187,7 +231,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/" data-id="cijwgri0b000soucr2yvl7d9b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/13/Transitioning-to-ARC-Release-Notes－翻译/" data-id="cik557x5p000tw9criw2oras9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -226,7 +270,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/08/容器/" data-id="cijwgrhz80004oucr3842hmwb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/08/容器/" data-id="cik557x4k0004w9cruroz7weh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -276,7 +320,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/08/Oracle-RAC/" data-id="cijwgri0g000woucrj5ct07mf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/08/Oracle-RAC/" data-id="cik557x5w000xw9cru911jh53" class="article-share-link">Share</a>
       
       
     </footer>
@@ -319,7 +363,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/04/objc-swift/" data-id="cijwgrhzi000boucreniohmcu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/04/objc-swift/" data-id="cik557x4v000bw9cr16bx3oj9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -356,7 +400,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/18/SFSafariViewController/" data-id="cijwgri0c000toucrzbk4lzyh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/18/SFSafariViewController/" data-id="cik557x5q000uw9crzn3ooxej" class="article-share-link">Share</a>
       
       
     </footer>
@@ -398,7 +442,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/11/didFinishLaunchingWithOptions/" data-id="cijwgri00000moucr5e9bxyb8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/11/didFinishLaunchingWithOptions/" data-id="cik557x5f000nw9crxnq5eyht" class="article-share-link">Share</a>
       
       
     </footer>
@@ -434,7 +478,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/11/hexo-new-牛蒡茶/" data-id="cijwgrhzt000joucreljr4w5j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/11/hexo-new-牛蒡茶/" data-id="cik557x58000kw9cr7mqjnzjp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -474,53 +518,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/13/FPS追踪工具/" data-id="cijwgri0o0011oucr737nagcy" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-牛蒡茶" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/11/牛蒡茶/" class="article-date">
-  <time datetime="2015-11-11T03:05:59.000Z" itemprop="datePublished">2015-11-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/11/牛蒡茶/">牛蒡茶</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>首选来自“中国牛蒡之乡”—苍山</p>
-<p>最后看冲泡出来的效果，一般好的牛蒡茶开水冲泡后有一股浓郁的人参香气，茶色红润，味道甘醇，耐冲泡。反之，一般的牛蒡茶就相差甚远。好的牛蒡茶见效，经常饮用会有口干、腹胀、放屁、排便功能增强、肚饿等类似的好转反应。而普通的则要差很多，而且很多达不到卫生、质量标准的牛蒡茶还会导致其他疾病。</p>
-<p>如何选购牛蒡茶<br>⒈原料：原料直接决定了牛蒡茶的品质，选用来自“牛蒡之乡”苍山的牛蒡是最好的，因为那里有特别适合牛蒡生长的土壤以及新鲜干净的空气、水分，所以培育出的牛蒡营养丰富、生命力强，是中国牛蒡的源产地和出口首选地；<br>⒉外观：看茶片是否是非空心（茶片中心呈白色空洞状）（空心的牛蒡片一般是低端的），看是否为小圆片（小圆片是优质黄金牛蒡），茶水色泽是否呈红润的酒红色且无杂质；闻气味是否香浓。好的牛蒡茶开水冲泡后会有一股浓郁的人参或者咖啡的香味，且茶色红润；<br>⒊口感：好的牛蒡茶味道甘醇柔滑，耐冲泡，饮后口有余香、淡淡回甘。反之，一般的牛蒡茶就相差甚远；<br>⒋包装：包装不仅仅是体现牛蒡茶的档次，更是质量、效果的保证。看外包装是否有食品安全认证QS标志；看内包装是否严密，内包装最好采用铝膜纸，其保鲜和防水性极好。</p>
-<p> 注意事项<br>编辑<br>饮用时应该注意的事项，牛蒡茶在饮用时不宜过浓，过浓容易引起上火，就像我们平时喝高汤一样，喝的量多，就容易上火，在泡制的时候可以适当的加入一些蜂蜜这样就不会上火了！<br>还有牛蒡茶就有排毒养颜，减肥的功效，女性在饮用时要注意月经期最好不要饮用！<br>每天5-8克，便秘者、减肥者可酌情增加饮用牛蒡茶。<br>牛蒡茶不能冷饮，冷饮会导致腹泻。</p>
-<p>喝牛蒡茶却有些注意事项。<br>⒈初饮者可能出现排便功能增强（不是水泻）现象。<br>2、因牛蒡茶有助于辅助稳定降低高血压，建议低血压患者间歇饮用。<br>3、不与其它茶混饮，泡发的茶片最后食掉最佳。<br>4、坚持饮用一个月就会有明显效果。</p>
-<p>牛蒡茶色泽金黄、香味宜人，是老幼四季皆宜的保健饮品，也可炖、煮、涮、做汤等。[1] 牛蒡茶具有通经络活血化淤的作用早在李时珍的《本草纲目》中就有记载牛蒡能“通十二经脉，除五脏恶气”，能调整女性经期，对于女性的气滞血淤的症状和久坐办公室的上班族有很好作用。.牛蒡茶不宜过浓，过浓容易引起上火，在泡 制的时候可以适当的加入一些蜂蜜这样就不会上火了![3</p>
-<p>具体做法：<br>热饮：每次5-8克（备注7到8片），便秘者、减肥者可酌情增加。<br>用开水冲泡2-3分钟即可饮用（可反复冲泡多次），也可以配以冰糖、红枣、洋参冲泡效果更佳，还可以放少许蜂蜜，预防上火！</p>
-<p>营养价值：</p>
-<p>牛蒡含菊糖、纤维素、蛋白质、钙、磷、铁等人体所需的多种维生素及矿物质，其中胡萝卜素含量比胡萝卜高150倍，蛋白质和钙的含量为根茎类之首。牛蒡根含有菊糖（人体内不含菊糖）及挥发油、牛蒡酸、多种多酚物质及醛类，并富含纤维素和氨基酸。<br>牛蒡根含有人体必需的各种氨基酸，且含量较高，尤其是具有特殊药理作用的氨基酸含量高，如具有健脑作用的天门冬氨酸占总氨基酸的25%-28%，精氨酸占18%-20%，且含有Ca、Mg、Fe、 Mn、 Zn等人体必需的宏量元素和微量元素。[6-7] </p>
-<p>药用功效：<br>治疗糖尿病、高血压、高血脂、抗癌等作用。可降血糖、降血压、血脂、治疗失眠，提高人体免疫力等功效。<br>牛蒡全植物含有抗菌成分，其中叶含抗菌成分最多，主要抗金黄色葡萄球菌。<br> 抗衰老和清除氧自由基作用<br>人类生命在正常活动代谢过程中，会产生一种有害于身体健康，促使细胞衰老的物质——氧自由基。它们能够促使产生脂褐斑色素——老年斑的生成和堆积。老年斑在体表的出现，表示机体中细胞已进入衰老阶段。牛旁根中含有过氧化物酶，它能增强细胞免疫机制的活力，清除体内氧自由基，阻止脂褐质色素在体内的生成和堆积，抗衰防老，为机体提供了对抗和清除氧自由基的内护环境。<br> 抗癌作用<br>牛蒡苦素能抑制癌细胞中磷酸果糖基酶的活性，牛蒡甙元也有抗癌活性，同时牛蒡子甙元还具有抗老年性痴呆作用。现代科学研究结果认为，牛蒡含黄酮甙类化合物，对恶性肿瘤具有一定抗性，其粗提取物呈选择毒性，较低量就可以抑制癌细胞增殖，使肿瘤细胞向正常细胞接近。[9]<br> 移除废水中重金属作用<br>牛蒡对金属离子的吸附能力依次为：Pb&gt;Cd&gt;Hg&gt;Ca&gt;Zn。<br> 其它作用<br>牛蒡甙和牛蒡酚有抗肾炎活性<br>，能有效地治疗急性进行性肾炎和慢性肾小球肾，做肾病治疗剂。牛蒡的主要成分木酚素具有抑制血小板活化因子对血小板结合作用，可以做血小板活化因子拮抗药。[10]  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/11/牛蒡茶/" data-id="cijwgrhz20001oucrkerpnaag" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/13/FPS追踪工具/" data-id="cik557x620012w9cr7i3uqygs" class="article-share-link">Share</a>
       
       
     </footer>
@@ -549,7 +547,7 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -559,6 +557,10 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/02/01/iOS-Block/">iOS Block</a>
+          </li>
         
           <li>
             <a href="/2016/01/27/开发一个iOS-APP需要准备的东西/">开发一个iOS APP需要准备的东西</a>
@@ -574,10 +576,6 @@ d. 尽量设为手动放开－－避免审核期间，业务流程或技术出�
         
           <li>
             <a href="/2016/01/08/Oracle-RAC/">Oracle RAC</a>
-          </li>
-        
-          <li>
-            <a href="/2016/01/04/objc-swift/">objc &amp; swift</a>
           </li>
         
       </ul>
